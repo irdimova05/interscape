@@ -4,8 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -22,9 +25,17 @@ class UserSeeder extends Seeder
                 'email' => 'test1@test.com',
                 'password' => Hash::make('test1'),
             ])
-            ->create();
-        User::factory()
+            ->create()
+            ->assignRole(Role::findByName('admin'));
+
+        $users = User::factory()
             ->count(10)
             ->create();
+
+        $roles = Role::whereIn('name', ['student', 'employer'])->get();
+
+        foreach ($users as $user) {
+            $user->assignRole($roles->random());
+        }
     }
 }

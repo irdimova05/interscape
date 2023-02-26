@@ -17,8 +17,13 @@ class EmployerFactory extends Factory
     public function definition()
     {
         return [
+            'name' => $this->faker->company,
+            'description' => $this->faker->text,
+            'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
-            'position' => $this->faker->jobTitle,
+            'address' => $this->faker->address,
+            'website' => $this->faker->url,
+            'logo' => $this->faker->imageUrl(640, 480, 'business', true),
         ];
     }
 }

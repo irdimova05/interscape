@@ -18,24 +18,34 @@ class RolePermissionsSeeder extends Seeder
     {
         $adminPermissions =
             [
-                Permission::create(['name' => 'approve.student']),
-                Permission::create(['name' => 'approve.ad']),
-                Permission::create(['name' => 'approve.employer']),
-                Permission::create(['name' => 'delete.student']),
-                Permission::create(['name' => 'delete.employer'])
+                Permission::create(['name' => 'create.student']),
+                Permission::create(['name' => 'activate.student']),
+                Permission::create(['name' => 'deactivate.student']),
+                Permission::create(['name' => 'create.employer']),
+                Permission::create(['name' => 'deactivate.employer']),
+                Permission::create(['name' => 'list.reported_ad']),
+                Permission::create(['name' => 'block.reported_ad']),
             ];
 
         $studentPermissions =
             [
+                
+                Permission::create(['name' => 'follow.employer']),
+                Permission::create(['name' => 'show.employer']),
                 Permission::create(['name' => 'apply.ad'])
             ];
 
         $employerPermissions =
             [
+                
+                Permission::create(['name' => 'follow.student']),
                 Permission::create(['name' => 'create.ad']),
                 Permission::create(['name' => 'edit.ad']),
-                Permission::create(['name' => 'delete.ad']),
-                Permission::create(['name' => 'list.student'])
+                Permission::create(['name' => 'activate.ad']),
+                Permission::create(['name' => 'deactivate.ad']),
+                Permission::create(['name' => 'list.student']),
+                Permission::create(['name' => 'show.student']),
+                Permission::create(['name' => 'list.applications'])
             ];
 
         $sharedStudentEmployerPermissions =
@@ -45,8 +55,7 @@ class RolePermissionsSeeder extends Seeder
                 Permission::create(['name' => 'show.profile']),
                 Permission::create(['name' => 'show.ad']),
                 Permission::create(['name' => 'list.ad']),
-                Permission::create(['name' => 'show.employer']),
-                Permission::create(['name' => 'show.student'])
+                Permission::create(['name' => 'report.ad']),
             ];
 
 

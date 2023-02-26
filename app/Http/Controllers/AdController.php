@@ -14,7 +14,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        $ads = Ad::with('employer', 'company')->get();
+        $ads = Ad::with('employer')->get();
         return view('ads.index', compact('ads'));
     }
 

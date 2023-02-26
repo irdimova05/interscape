@@ -15,10 +15,14 @@ return new class extends Migration
     {
         Schema::create('employers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->string('email')->unique();
+            $table->string('logo');
             $table->string('phone')->nullable();
-            $table->string('position')->nullable();
+            $table->string('address')->nullable();
+            $table->string('website')->nullable();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('company_id')->constrained();
             $table->timestamps();
         });
     }
@@ -31,7 +35,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('employers', function (Blueprint $table) {
-            $table->dropForeign(['user_id', 'company_id']);
+            $table->dropForeign(['user_id']);
         });
         Schema::dropIfExists('employers');
     }

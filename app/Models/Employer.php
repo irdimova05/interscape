@@ -10,19 +10,19 @@ class Employer extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
+        'description',
+        'email',
         'phone',
-        'position',
+        'address',
+        'website',
+        'logo',
         'user_id',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
     }
 
     public function ads()

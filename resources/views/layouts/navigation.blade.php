@@ -17,23 +17,33 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('interests')" :active="request()->routeIs('interests')">
-                        {{ __('Интереси') }}
-                    </x-nav-link>
-                </div>
+                @unlessrole('admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('interests.index')" :active="request()->routeIs('interests.index')">
+                            {{ __('Интереси') }}
+                        </x-nav-link>
+                    </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('students')" :active="request()->routeIs('students')">
-                        {{ __('Студенти') }}
-                    </x-nav-link>
-                </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
+                            {{ __('Студенти') }}
+                        </x-nav-link>
+                    </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('employers')" :active="request()->routeIs('employers')">
-                        {{ __('Работодатели') }}
-                    </x-nav-link>
-                </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('employers.index')" :active="request()->routeIs('employers.index')">
+                            {{ __('Работодатели') }}
+                        </x-nav-link>
+                    </div>
+                @endunlessrole
+
+                @role('admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                            {{ __('Потребители') }}
+                        </x-nav-link>
+                    </div>
+                @endrole
             </div>
 
             <!-- Settings Dropdown -->
@@ -88,17 +98,25 @@
                 {{ __('Обяви') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('interests')" :active="request()->routeIs('interests')">
+            @unlessrole('admin')
+            <x-responsive-nav-link :href="route('interests.index')" :active="request()->routeIs('interests.index')">
                 {{ __('Интереси') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('students')" :active="request()->routeIs('students')">
+            <x-responsive-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
                 {{ __('Студенти') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('employers')" :active="request()->routeIs('employers')">
+            <x-responsive-nav-link :href="route('employers.index')" :active="request()->routeIs('employers.index')">
                 {{ __('Работодатели') }}
             </x-responsive-nav-link>
+            @endunlessrole
+
+            @role('admin')
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                {{ __('Потребители') }}
+            </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

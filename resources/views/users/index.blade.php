@@ -41,17 +41,25 @@
                                     <span class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span>
                                 </div>
                                 <div class="text-sm">
-                                    <div class="font-medium text-gray-700">{{ $user->name }}
+                                    <div class="font-medium text-gray-700">
+                                        {{ $user->name }}
                                     </div>
                                     <div class="text-gray-400">{{ $user->email }} </div>
                                 </div>
                             </th>
                             <td class="px-6 py-4 ">
                                 <div class="flex justify-center">
+                                    @if($user->status->slug == \App\Models\Status::ACTIVE)
                                     <span class=" inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-                                    <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                                        <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
                                         Активен
                                     </span>
+                                    @elseif($user->status->slug == \App\Models\Status::INACTIVE)
+                                    <span class=" inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+                                        Неактивен
+                                    </span>
+                                    @endif
                                 </div>
                             </td>
                             <td class="px-6 py-4">{{ $user->role }}</td>

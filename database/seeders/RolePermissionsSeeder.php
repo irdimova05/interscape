@@ -32,7 +32,8 @@ class RolePermissionsSeeder extends Seeder
                 
                 Permission::create(['name' => 'follow.employer']),
                 Permission::create(['name' => 'show.employer']),
-                Permission::create(['name' => 'apply.ad'])
+                Permission::create(['name' => 'apply.ad']),
+                Permission::create(['name' => 'report.ad'])
             ];
 
         $employerPermissions =
@@ -55,7 +56,6 @@ class RolePermissionsSeeder extends Seeder
                 Permission::create(['name' => 'show.profile']),
                 Permission::create(['name' => 'show.ad']),
                 Permission::create(['name' => 'list.ad']),
-                Permission::create(['name' => 'report.ad']),
             ];
 
 

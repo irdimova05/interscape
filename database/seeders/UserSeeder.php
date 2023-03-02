@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -20,16 +21,21 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::factory()
-            ->state(fn (array $attributes) => [
+            ->state(fn (array $attributes) => 
+            [
                 'name' => 'Test',
                 'email' => 'test1@test.com',
                 'password' => Hash::make('test1'),
+                'status_id' => Status::where('slug', Status::ACTIVE)->first()->id,
             ])
             ->create()
             ->assignRole(Role::findByName('admin'));
 
         $users = User::factory()
             ->count(10)
+            ->state(new Sequence(
+                fn ($sequence) => ['status_id' => Status::all()->random()],
+            ))
             ->create();
 
         $roles = Role::whereIn('name', ['student', 'employer'])->get();

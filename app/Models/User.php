@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status_id',
     ];
 
     /**
@@ -46,5 +47,10 @@ class User extends Authenticatable
     public function employer()
     {
         return $this->hasOne(Employer::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }

@@ -11,6 +11,10 @@ class Faculty extends Model
 
     protected $fillable = [
         'name',
-        'slug',
     ];
+
+    public function specialties()
+    {
+        return $this->hasMany(Specialty::class);
+    }
 }

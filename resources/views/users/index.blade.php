@@ -75,6 +75,7 @@
                                             </g>
                                         </svg>
                                     </a>
+                                    @if($user->status->slug == \App\Models\Status::INACTIVE)
                                     <a x-data="{ tooltip: 'Activate' }" href="#">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6" x-tooltip="tooltip">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -84,6 +85,7 @@
                                             </g>
                                         </svg>
                                     </a>
+                                    @elseif($user->status->slug == \App\Models\Status::ACTIVE)
                                     <a x-data="{ tooltip: 'Deactivate' }" href="#">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6" x-tooltip="tooltip">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -93,6 +95,7 @@
                                             </g>
                                         </svg>
                                     </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

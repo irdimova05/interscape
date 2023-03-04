@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Faculty;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,23 +19,27 @@ class FacultySeeder extends Seeder
             [
                 'name' => 'Машинно-технологичен факултет',
                 'slug' => 'mtf',
+                'university_id' => 1,
             ],
             [
                 'name' => 'Корабостроителен факултет',
                 'slug' => 'kf',
+                'university_id' => 1,
             ],
             [
                 'name' => 'Електротехнически факултет',
                 'slug' => 'ef',
+                'university_id' => 1,
             ],
             [
                 'name' => 'Факултет по изчислителна техника и автоматизация',
                 'slug' => 'fita',
+                'university_id' => 1,
             ],
         ];
 
         foreach ($faculties as $faculty) {
-            \App\Models\Faculty::create($faculty);
+            Faculty::create($faculty);
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -15,6 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('status:id,slug', 'roles')->get();
+        UserService::enrichUsers($users);
         return view('users.index', compact('users'));
     }
 

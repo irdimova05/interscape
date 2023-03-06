@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('faculties', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('abbreviation');
+            $table->foreignId('university_id')->constrained();
             $table->timestamps();
         });
     }
@@ -27,6 +29,9 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('faculties', function (Blueprint $table) {
+            $table->dropForeign(['university_id']);
+        });
         Schema::dropIfExists('faculties');
     }
 };

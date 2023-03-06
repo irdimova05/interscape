@@ -18,15 +18,23 @@ class FacultySeeder extends Seeder
         $faculties = [
             [
                 'name' => 'Машинно-технологичен факултет',
+                'abbreviation' => 'mtf',
+                'university_id' => 1,
             ],
             [
                 'name' => 'Корабостроителен факултет',
+                'abbreviation' => 'kf',
+                'university_id' => 1,
             ],
             [
                 'name' => 'Електротехнически факултет',
+                'abbreviation' => 'ef',
+                'university_id' => 1,
             ],
             [
                 'name' => 'Факултет по изчислителна техника и автоматизация',
+                'abbreviation' => 'fita',
+                'university_id' => 1,
             ],
         ];
 

@@ -14,7 +14,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        $ads = Ad::with('employer')->get();
+        $ads = Ad::with('employer')->paginate(10);
         return view('ads.index', compact('ads'));
     }
 
@@ -47,7 +47,7 @@ class AdController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('ads.show', ['ad' => Ad::findOrFail($id)]);
     }
 
     /**

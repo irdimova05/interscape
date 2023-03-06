@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             UniversitySeeder::class,
             FacultySeeder::class,
             EducationSeeder::class,
+            SpecialtySeeder::class,
             CourseSeeder::class,
             UserSeeder::class,
             EmployerAdSeeder::class,

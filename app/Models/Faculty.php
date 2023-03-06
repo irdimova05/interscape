@@ -15,4 +15,8 @@ class Faculty extends Model
         'university_id',
     ];
 
+    public function specialties()
+    {
+        return $this->hasMany(Specialty::class);
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Course;
 use Illuminate\Database\Seeder;
 
 class CourseSeeder extends Seeder
@@ -38,7 +38,7 @@ class CourseSeeder extends Seeder
         ];
 
         foreach ($courses as $course) {
-            \App\Models\Course::create($course);
+            Course::create($course);
         }
     }
 }

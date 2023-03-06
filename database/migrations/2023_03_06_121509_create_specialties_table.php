@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('specialties', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('abbreviation');
             $table->foreignId('faculty_id')->constrained();
-            $table->foreignId('education_id')->constrained();
+            $table->foreignId('education_id')->constrained('educations');
             $table->timestamps();
         });
     }

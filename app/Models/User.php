@@ -58,4 +58,14 @@ class User extends Authenticatable
     {
         return $this->hasRole('student');
     }
+
+    public function isEmployer()
+    {
+        return $this->hasRole('employer');
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
 }

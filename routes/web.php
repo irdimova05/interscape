@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('interests', InterestsController::class);
     Route::resource('employers', EmployerController::class);
     Route::resource('students', StudentController::class);
+    Route::get('users/search', [UserController::class, 'search'])->name('users.search');
     Route::resource('users', UserController::class);
 });
 

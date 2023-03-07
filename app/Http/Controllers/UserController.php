@@ -85,4 +85,11 @@ class UserController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        $users = User::where('name', 'like', '%' . $request->input('q') . '%')->paginate(10);
+        UserService::enrichUsers($users);
+        return view('users.components.table', compact('users'));
+    }
 }

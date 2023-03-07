@@ -49,7 +49,17 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('users.show', ['user' => User::findOrFail($id)]);
+        $user = User::with('status:id,slug', 'roles')->findOrFail($id);
+        UserService::enrichUser($user);
+        if ($user->isStudent()) {
+            $user->load('student');
+            return view('users.students.show', compact('user'));
+        } else if ($user->isEmployer()) {
+            $user->load('employer.ads');
+            return view('users.employers.show', compact('user'));
+        } else if ($user->isAdmin()) {
+            return view('users.admins.show', compact('user'));
+        }
     }
 
     /**

@@ -4,15 +4,21 @@ namespace App\Services;
 
 class UserService
 {
+    public static function enrichUser(&$user)
+    {
+        if ($user->relationLoaded('roles')) {
+            $roleNames = self::formatUserRoles($user->roles);
+            $user->role_names = $roleNames;
+        }
+    }
+
     public static function enrichUsers(&$users)
     {
         foreach ($users as &$user) {
-            if ($user->relationLoaded('roles')) {
-                $roleNames = self::formatUserRoles($user->roles);
-                $user->role_names = $roleNames;
-            }
+            self::enrichUser($user);
         }
     }
+
 
     public static function formatUserRoles($roles)
     {

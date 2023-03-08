@@ -27,9 +27,6 @@ class StudentSeeder extends Seeder
             ->select('users.*')
             ->get();
 
-
-        $universities = University::all();
-        $faculties = Faculty::all();
         $specialties = Specialty::all();
         $courses = Course::all();
 
@@ -37,8 +34,6 @@ class StudentSeeder extends Seeder
             Student::factory()
                 ->state(new Sequence(
                     fn ($sequence) => [
-                        'university_id' => $universities->random(),
-                        'faculty_id' => $faculties->random(),
                         'specialty_id' => $specialties->random(),
                         'course_id' => $courses->random(),
                         'user_id' => $user->id,

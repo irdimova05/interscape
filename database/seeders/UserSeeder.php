@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::factory()
-            ->state(fn (array $attributes) => 
+            ->state(fn (array $attributes) =>
             [
                 'name' => 'Test',
                 'email' => 'test1@test.com',
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             ->assignRole(Role::findByName('admin'));
 
         $users = User::factory()
-            ->count(10)
+            ->count(30)
             ->state(new Sequence(
                 fn ($sequence) => ['status_id' => Status::all()->random()],
             ))

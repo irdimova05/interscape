@@ -23,7 +23,7 @@ class EmployerAdSeeder extends Seeder
 
         foreach ($users as $user) {
             Employer::factory()
-                ->hasAds(2)
+                ->hasAds(5)
                 ->create([
                     'user_id' => $user->id,
                 ]);

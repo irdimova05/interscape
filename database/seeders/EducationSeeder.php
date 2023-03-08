@@ -21,9 +21,14 @@ class EducationSeeder extends Seeder
                 'slug' => 'bachelor',
             ],
             [
+                'name' => 'Професионален бакалавър',
+                'slug' => 'professional_bachelor',
+            ],
+            [
                 'name' => 'Магистър',
                 'slug' => 'master',
             ],
+
             [
                 'name' => 'Докторант',
                 'slug' => 'doctorant',

@@ -17,6 +17,7 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
+            'success' => fake()->randomFloat(2, 2, 6),
             'description' => fake()->text(),
         ];
     }

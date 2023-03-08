@@ -16,20 +16,28 @@ class CourseSeeder extends Seeder
     {
         $courses = [
             [
-                'name' => 'Първи курс',
+                'name' => 'Първи',
                 'slug' => 'first',
             ],
             [
-                'name' => 'Втори курс',
+                'name' => 'Втори',
                 'slug' => 'second',
             ],
             [
-                'name' => 'Трети курс',
+                'name' => 'Трети',
                 'slug' => 'third',
             ],
             [
-                'name' => 'Четвърти курс',
+                'name' => 'Четвърти',
                 'slug' => 'fourth',
+            ],
+            [
+                'name' => 'Пети',
+                'slug' => 'fifth',
+            ],
+            [
+                'name' => 'Шести',
+                'slug' => 'sixth',
             ],
             [
                 'name' => 'Завършил',

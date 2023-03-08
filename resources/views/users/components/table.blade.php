@@ -12,10 +12,10 @@
             @forelse($users as $user)
             <tr class="hover:bg-gray-50">
                 <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
-                    <!-- <div class="relative h-10 w-10">
-                            <img class="h-full w-full rounded-full object-cover object-center" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                            <span class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span>
-                        </div> -->
+                    <div class="relative h-10 w-10">
+                        <img class="h-full w-full rounded-full object-cover object-center" src="{{ $user->hasRole('employer') ? $user->employer->logo : $user->profile_picture }}" alt="{{ $user->name }}" class="rounded-full h-48 w-48 object-cover" />
+                        <!-- <span class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span> -->
+                    </div>
                     <div class="text-sm">
                         <a href="{{ route('users.show', $user->id) }}">
                             <div class="font-medium text-gray-700">

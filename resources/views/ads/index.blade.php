@@ -22,7 +22,7 @@
         </div>
         @endforeach
     </div>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-2">
         {{ $ads->links() }}
     </div>
 </x-app-layout>

@@ -26,12 +26,12 @@
             </div>
             <div class="mt-20 text-center border-b pb-12">
                 <h1 class="text-4xl font-medium text-gray-700">{{$user->name}}, <span class="font-light text-gray-500">27</span></h1>
-                <p class="font-light text-gray-600 mt-3">Bucharest, Romania</p>
-                <p class="mt-8 text-gray-500">Solution Manager - Creative Tim Officer</p>
-                <p class="mt-2 text-gray-500">University of Computer Science</p>
+                <p class="font-light text-gray-600 mt-3">{{$user->email}}</p>
+                <p class="mt-8 text-gray-500">{{$user->student->specialty->name}}</p>
+                <p class="mt-2 text-gray-500">{{$user->student->specialty->faculty->university->name}}</p>
             </div>
             <div class="mt-12 flex flex-col justify-center">
-                <p class="text-gray-600 text-center font-light lg:px-16">An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.</p> <button class="text-indigo-500 py-2 px-4  font-medium mt-4"> Show more</button>
+                <p class="text-gray-600 text-center font-light lg:px-16">{{$user->student->description}}</p>
             </div>
         </div>
     </div>

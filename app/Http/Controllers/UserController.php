@@ -52,7 +52,7 @@ class UserController extends Controller
         $user = User::with('status:id,slug', 'roles')->findOrFail($id);
         UserService::enrichUser($user);
         if ($user->isStudent()) {
-            $user->load('student');
+            $user->load('student.course', 'student.specialty.education', 'student.specialty.faculty.university');
             return view('users.students.show', compact('user'));
         } else if ($user->isEmployer()) {
             $user->load('employer.ads');

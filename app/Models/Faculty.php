@@ -19,4 +19,9 @@ class Faculty extends Model
     {
         return $this->hasMany(Specialty::class);
     }
+
+    public function university()
+    {
+        return $this->belongsTo(University::class);
+    }
 }

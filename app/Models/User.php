@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasOne(Employer::class);
     }
 
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
     public function status()
     {
         return $this->belongsTo(Status::class);

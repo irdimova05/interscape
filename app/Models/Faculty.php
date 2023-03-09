@@ -11,7 +11,7 @@ class Faculty extends Model
 
     protected $fillable = [
         'name',
-        'slug',
+        'abbreviation',
         'university_id',
     ];
 

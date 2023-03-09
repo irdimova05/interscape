@@ -18,33 +18,35 @@ class FacultySeeder extends Seeder
         $faculties = [
             [
                 'name' => 'Машинно-технологичен факултет',
+<<<<<<<<< Temporary merge branch 1
+            ],
+            [
+                'name' => 'Корабостроителен факултет',
+            ],
+            [
+                'name' => 'Електротехнически факултет',
+            ],
+            [
+                'name' => 'Факултет по изчислителна техника и автоматизация',
+=========
                 'slug' => 'mtf',
                 'university_id' => 1,
             ],
             [
                 'name' => 'Корабостроителен факултет',
-                'slug' => 'kf',
+                'abbreviation' => 'kf',
                 'university_id' => 1,
             ],
             [
                 'name' => 'Електротехнически факултет',
-                'slug' => 'ef',
+                'abbreviation' => 'ef',
                 'university_id' => 1,
             ],
             [
                 'name' => 'Факултет по изчислителна техника и автоматизация',
-                'slug' => 'fita',
+                'abbreviation' => 'fita',
                 'university_id' => 1,
-            ],
-            [
-                'name' => 'Добруджански технологичен колеж',
-                'slug' => 'dtk',
-                'university_id' => 1,
-            ],
-            [
-                'name' => 'Колеж в структурата на ТУ-Варна',
-                'slug' => 'kstuv',
-                'university_id' => 1,
+>>>>>>>>> Temporary merge branch 2
             ],
         ];
 

@@ -16,10 +16,13 @@
                     </div>
                     <div class="w-40 flex">
                         <img src=" {{ $ad->employer->logo }}" alt="{{ $ad->employer->name }}" />
+                    </div>
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
-    @endforeach
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        {{ $ads->links() }}
     </div>
 </x-app-layout>

@@ -11,7 +11,7 @@ class Specialty extends Model
 
     protected $fillable = [
         'name',
-        'slug',
+        'abbreviation',
         'faculty_id',
         'education_id',
     ];

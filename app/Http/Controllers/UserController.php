@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('status:id,slug', 'roles')->get();
+        $users = User::with('status:id,slug', 'roles')->paginate(10);
         UserService::enrichUsers($users);
         return view('users.index', compact('users'));
     }
@@ -49,7 +49,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('users.show', ['user' => User::findOrFail($id)]);
     }
 
     /**

@@ -24,17 +24,21 @@
                     </x-nav-link>
                 </div>
 
+                @role('employer')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
                         {{ __('Студенти') }}
                     </x-nav-link>
                 </div>
+                @endrole
 
+                @role('student')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('employers.index')" :active="request()->routeIs('employers.index')">
                         {{ __('Работодатели') }}
                     </x-nav-link>
                 </div>
+                @endrole
                 @endunlessrole
 
                 @role('admin')

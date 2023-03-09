@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('faculties', function (Blueprint $table) {
+        Schema::create('universities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
-            $table->foreignId('university_id')->constrained();
+            $table->string('abbreviation');
             $table->timestamps();
         });
     }
@@ -29,9 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('faculties', function (Blueprint $table) {
-            $table->dropForeign(['university_id']);
-        });
-        Schema::dropIfExists('faculties');
+        Schema::dropIfExists('universities');
     }
 };

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use JetBrains\PhpStorm\Deprecated;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             StatusSeeder::class,
             RolePermissionsSeeder::class,
+            UniversitySeeder::class,
+            DepartmentSeeder::class,
             FacultySeeder::class,
             SpecialtySeeder::class,
             EducationSeeder::class,

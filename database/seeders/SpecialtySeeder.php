@@ -19,14 +19,7 @@ class SpecialtySeeder extends Seeder
     {
         $educations = Education::all()->pluck('id', 'slug');
 
-        $specialties = [
-            [
-                'name' => 'Материалознание и технология на материалите',
-                'slug' => 'mtm',
-                'faculty_id' => 1,
-                'education_id' => $educations[Education::BACHELOR],
-            ],
-        ];
+        $specialties = [];
 
         foreach ($specialties as $specialty) {
             Specialty::create($specialty);

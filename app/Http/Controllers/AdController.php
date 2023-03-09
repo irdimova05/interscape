@@ -14,7 +14,12 @@ class AdController extends Controller
      */
     public function index()
     {
-        $ads = Ad::with('employer')->paginate(10);
+        // if the user is employer show only his own ads
+        if (auth()->user()->hasRole('employer')) {
+            $ads = Ad::where('employer_id', auth()->user()->employer->id)->paginate(10);
+        } else {
+            $ads = Ad::with('employer')->paginate(10);
+        }
         return view('ads.index', compact('ads'));
     }
 

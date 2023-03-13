@@ -24,7 +24,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var searchInput = document.getElementById("search");
-            searchInput.addEventListener("change", function() {
+            searchInput.addEventListener("input", function() {
                 var value = this.value;
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "{{ route('users.search') }}?q=" + value, true);

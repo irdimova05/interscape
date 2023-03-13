@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ad;
+use App\Services\AdService;
 use Illuminate\Http\Request;
 
 class AdController extends Controller
@@ -14,12 +15,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        // if the user is employer show only his own ads
-        if (auth()->user()->hasRole('employer')) {
-            $ads = Ad::where('employer_id', auth()->user()->employer->id)->paginate(10);
-        } else {
-            $ads = Ad::with('employer')->paginate(10);
-        }
+        $ads = AdService::getAds();
         return view('ads.index', compact('ads'));
     }
 
@@ -87,5 +83,13 @@ class AdController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $ads = AdService::getAds(function ($query) use ($request) {
+            return AdService::applySearch($query, $request->get('q'));
+        });
+        return view('ads.components.ads', compact('ads'));
     }
 }

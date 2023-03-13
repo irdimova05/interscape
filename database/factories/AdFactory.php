@@ -19,6 +19,7 @@ class AdFactory extends Factory
         return [
             'title' => $this->faker->jobTitle,
             'description' => $this->faker->text,
+            'ad_status_id' => $this->faker->numberBetween(1, 3),
         ];
     }
 }

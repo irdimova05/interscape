@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ads', function (Blueprint $table) {
+        Schema::create('ad_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->foreignId('employer_id')->constrained();
-            $table->foreignId('ad_status_id')->constrained();
+            $table->string('name');
+            $table->string('slug');
             $table->timestamps();
         });
     }
@@ -30,9 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('ads', function (Blueprint $table) {
-            $table->dropForeign(['employer_id, ad_status_id']);
-        });
-        Schema::dropIfExists('ads');
+        Schema::dropIfExists('ad_statuses');
     }
 };

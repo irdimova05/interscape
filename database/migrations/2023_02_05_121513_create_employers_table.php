@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('website')->nullable();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('employee_range_id')->constrained();
             $table->timestamps();
         });
     }
@@ -35,7 +36,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('employers', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+            $table->dropForeign(['user_id', 'employee_range_id']);
         });
         Schema::dropIfExists('employers');
     }

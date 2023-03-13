@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             StatusSeeder::class,
             AdStatusSeeder::class,
+            EmployeeRangeSeeder::class,
             RolePermissionsSeeder::class,
             UniversitySeeder::class,
             FacultySeeder::class,

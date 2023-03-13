@@ -18,6 +18,7 @@ class Employer extends Model
         'website',
         'logo',
         'user_id',
+        'employee_ranges_id',
     ];
 
     public function user()
@@ -28,5 +29,10 @@ class Employer extends Model
     public function ads()
     {
         return $this->hasMany(Ad::class);
+    }
+
+    public function employeeRanges()
+    {
+        return $this->hasOne(EmployeeRanges::class);
     }
 }

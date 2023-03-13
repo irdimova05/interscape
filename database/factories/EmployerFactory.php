@@ -24,6 +24,7 @@ class EmployerFactory extends Factory
             'address' => $this->faker->address,
             'website' => $this->faker->url,
             'logo' => $this->faker->imageUrl(640, 480, 'business', true),
+            'employee_range_id' => $this->faker->numberBetween(1, 3),
         ];
     }
 }

@@ -23,13 +23,35 @@ class UserSeeder extends Seeder
         User::factory()
             ->state(fn (array $attributes) =>
             [
-                'name' => 'Test',
-                'email' => 'test1@test.com',
-                'password' => Hash::make('test1'),
+                'name' => 'admin',
+                'email' => 'admin@test.com',
+                'password' => Hash::make('admin'),
                 'status_id' => Status::where('slug', Status::ACTIVE)->first()->id,
             ])
             ->create()
             ->assignRole(Role::findByName('admin'));
+
+        User::factory()
+            ->state(fn (array $attributes) =>
+            [
+                'name' => 'student',
+                'email' => 'student@test.com',
+                'password' => Hash::make('student'),
+                'status_id' => Status::where('slug', Status::ACTIVE)->first()->id,
+            ])
+            ->create()
+            ->assignRole(Role::findByName('student'));
+
+        User::factory()
+            ->state(fn (array $attributes) =>
+            [
+                'name' => 'employer',
+                'email' => 'employer@test.com',
+                'password' => Hash::make('employer'),
+                'status_id' => Status::where('slug', Status::ACTIVE)->first()->id,
+            ])
+            ->create()
+            ->assignRole(Role::findByName('employer'));
 
         $users = User::factory()
             ->count(30)

@@ -26,7 +26,7 @@ class AdController extends Controller
      */
     public function create()
     {
-        //
+        return view('ads.create');
     }
 
     /**

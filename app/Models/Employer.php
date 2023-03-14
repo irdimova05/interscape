@@ -31,8 +31,8 @@ class Employer extends Model
         return $this->hasMany(Ad::class);
     }
 
-    public function employeeRanges()
+    public function employeeRange()
     {
-        return $this->hasOne(EmployeeRanges::class);
+        return $this->belongsTo(EmployeeRanges::class);
     }
 }

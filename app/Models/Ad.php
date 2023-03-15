@@ -12,6 +12,7 @@ class Ad extends Model
     protected $fillable = [
         'title',
         'description',
+        'salary',
         'employer_id',
         'ad_status_id',
         'ad_category_id',

@@ -15,8 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('status:id,slug', 'roles')->paginate(10);
-        UserService::enrichUsers($users);
+        $users = UserService::getUsers();
         return view('users.index', compact('users'));
     }
 
@@ -98,8 +97,9 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        $users = User::where('name', 'like', '%' . $request->input('q') . '%')->paginate(10);
-        UserService::enrichUsers($users);
+        $users = UserService::getUsers(function ($query) use ($request) {
+            return UserService::applySearch($query, $request->get('q'));
+        });
         return view('users.components.table', compact('users'));
     }
 }

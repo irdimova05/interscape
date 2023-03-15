@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('employer_id')->constrained();
             $table->foreignId('ad_status_id')->constrained();
             $table->foreignId('ad_category_id')->constrained();
+            $table->foreignId('job_type_id')->constrained();
             $table->timestamps();
         });
     }
@@ -32,7 +33,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('ads', function (Blueprint $table) {
-            $table->dropForeign(['employer_id, ad_status_id, ad_category_id']);
+            $table->dropForeign(['employer_id, ad_status_id, ad_category_id, job_type_id']);
         });
         Schema::dropIfExists('ads');
     }

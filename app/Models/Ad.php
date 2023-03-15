@@ -15,6 +15,7 @@ class Ad extends Model
         'employer_id',
         'ad_status_id',
         'ad_category_id',
+        'job_type_id',
     ];
 
     public function employer()
@@ -35,5 +36,10 @@ class Ad extends Model
     public function adCategory()
     {
         return $this->belongsTo(AdCategory::class);
+    }
+
+    public function jobType()
+    {
+        return $this->belongsTo(JobType::class);
     }
 }

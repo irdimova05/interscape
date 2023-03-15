@@ -21,6 +21,7 @@ class AdFactory extends Factory
             'description' => $this->faker->text,
             'ad_status_id' => $this->faker->numberBetween(1, 3),
             'ad_category_id' => $this->faker->numberBetween(1, 7),
+            'job_type_id' => $this->faker->numberBetween(1, 2),
         ];
     }
 }

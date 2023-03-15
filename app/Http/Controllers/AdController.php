@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdStoreRequest;
 use App\Models\Ad;
+use App\Models\AdCategory;
+use App\Models\JobType;
 use App\Services\AdService;
 use Illuminate\Http\Request;
 
@@ -26,18 +29,21 @@ class AdController extends Controller
      */
     public function create()
     {
-        return view('ads.create');
+        $categories = AdCategory::get()->pluck('name', 'id')->toArray();
+        $jobTypes = JobType::get()->pluck('name', 'id')->toArray();
+        return view('ads.create', compact('categories', 'jobTypes'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  AdStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdStoreRequest $request)
     {
-        //
+        $ad = AdService::createAd($request->all());
+        return redirect()->route('ads.show', $ad->id);
     }
 
     /**

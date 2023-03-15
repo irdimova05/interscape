@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->string('salary');
             $table->foreignId('employer_id')->constrained();
             $table->foreignId('ad_status_id')->constrained();
             $table->foreignId('ad_category_id')->constrained();

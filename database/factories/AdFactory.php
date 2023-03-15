@@ -19,6 +19,7 @@ class AdFactory extends Factory
         return [
             'title' => $this->faker->jobTitle,
             'description' => $this->faker->text,
+            'salary' => $this->faker->numberBetween(1000, 10000),
             'ad_status_id' => $this->faker->numberBetween(1, 3),
             'ad_category_id' => $this->faker->numberBetween(1, 7),
             'job_type_id' => $this->faker->numberBetween(1, 2),

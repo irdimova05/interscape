@@ -12,7 +12,8 @@
                             <a href="#">{{ $student->user->name }}</a>
                         </h3>
                         <span class="text-gray-500 ">{{ $student->course->name_formatted }}, {{ $student->specialty->education->name }}</span>
-                        <p class="mt-3 mb-4 font-light text-gray-500 ">{{ $student->specialty->faculty->university->name }}</p>
+                        <p class="mt-3 font-light text-gray-500 ">{{ $student->specialty->name }}</p>
+                        <p class="font-light text-gray-500 ">{{ $student->specialty->faculty->university->name }}</p>
                     </div>
                 </div>
                 @endforeach

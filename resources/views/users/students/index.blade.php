@@ -1,11 +1,11 @@
 <x-app-layout>
     <section class="bg-white rounded-xl">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
-            <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:px-6 ">
+            <div class="grid gap-8 md:grid-cols-2">
                 @foreach ($students as $student)
                 <div class="items-center bg-gray-50 rounded-lg shadow sm:flex ">
-                    <a href=" {{ route('users.show', $student->user->id) }}">
-                        <img img class="h-full w-full object-cover object-center" src="{{ $student->user->profile_picture }}" alt="{{ $student->user->name }}" />
+                    <a style="width: 200px" href=" {{ route('users.show', $student->user->id) }}">
+                        <img class="h-full w-full object-cover object-center" src="{{ $student->user->profile_picture }}" alt="{{ $student->user->name }}" />
                     </a>
                     <div class="p-5">
                         <h3 class="text-xl font-bold tracking-tight text-gray-900 ">
@@ -19,4 +19,7 @@
             </div>
         </div>
     </section>
+    <div class="mt-2">
+        {{ $students->links() }}
+    </div>
 </x-app-layout>

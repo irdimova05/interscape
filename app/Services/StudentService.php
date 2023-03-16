@@ -23,7 +23,7 @@ class StudentService
             $query = call_user_func($callback, $query);
         }
 
-        $students = $query->paginate(20);
+        $students = $query->paginate(10);
 
         self::enrichStudents($students);
 

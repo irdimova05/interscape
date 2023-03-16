@@ -8,12 +8,12 @@
                         <p class="text-gray-400">Курс</p>
                     </div>
                     <div>
-                        <p class="font-bold text-gray-700 text-xl">{{$user->student->specialty->education->name}}</p>
-                        <p class="text-gray-400">Обучение</p>
-                    </div>
-                    <div>
                         <p class="font-bold text-gray-700 text-xl">{{$user->student->success}}</p>
                         <p class="text-gray-400">Успех</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-700 text-xl">{{$user->student->specialty->education->name}}</p>
+                        <p class="text-gray-400">Обучение</p>
                     </div>
                 </div>
                 <div class="relative">

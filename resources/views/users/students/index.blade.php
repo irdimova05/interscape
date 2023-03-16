@@ -9,7 +9,7 @@
                     </a>
                     <div class="p-5">
                         <h3 class="text-xl font-bold tracking-tight text-gray-900 ">
-                            <a href="#">{{ $student->user->name }}</a>
+                            <a href="{{ route('users.show', $student->user->id) }}">{{ $student->user->name }}</a>
                         </h3>
                         <span class="text-gray-500 ">{{ $student->course->name_formatted }}, {{ $student->specialty->education->name }}</span>
                         <p class="mt-3 font-light text-gray-500 ">{{ $student->specialty->name }}</p>

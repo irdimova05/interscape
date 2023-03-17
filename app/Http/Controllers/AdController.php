@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdStoreRequest;
+use App\Http\Requests\AdUpdateRequest;
 use App\Models\Ad;
 use App\Models\AdCategory;
 use App\Models\JobType;
@@ -49,35 +50,38 @@ class AdController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ad $ad)
     {
-        return view('ads.show', ['ad' => Ad::findOrFail($id)]);
+        return view('ads.show', compact('ad'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ad $ad)
     {
-        //
+        $categories = AdCategory::get()->pluck('name', 'id')->toArray();
+        $jobTypes = JobType::get()->pluck('name', 'id')->toArray();
+        return view('ads.edit', compact('ad', 'categories', 'jobTypes'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  AdUpdateRequest  $request
+     * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdUpdateRequest $request, Ad $ad)
     {
-        //
+        AdService::updateAd($ad, $request->all());
+        return redirect()->route('ads.show', $ad->id);
     }
 
     /**

@@ -47,4 +47,14 @@ class AdService
 
         return Ad::create($data);
     }
+
+    public static function updateAd($ad, $data)
+    {
+        $data['ad_category_id'] = $data['category'];
+        unset($data['category']);
+        $data['job_type_id'] = $data['jobType'];
+        unset($data['jobType']);
+
+        $ad->update($data);
+    }
 }

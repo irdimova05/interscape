@@ -89,11 +89,15 @@
                         </div>
 
                         @if($ad->salary !== null)
-                        <p class="mb-5 text-gray-500">Заплата:
+                        <p class=" text-gray-500">Заплата:
                             {{ $ad->salary }} лв.
                         </p>
                         @endif
-                        <p class=" mb-2 font-light text-gray-500 ">{{ $ad->description}}</p>
+                        <p class="mb-5 text-gray-500">Вид:
+                            {{ $ad->jobType->name }}
+                        <p class=" mb-2 font-light text-gray-500 ">
+                            {{ $ad->description}}
+                        </p>
                     </div>
                     @role('student')
                     <div class=" flex justify-center col-span-3">

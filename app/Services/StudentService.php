@@ -16,7 +16,8 @@ class StudentService
             'specialty.education',
             'specialty.faculty',
             'specialty.faculty.university',
-            'specialty.education'
+            'specialty.education',
+            'user.status',
         );
 
         if ($callback) {

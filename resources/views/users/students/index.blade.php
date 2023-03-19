@@ -3,7 +3,6 @@
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:px-6 ">
             <div class="grid gap-8 md:grid-cols-2">
                 @foreach ($students as $student)
-                @if($student->user->status->slug == \App\Models\Status::ACTIVE)
                 <div class="items-center bg-gray-50 rounded-lg shadow sm:flex ">
                     <a style="width: 200px" href=" {{ route('users.show', $student->user->id) }}">
                         <img class="h-full w-full object-cover object-center" src="{{ $student->user->profile_picture }}" alt="{{ $student->user->name }}" />
@@ -17,7 +16,6 @@
                         <p class="font-light text-gray-500 ">{{ $student->specialty->faculty->university->name }}</p>
                     </div>
                 </div>
-                @endif
                 @endforeach
             </div>
         </div>

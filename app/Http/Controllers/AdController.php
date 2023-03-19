@@ -102,4 +102,9 @@ class AdController extends Controller
         });
         return view('ads.components.ads', compact('ads'));
     }
+
+    public function apply(Ad $ad)
+    {
+        return view('ads.apply', compact('ad'));
+    }
 }

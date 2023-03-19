@@ -24,11 +24,6 @@ class Ad extends Model
         return $this->belongsTo(Employer::class);
     }
 
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
-    }
-
     public function adStatus()
     {
         return $this->belongsTo(AdStatus::class);

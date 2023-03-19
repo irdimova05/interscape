@@ -33,8 +33,8 @@
                             {{ $ad->adStatus->name }}
                         </span>
                     </div>
+                    @endunlessrole
                 </div>
-                @endunlessrole
                 <p class="mb-3 text-gray-500">{{ $ad->employer->name }}</p>
                 <a href="{{ route('ads.show', $ad->id) }}" class="inline-flex items-center font-medium text-blue-600 hover:text-blue-800">
                     Разгледай обявата

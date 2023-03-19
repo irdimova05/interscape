@@ -13,11 +13,23 @@ class AdService
         // if the user is employer show only his own ads
         /** @var User $user */
         $user = auth()->user();
+        $query = Ad::with('employer', 'adStatus');
+
+        $statuses = [
+            AdStatus::ACTIVE,
+        ];
+
         if ($user->hasRole('employer')) {
-            $query = Ad::where('employer_id', $user->employer->id);
-        } else {
-            $query = Ad::with('employer');
+            $query->where('employer_id', $user->employer->id);
+
+            array_push($statuses, AdStatus::INACTIVE);
+        } else if ($user->hasRole('admin')) {
+            array_push($statuses, AdStatus::INACTIVE, AdStatus::BLOCKED);
         }
+
+        $query->whereHas('adStatus', function ($q) use ($statuses) {
+            $q->whereIn('slug', $statuses);
+        });
 
         if ($callback) {
             $query = call_user_func($callback, $query);

@@ -3,33 +3,37 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 flex">
             <div class="grow">
-                <h2 class="mb-3 text-3xl font-extrabold tracking-tight text-gray-900">{{ $ad->title }}</h2>
-                @unlessrole('student')
-                @php
-                $textColor = '';
-                $textBgColor = '';
-                $bgColor = '';
+                <div class="flex">
+                    <h2 class="mb-3 text-3xl font-extrabold tracking-tight text-gray-900">{{ $ad->title }}</h2>
+                    @unlessrole('student')
+                    @php
+                    $textColor = '';
+                    $textBgColor = '';
+                    $bgColor = '';
 
-                $adStatusSlug = $ad->adStatus->slug;
+                    $adStatusSlug = $ad->adStatus->slug;
 
-                if ($adStatusSlug == \App\Models\AdStatus::ACTIVE) {
-                $textColor = 'text-green-600';
-                $textBgColor = 'bg-green-50';
-                $bgColor = 'bg-green-600';
-                } elseif ($adStatusSlug == \App\Models\AdStatus::INACTIVE) {
-                $textColor = 'text-red-600';
-                $textBgColor = 'bg-red-50';
-                $bgColor = 'bg-red-600';
-                } elseif ($adStatusSlug == \App\Models\AdStatus::BLOCKED) {
-                $textColor = 'text-purple-600';
-                $textBgColor = 'bg-purple-50';
-                $bgColor = 'bg-purple-600';
-                }
-                @endphp
-                <span class=" inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold {{ $textBgColor }} {{ $textColor }}">
-                    <span class="h-1.5 w-1.5 rounded-full {{ $bgColor }}"></span>
-                    {{ $ad->adStatus->name }}
-                </span>
+                    if ($adStatusSlug == \App\Models\AdStatus::ACTIVE) {
+                    $textColor = 'text-green-600';
+                    $textBgColor = 'bg-green-50';
+                    $bgColor = 'bg-green-600';
+                    } elseif ($adStatusSlug == \App\Models\AdStatus::INACTIVE) {
+                    $textColor = 'text-red-600';
+                    $textBgColor = 'bg-red-50';
+                    $bgColor = 'bg-red-600';
+                    } elseif ($adStatusSlug == \App\Models\AdStatus::BLOCKED) {
+                    $textColor = 'text-purple-600';
+                    $textBgColor = 'bg-purple-50';
+                    $bgColor = 'bg-purple-600';
+                    }
+                    @endphp
+                    <div class="py-1 justify-center mb-3 ml-3">
+                        <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold {{ $textBgColor }} {{ $textColor }}">
+                            <span class="h-1.5 w-1.5 rounded-full {{ $bgColor }}"></span>
+                            {{ $ad->adStatus->name }}
+                        </span>
+                    </div>
+                </div>
                 @endunlessrole
                 <p class="mb-3 text-gray-500">{{ $ad->employer->name }}</p>
                 <a href="{{ route('ads.show', $ad->id) }}" class="inline-flex items-center font-medium text-blue-600 hover:text-blue-800">

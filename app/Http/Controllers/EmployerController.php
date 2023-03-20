@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\EmployerService;
 use Illuminate\Http\Request;
 
 class EmployerController extends Controller
@@ -13,7 +14,9 @@ class EmployerController extends Controller
      */
     public function index()
     {
-        //
+        $employers = EmployerService::getEmployers();
+
+        return view('users.employers.index', compact('employers'));
     }
 
     /**

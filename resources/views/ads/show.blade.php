@@ -14,7 +14,38 @@
                         <div>
                             <div class="flex justify-between">
                                 <div class="pr-4">
-                                    <h4 class="text-xl font-bold text-gray-900 ">{{ $ad->title }}</h4>
+                                    <div class="flex">
+                                        <h4 class=" text-xl font-bold text-gray-900">{{ $ad->title }}</h4>
+                                        @unlessrole('student')
+                                        @php
+                                        $textColor = '';
+                                        $textBgColor = '';
+                                        $bgColor = '';
+
+                                        $adStatusSlug = $ad->adStatus->slug;
+
+                                        if ($adStatusSlug == \App\Models\AdStatus::ACTIVE) {
+                                        $textColor = 'text-green-600';
+                                        $textBgColor = 'bg-green-50';
+                                        $bgColor = 'bg-green-600';
+                                        } elseif ($adStatusSlug == \App\Models\AdStatus::INACTIVE) {
+                                        $textColor = 'text-red-600';
+                                        $textBgColor = 'bg-red-50';
+                                        $bgColor = 'bg-red-600';
+                                        } elseif ($adStatusSlug == \App\Models\AdStatus::BLOCKED) {
+                                        $textColor = 'text-purple-600';
+                                        $textBgColor = 'bg-purple-50';
+                                        $bgColor = 'bg-purple-600';
+                                        }
+                                        @endphp
+                                        <div class="py-1 justify-center mb-3 ml-3">
+                                            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold {{ $textBgColor }} {{ $textColor }}">
+                                                <span class="h-1.5 w-1.5 rounded-full {{ $bgColor }}"></span>
+                                                {{ $ad->adStatus->name }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @endunlessrole
                                     <div class="mb-5 text-gray-500">
                                         <a href="{{ route('users.show', $ad->employer->user->id) }}">
                                             <p>{{ $ad->employer->name }}</p>

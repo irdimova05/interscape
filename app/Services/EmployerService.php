@@ -26,7 +26,7 @@ class EmployerService
 
         $employers = $query->paginate(10);
 
-        self::enrichEmployer($employers);
+        self::enrichEmployers($employers);
 
         return $employers;
     }
@@ -34,7 +34,7 @@ class EmployerService
     public static function enrichEmployer(&$employer)
     {
         if ($employer->relationLoaded('employeeRange')) {
-            $employer->employeeRange->name . ' служители';
+            $employer->employeeRange->name = $employer->employeeRange->range . ' служители';
         }
     }
 

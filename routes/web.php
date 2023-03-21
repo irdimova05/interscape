@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\ApplyController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/apply/{ad}', [AdController::class, 'apply'])->name('ads.apply');
     Route::get('ads/search', [AdController::class, 'search'])->name('ads.search');
     Route::resource('ads', AdController::class);
+    Route::resource('applies', ApplyController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

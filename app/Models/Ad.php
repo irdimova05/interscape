@@ -38,4 +38,9 @@ class Ad extends Model
     {
         return $this->belongsTo(JobType::class);
     }
+
+    public function applies()
+    {
+        return $this->hasMany(Apply::class);
+    }
 }

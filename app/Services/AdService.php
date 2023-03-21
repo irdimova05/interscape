@@ -41,7 +41,10 @@ class AdService
     public static function applySearch($query, $search)
     {
         $query->where('title', 'like', '%' . $search . '%')
-            ->orWhere('id', $search);
+            ->orWhere('id', $search)
+            ->orWhereHas('employer', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
 
         return $query;
     }

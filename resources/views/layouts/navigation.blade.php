@@ -31,6 +31,12 @@
                         {{ __('Студенти') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('applies.index')" :active="request()->routeIs('applies.index')">
+                        {{ __('Кандидатури') }}
+                    </x-nav-link>
+                </div>
                 @endrole
 
                 @role('student')
@@ -112,6 +118,10 @@
 
             <x-responsive-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
                 {{ __('Студенти') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('applies.index')" :active="request()->routeIs('applies.index')">
+                {{ __('Кандидатури') }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('employers.index')" :active="request()->routeIs('employers.index')">

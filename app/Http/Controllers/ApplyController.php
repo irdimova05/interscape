@@ -89,4 +89,18 @@ class ApplyController extends Controller
     {
         //
     }
+
+    public function adsFilter(Request $request)
+    {
+        $applies = ApplyService::getApplies(function ($query) use ($request) {
+            if (!$request->adId) {
+                return $query;
+            }
+            return $query->whereHas('ad', function ($query) use ($request) {
+                $query->where('id', $request->adId);
+            });
+        });
+
+        return view('applies.components.applies_results', compact('applies'));
+    }
 }

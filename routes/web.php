@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('ads/search', [AdController::class, 'search'])->name('ads.search');
     Route::resource('ads', AdController::class);
 
+    Route::get('applies/adsFilter', [ApplyController::class, 'adsFilter'])->name('applies.adsFilter');
     Route::get('/apply/{ad}', [ApplyController::class, 'create'])->name('ads.apply');
     Route::post('/apply/{ad}', [ApplyController::class, 'store'])->name('applies.store');
     Route::resource('applies', ApplyController::class)->only(['index', 'show']);

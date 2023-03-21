@@ -46,4 +46,12 @@ class ApplyService
             'user_id' => auth()->user()->id,
         ]);
     }
+
+    //get ads of the logged employer
+    public static function getAdsNames()
+    {
+        $user = auth()->user();
+        $ads = $user->employer->ads()->pluck('title', 'id');
+        return $ads;
+    }
 }

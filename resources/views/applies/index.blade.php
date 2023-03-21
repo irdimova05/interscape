@@ -1,4 +1,12 @@
 <x-app-layout>
+    <div class="items-stretch">
+        <div class="relative mb-4 flex justify-end">
+            {!! Form::select('ads', $ads, null, [
+            'class' => "w-80 p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block",
+            'placeholder' => "Търси по обява"
+            ]) !!}
+        </div>
+    </div>
     <section class="bg-white rounded-xl">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:px-6 ">
             <div class="grid gap-8">

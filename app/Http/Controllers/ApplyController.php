@@ -18,7 +18,8 @@ class ApplyController extends Controller
     public function index()
     {
         $applies = ApplyService::getApplies();
-        return view('applies.index', compact('applies'));
+        $ads = ApplyService::getAdsNames();
+        return view('applies.index', compact('applies', 'ads'));
     }
 
     /**

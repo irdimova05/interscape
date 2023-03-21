@@ -22,9 +22,9 @@ class ApplyService
             'user.student.specialty.faculty.university'
         );
 
-        if ($user->isEmployer()) {
-            $query->whereHas('ad', function ($query) use ($user) {
-                $query->where('employer_id', $user->employer->id);
+        if ($user->hasRole('employer')) {
+            $query->whereHas('ad.employer', function ($query) use ($user) {
+                $query->where('id', $user->employer->id);
             });
         }
 
@@ -35,18 +35,15 @@ class ApplyService
         return $query->paginate(10);
     }
 
-    public static function createApply($data)
+    public static function createApply($request, $adId)
     {
-        $apply = Apply::create([
-            'folder_path' => $data['folder_path'],
-            'description' => $data['description'],
+        $path = $request->file('file')->store('applies');
+
+        Apply::create([
+            'folder_path' => $path,
+            'description' => $request->description,
+            'ad_id' => $adId,
+            'user_id' => auth()->user()->id,
         ]);
-
-        $apply->user()->associate($data['user_id']);
-        $apply->ad()->associate($data['ad_id']);
-
-        $apply->save();
-
-        return $apply;
     }
 }

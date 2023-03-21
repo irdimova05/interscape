@@ -24,16 +24,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/apply/{ad}', [AdController::class, 'apply'])->name('ads.apply');
     Route::get('ads/search', [AdController::class, 'search'])->name('ads.search');
     Route::resource('ads', AdController::class);
-    Route::resource('applies', ApplyController::class);
+
+    Route::get('/apply/{ad}', [ApplyController::class, 'create'])->name('ads.apply');
+    Route::post('/apply/{ad}', [ApplyController::class, 'store'])->name('applies.store');
+    Route::resource('applies', ApplyController::class)->only(['index', 'show']);
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::resource('interests', InterestsController::class);
+
     Route::resource('employers', EmployerController::class);
+
     Route::resource('students', StudentController::class);
+
     Route::get('users/search', [UserController::class, 'search'])->name('users.search');
     Route::resource('users', UserController::class);
 });

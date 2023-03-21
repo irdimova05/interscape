@@ -26,7 +26,7 @@ class ApplyStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'folder_path' => 'required|string|max:255',
+            'file' => 'required|file',
             'description' => 'required|string',
         ];
     }

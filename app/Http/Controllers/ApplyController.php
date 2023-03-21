@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ApplyStoreRequest;
+use App\Models\Ad;
 use App\Services\AdService;
 use App\Services\ApplyService;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class ApplyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Ad $ad)
     {
         return view('ads.apply', compact('ad'));
     }
@@ -38,9 +39,9 @@ class ApplyController extends Controller
      */
     public function store(ApplyStoreRequest $request)
     {
-        ApplyService::createApply($request->all());
-        $ad = AdService::getAds();
-        return redirect()->route('ads.show', $ad->id);
+        $id = $request->ad_id;
+        ApplyService::createApply($request, $id);
+        return redirect()->route('ads.show', $id);
     }
 
     /**
@@ -51,7 +52,7 @@ class ApplyController extends Controller
      */
     public function show($id)
     {
-        return view('applies.show', compact('apply'));
+        return view('applies.show', compact('applies'));
     }
 
     /**

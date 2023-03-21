@@ -12,11 +12,19 @@ class ApplyService
         //if the user is employer show only applies of his own ads
         /** @var User $user */
         $user = auth()->user();
-        $query = Apply::with('user', 'ad');
+        $query = Apply::with(
+            'user',
+            'ad',
+            'ad.employer',
+            'user.student',
+            'user.student.course',
+            'user.student.specialty',
+            'user.student.specialty.faculty.university'
+        );
 
-        if ($user->hasRole('employer')) {
-            $query->whereHas('ad', function ($q) use ($user) {
-                $q->where('employer_id', $user->employer->id);
+        if ($user->isEmployer()) {
+            $query->whereHas('ad', function ($query) use ($user) {
+                $query->where('employer_id', $user->employer->id);
             });
         }
 

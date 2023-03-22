@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->text('folder_path');
             $table->text('description')->nullable();
+            $table->foreignId('apply_status_id')->constrained('apply_statuses');
             $table->timestamps();
         });
     }
@@ -31,7 +32,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('applies', function (Blueprint $table) {
-            $table->dropForeign(['ad_id', 'user_id']);
+            $table->dropForeign(['ad_id', 'user_id', 'apply_status_id']);
         });
         Schema::dropIfExists('applies');
     }

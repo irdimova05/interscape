@@ -19,6 +19,7 @@ class ApplyFactory extends Factory
         return [
             'folder_path' => $this->faker->text,
             'description' => $this->faker->text,
+            'apply_status_id' => $this->faker->numberBetween(1, 3),
         ];
     }
 }

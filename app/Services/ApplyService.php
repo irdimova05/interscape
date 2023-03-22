@@ -19,7 +19,8 @@ class ApplyService
             'user.student',
             'user.student.course',
             'user.student.specialty',
-            'user.student.specialty.faculty.university'
+            'user.student.specialty.faculty.university',
+            'applyStatus',
         );
 
         if ($user->hasRole('employer')) {
@@ -44,6 +45,7 @@ class ApplyService
             'description' => $request->description,
             'ad_id' => $adId,
             'user_id' => auth()->user()->id,
+            'apply_status_id' => 3,
         ]);
     }
 

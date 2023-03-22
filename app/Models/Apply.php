@@ -25,4 +25,9 @@ class Apply extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function applyStatus()
+    {
+        return $this->belongsTo(ApplyStatus::class);
+    }
 }

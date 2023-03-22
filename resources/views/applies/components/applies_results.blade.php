@@ -13,9 +13,9 @@
                     <span class="text-gray-500 ">{{ $apply->user->student->course->name_formatted, $apply->user->student->specialty->education->name }}</span>
                     <p class="mt-3 font-light text-gray-500 ">{{ $apply->user->student->specialty->name }}</p>
                     <p class="font-light text-gray-500 ">{{ $apply->user->student->specialty->faculty->university->name }}</p>
+                    <p class="font-light text-gray-500 ">Към обява: {{ $apply->ad->name }}</p>
                 </div>
             </div>
-
             @endforeach
         </div>
     </div>

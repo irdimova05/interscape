@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ApplyStoreRequest;
 use App\Models\Ad;
+use App\Models\Apply;
 use App\Services\AdService;
 use App\Services\ApplyService;
 use Illuminate\Http\Request;
@@ -48,10 +49,10 @@ class ApplyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Apply  $applies
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Apply $applies)
     {
         return view('applies.show', compact('applies'));
     }

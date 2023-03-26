@@ -63,6 +63,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            <img class="mx-auto h-8 w-8 rounded-full mr-2" src="{{ Auth::user()->hasRole('employer') ? Auth::user()->employer->logo : Auth::user()->profile_picture }}" alt="{{Auth::user()->name}}">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">
@@ -138,9 +139,16 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+            <div class="px-4 flex">
+                <div class="flex items-center justify-center mr-2">
+                    <img class="mx-auto h-8 w-8 rounded-full" src="{{ Auth::user()->hasRole('employer') ? Auth::user()->employer->logo : Auth::user()->profile_picture }}" alt="{{Auth::user()->name}}">
+                </div>
+                <div class="grow">
+                    <div class="font-medium text-base text-gray-800">
+                        {{ Auth::user()->name }}
+                    </div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
             </div>
 
             <div class="mt-3 space-y-1">

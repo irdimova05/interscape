@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('applies', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ad_id')->constrained();
+            $table->string('name');
+            $table->string('path');
             $table->foreignId('user_id')->constrained();
-            $table->text('description')->nullable();
-            $table->foreignId('apply_status_id')->constrained('apply_statuses');
-            $table->foreignId('file_id')->constrained();
             $table->timestamps();
         });
     }
@@ -31,9 +29,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('applies', function (Blueprint $table) {
-            $table->dropForeign(['ad_id', 'user_id', 'apply_status_id', 'file_id']);
+        Schema::table('files', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
         });
-        Schema::dropIfExists('applies');
+        Schema::dropIfExists('files');
     }
 };

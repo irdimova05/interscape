@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
             EmployerAdSeeder::class,
             StudentSeeder::class,
             ApplyStatusSeeder::class,
-            ApplySeeder::class,
         ]);
     }
 }

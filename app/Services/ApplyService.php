@@ -36,12 +36,24 @@ class ApplyService
         return $query->paginate(10);
     }
 
+    public static function getApply($id)
+    {
+        return Apply::with(
+            'user',
+            'ad',
+            'ad.employer',
+            'user.student',
+            'user.student.course',
+            'user.student.specialty',
+            'user.student.specialty.faculty.university',
+            'file'
+        )->findOrFail($id);
+    }
+
     public static function createApply($request, $adId)
     {
-        $path = $request->file('file')->store('applies');
-
         Apply::create([
-            'folder_path' => $path,
+            'file_id' => FileService::createFile($request, 'applies'),
             'description' => $request->description,
             'ad_id' => $adId,
             'user_id' => auth()->user()->id,

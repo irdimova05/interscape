@@ -12,7 +12,7 @@ class Apply extends Model
     protected $fillable = [
         'ad_id',
         'user_id',
-        'folder_path',
+        'file_id',
         'description',
     ];
 
@@ -29,5 +29,10 @@ class Apply extends Model
     public function applyStatus()
     {
         return $this->belongsTo(ApplyStatus::class);
+    }
+
+    public function file()
+    {
+        return $this->belongsTo(File::class);
     }
 }

@@ -54,7 +54,8 @@ class ApplyController extends Controller
      */
     public function show(Apply $applies)
     {
-        return view('applies.show', compact('applies'));
+        $apply = ApplyService::getApply($id);
+        return view('applies.show', compact('apply'));
     }
 
     /**

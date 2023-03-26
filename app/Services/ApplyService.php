@@ -36,9 +36,9 @@ class ApplyService
         return $query->paginate(10);
     }
 
-    public static function getApply($id)
+    public static function loadApply($apply)
     {
-        return Apply::with(
+        $apply->load(
             'user',
             'ad',
             'ad.employer',
@@ -47,7 +47,7 @@ class ApplyService
             'user.student.specialty',
             'user.student.specialty.faculty.university',
             'file'
-        )->findOrFail($id);
+        );
     }
 
     public static function createApply($request, $adId)

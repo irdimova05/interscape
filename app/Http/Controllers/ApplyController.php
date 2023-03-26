@@ -49,12 +49,12 @@ class ApplyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Apply  $applies
+     * @param  Apply  $apply
      * @return \Illuminate\Http\Response
      */
-    public function show(Apply $applies)
+    public function show(Apply $apply)
     {
-        $apply = ApplyService::getApply($id);
+        ApplyService::loadApply($apply);
         return view('applies.show', compact('apply'));
     }
 

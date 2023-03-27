@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,4 +20,11 @@ class Course extends Model
         'name',
         'slug'
     ];
+
+    public function nameFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->slug !== self::GRADUATED ? $this->name . ' курс' : $this->name,
+        );
+    }
 }

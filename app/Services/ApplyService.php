@@ -19,7 +19,8 @@ class ApplyService
             'user.student',
             'user.student.course',
             'user.student.specialty',
-            'user.student.specialty.faculty.university'
+            'user.student.specialty.faculty.university',
+            'applyStatus',
         );
 
         if ($user->hasRole('employer')) {
@@ -35,15 +36,29 @@ class ApplyService
         return $query->paginate(10);
     }
 
+    public static function loadApply($apply)
+    {
+        $apply->load(
+            'user',
+            'ad',
+            'ad.employer',
+            'user.student',
+            'user.student.course',
+            'user.student.specialty',
+            'user.student.specialty.education',
+            'user.student.specialty.faculty.university',
+            'file'
+        );
+    }
+
     public static function createApply($request, $adId)
     {
-        $path = $request->file('file')->store('applies');
-
         Apply::create([
-            'folder_path' => $path,
+            'file_id' => FileService::createFile($request, 'applies'),
             'description' => $request->description,
             'ad_id' => $adId,
             'user_id' => auth()->user()->id,
+            'apply_status_id' => 3,
         ]);
     }
 

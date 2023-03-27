@@ -14,6 +14,7 @@ class Apply extends Model
         'user_id',
         'file_id',
         'description',
+        'apply_status_id',
     ];
 
     public function ad()

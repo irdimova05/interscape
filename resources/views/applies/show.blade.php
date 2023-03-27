@@ -1,14 +1,18 @@
 <x-app-layout>
-    <section class="bg-white ">
-        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-            <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl ">ime student"</h2>
-            <p class=" text-sm leading-none text-gray-500 md:text-base ">bak, kurs </p>
-            <p class=" text-sm leading-none text-gray-500 md:text-base ">spec </p>
-            <p class="mb-4 text-sm leading-none text-gray-500 md:text-base ">uni </p>
+    <section class="bg-white flex rounded-xl py-8 px-4 lg:py-6">
+        <div>
+            <img class="max-w-xs" src="{{ $apply->user->profile_picture }}" alt="{{$apply->user->name}}" />
+        </div>
+        <div class="ml-6 grow">
+            <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl ">{{$apply->user->name}}</h2>
+            <p class=" text-sm leading-none text-gray-500 md:text-base ">{{ $apply->user->student->course->name_formatted }}, {{ $apply->user->student->specialty->education->name }}</p>
+            <p class=" text-sm leading-none text-gray-500 md:text-base ">{{ $apply->user->student->specialty->name}}</p>
+            <p class="mb-4 text-sm leading-none text-gray-500 md:text-base ">{{ $apply->user->student->specialty->faculty->university->name }}</p>
             <p class="mb-2 font-semibold leading-none text-gray-900 ">Автобиография:</p>
-            <a href="{{$apply->file->path}}" class="mb-4 font-light text-gray-500 sm:mb-5" download="{{$apply->file->name}}">{{$apply->file->name}}</a>
+            <p class="mb-4 font-light text-gray-500 sm:mb-5"><a href="{{$apply->file->path}}" download="{{$apply->file->name}}">{{$apply->file->name}}</a></p>
             <p class="mb-2 font-semibold leading-none text-gray-900 ">Мотивационно писмо:</p>
-            <p class="mb-4 font-light text-gray-500 sm:mb-5 ">мотивац. писмо текст</p>
+            <p class="mb-4 font-light text-gray-500 sm:mb-5 text-justify">{{ $apply->description }}</p>
+            @if($apply->apply_status_id == 3)
             <div class="flex items-center space-x-4">
                 <button type="button" class="inline-flex text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">
                     <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -24,6 +28,7 @@
                     Отхвърли
                 </button>
             </div>
+            @endif
         </div>
     </section>
 </x-app-layout>

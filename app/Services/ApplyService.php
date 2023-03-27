@@ -45,6 +45,7 @@ class ApplyService
             'user.student',
             'user.student.course',
             'user.student.specialty',
+            'user.student.specialty.education',
             'user.student.specialty.faculty.university',
             'file'
         );

@@ -10,10 +10,12 @@
                     <h3 class="text-xl font-bold tracking-tight text-gray-900 ">
                         <a href="{{ route('applies.show', $apply->id) }}">{{ $apply->user->name }}</a>
                     </h3>
-                    <span class="text-gray-500 ">{{ $apply->user->student->course->name_formatted, $apply->user->student->specialty->education->name }}</span>
+                    <span class="text-gray-500 ">{{ $apply->user->student->course->name_formatted}}, {{$apply->user->student->specialty->education->name }}</span>
                     <p class="mt-3 font-light text-gray-500 ">{{ $apply->user->student->specialty->name }}</p>
                     <p class="font-light text-gray-500 ">{{ $apply->user->student->specialty->faculty->university->name }}</p>
-                    <p class="font-light text-gray-500 ">Към обява: {{ $apply->ad->name }}</p>
+                    <p class="font-light text-gray-500 ">Към обява:
+                        <a href="{{ route('ads.show', $apply->ad->id) }}">{{ $apply->ad->title }}</a>
+                    </p>
                 </div>
             </div>
             @endforeach

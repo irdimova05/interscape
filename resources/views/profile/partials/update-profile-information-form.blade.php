@@ -93,7 +93,7 @@
         {!! Form::text('website', $user->employer->website, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
 
         <x-input-label for="employeeRange" :value="__('Брой служители:')" />
-        {!! Form::select('employeeRange', $employeeRanges, $user->employer->employee_range_id, ['class' => "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
+        {!! Form::select('employeeRange', $employeeRanges, $user->employer->employee_range_id, ['class' => "border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
 
         <x-input-label for="description" :value="__('За фирмата:')" />
         {!! Form::textarea('description', $user->employer->description, ["rows"=>"4", "class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}

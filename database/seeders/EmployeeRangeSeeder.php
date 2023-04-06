@@ -29,7 +29,7 @@ class EmployeeRangeSeeder extends Seeder
                 'slug' => 'range_101_500',
             ],
             [
-                'range' => 'Over 500',
+                'range' => '500+',
                 'slug' => 'range_over_500',
             ],
         ];

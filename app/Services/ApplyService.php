@@ -21,6 +21,7 @@ class ApplyService
             'user.student.specialty',
             'user.student.specialty.faculty.university',
             'applyStatus',
+            'ad.adStatus'
         );
 
         if ($user->hasRole('employer')) {
@@ -66,7 +67,7 @@ class ApplyService
     public static function getAdsNames()
     {
         $user = auth()->user();
-        $ads = $user->employer->ads()->pluck('title', 'id');
+        $ads = $user->employer->ads()->where('ad_status_id', '!=', 3)->pluck('title', 'id');
         return $ads;
     }
 }

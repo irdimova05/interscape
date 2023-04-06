@@ -18,6 +18,9 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'description' => ['string', 'max:500'],
+            'phone' => ['string', 'max:15'],
+            'address' => ['string', 'max:255'],
+            'website' => ['string', 'max:255'],
 
         ];
     }

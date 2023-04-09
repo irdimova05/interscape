@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('users/search', [UserController::class, 'search'])->name('users.search');
     Route::resource('users', UserController::class);
+    Route::put('users/{user}/status', [UserController::class, 'status'])->name('users.status');
 });
 
 require __DIR__ . '/auth.php';

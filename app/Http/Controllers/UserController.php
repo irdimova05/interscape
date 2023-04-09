@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -64,12 +65,12 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -101,5 +102,12 @@ class UserController extends Controller
             return UserService::applySearch($query, $request->get('q'));
         });
         return view('users.components.table', compact('users'));
+    }
+
+    public function status(Request $request, User $user)
+    {
+        $status = Status::where('slug', $request->get('status'))->firstOrFail()->id;
+        UserService::updateStatus($user, $status);
+        return redirect()->back();
     }
 }

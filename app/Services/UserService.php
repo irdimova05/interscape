@@ -53,4 +53,10 @@ class UserService
 
         return $query;
     }
+
+    public static function updateStatus($user, $statusId)
+    {
+        $user->status_id = $statusId;
+        $user->save();
+    }
 }

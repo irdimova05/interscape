@@ -35,4 +35,9 @@ class Employer extends Model
     {
         return $this->belongsTo(EmployeeRanges::class);
     }
+
+    public function interests()
+    {
+        return $this->hasMany(EmployerInterest::class);
+    }
 }

@@ -36,4 +36,9 @@ class Student extends Model
     {
         return $this->hasMany(Apply::class);
     }
+
+    public function interests()
+    {
+        return $this->hasMany(StudentInterest::class);
+    }
 }

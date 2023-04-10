@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\InterestService;
 use Illuminate\Http\Request;
 
 class InterestsController extends Controller
@@ -13,6 +14,7 @@ class InterestsController extends Controller
      */
     public function index()
     {
+        $interests = InterestService::getInterests();
         return view('interests');
     }
 
@@ -34,7 +36,8 @@ class InterestsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        InterestService::createInterest($request);
+        return redirect()->back();
     }
 
     /**

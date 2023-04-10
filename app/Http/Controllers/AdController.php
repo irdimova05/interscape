@@ -6,6 +6,7 @@ use App\Http\Requests\AdStoreRequest;
 use App\Http\Requests\AdUpdateRequest;
 use App\Models\Ad;
 use App\Models\AdCategory;
+use App\Models\AdStatus;
 use App\Models\JobType;
 use App\Services\AdService;
 use Illuminate\Http\Request;
@@ -106,5 +107,12 @@ class AdController extends Controller
     public function apply(Ad $ad)
     {
         return view('ads.apply', compact('ad'));
+    }
+
+    public function status(Request $request, Ad $ad)
+    {
+        $adStatus = AdStatus::where('slug', $request->get('status'))->firstOrFail()->id;
+        AdService::updateStatus($ad, $adStatus);
+        return redirect()->back();
     }
 }

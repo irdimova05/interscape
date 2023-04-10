@@ -72,4 +72,10 @@ class AdService
 
         $ad->update($data);
     }
+
+    public static function updateStatus($ad, $adStatusId)
+    {
+        $ad->ad_status_id = $adStatusId;
+        $ad->save();
+    }
 }

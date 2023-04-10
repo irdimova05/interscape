@@ -64,8 +64,10 @@
                                         </svg>
                                         <span>Редактирай</span>
                                     </a>
-                                    @if($ad->adstatus->slug == \App\Models\AdStatus::ACTIVE)
-                                    <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
+                                    @if($ad->adStatus->slug == \App\Models\AdStatus::ACTIVE)
+                                    {!! Form::open(['route' => ['ads.status', $ad->id], 'method' => 'put']) !!}
+                                    {!! Form::hidden('status', \App\Models\AdStatus::INACTIVE) !!}
+                                    <button type="sumbit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 mr-1" x-tooltip="tooltip">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -75,8 +77,12 @@
                                         </svg>
                                         <span>Деактивирай</span>
                                     </button>
-                                    @elseif($ad->adstatus->slug == \App\Models\AdStatus::INACTIVE)
-                                    <button type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
+                                    {!! Form::close() !!}
+
+                                    @elseif($ad->adStatus->slug == \App\Models\AdStatus::INACTIVE)
+                                    {!! Form::open(['route' => ['ads.status', $ad->id], 'method' => 'put']) !!}
+                                    {!! Form::hidden('status', \App\Models\AdStatus::ACTIVE) !!}
+                                    <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 mr-1" x-tooltip="tooltip">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -86,11 +92,14 @@
                                         </svg>
                                         <span>Активирай</span>
                                     </button>
+                                    {!! Form::close() !!}
                                     @endif
                                     @endif
 
                                     @role('admin')
-                                    <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
+                                    {!! Form::open(['route' => ['ads.status', $ad->id], 'method' => 'put']) !!}
+                                    {!! Form::hidden('status', \App\Models\AdStatus::BLOCKED) !!}
+                                    <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 mr-1" x-tooltip="tooltip">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -100,6 +109,7 @@
                                         </svg>
                                         <span>Блокирай</span>
                                     </button>
+                                    {!! Form::close() !!}
                                     @endrole
 
                                     @role('student')

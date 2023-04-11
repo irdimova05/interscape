@@ -30,16 +30,17 @@ class InterestService
 
     public static function getInterests()
     {
+
         /** @var User $user */
         $user = auth()->user();
         if ($user->isStudent()) {
             return EmployerInterest::where('student_id', $user->student->id)
                 ->with('employer')
-                ->get();
+                ->paginate(10);
         } else if ($user->isEmployer()) {
             return StudentInterest::where('employer_id', $user->employer->id)
                 ->with('student')
-                ->get();
+                ->paginate(10);
         }
     }
 }

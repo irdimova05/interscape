@@ -15,7 +15,14 @@ class InterestsController extends Controller
     public function index()
     {
         $interests = InterestService::getInterests();
-        return view('interests');
+
+        /** @var User $user */
+        $user = auth()->user();
+        if ($user->isEmployer()) {
+            return view('interests.employers', compact('interests'));
+        } else if ($user->isStudent()) {
+            return view('interests.students', compact('interests'));
+        }
     }
 
     /**

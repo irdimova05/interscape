@@ -10,6 +10,7 @@
                 <div>
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Имейл:</label>
                     {!! Form::email('email', null, ['class' => 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5', 'placeholder' => 'email@email.com']) !!}
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
                 <div>
                     <label for="password" class="mt-6 inline-flex mb-2 text-sm font-medium text-gray-900">
@@ -17,7 +18,7 @@
                     </label>
                     <a href="#" onclick="generatePassword()" class="mb-2 text-sm font-medium text-blue-600 underline">Генерирай парола</a>
                     <div class="relative" x-data="{ show: 'true' }">
-                        <x-text-input id="password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " x-bind:type="show ? 'password' : 'text'" name="password" required autocomplete="current-password" />
+                        <x-text-input id="password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " x-bind:type="show ? 'password' : 'text'" name="password" required :value="old('password')" />
                         <div class="absolute top-1/2 right-4 cursor-pointer" style="transform: translateY(-50%);">
                             <svg class="h-5 text-gray-700 block" fill="none" @click="show = !show" :class="{'hidden': !show, 'block':show }" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -36,11 +37,13 @@
                                 </g>
                             </svg>
                         </div>
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
                 </div>
                 <div>
-                    <label for="confirm-password" class=" mt-6 block mb-2 text-sm font-medium text-gray-900 ">Роля</label>
-                    {!! Form::select('roles', $roles, null, ['class' => "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"]) !!}
+                    <label for="role" class=" mt-6 block mb-2 text-sm font-medium text-gray-900 ">Роля</label>
+                    {!! Form::select('role', $roles, null, ['class' => "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"]) !!}
+                    <x-input-error :messages="$errors->get('role')" class="mt-2" />
                 </div>
                 <div class="flex justify-center mt-8">
                     <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
@@ -68,4 +71,5 @@
         }
     </script>
     @endpush
+
 </x-app-layout>

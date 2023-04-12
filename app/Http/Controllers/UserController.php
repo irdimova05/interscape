@@ -44,7 +44,7 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $user = UserService::createUser($request->all());
-        return redirect()->route('users.show', $user->id);
+        return redirect()->route('users.index');
     }
 
     /**

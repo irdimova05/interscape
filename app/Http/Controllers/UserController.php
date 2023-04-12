@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use App\Models\Status;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -27,18 +29,22 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all()->pluck('name', 'id')->transform(function ($name) {
+            return trans("roles.$name");
+        });
+        return view('users.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateUserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        //
+        $user = UserService::createUser($request->all());
+        return redirect()->route('users.show', $user->id);
     }
 
     /**

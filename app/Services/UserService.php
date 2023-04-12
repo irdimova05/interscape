@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Status;
 use App\Models\User;
 
 class UserService
@@ -20,7 +21,6 @@ class UserService
             self::enrichUser($user);
         }
     }
-
 
     public static function formatUserRoles($roles)
     {
@@ -58,5 +58,14 @@ class UserService
     {
         $user->status_id = $statusId;
         $user->save();
+    }
+
+    public static function createUser($data)
+    {
+        $data['status_id'] = Status::where('slug', Status::INACTIVE)->first()->id;
+        $data['password'] = bcrypt($data['password']);
+
+        return User::create($data)
+            ->assignRole($data['role']);
     }
 }

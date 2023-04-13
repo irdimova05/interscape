@@ -23,7 +23,12 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = Auth::user();
+                if ($user && !$user->is_profile_completed) {
+                    return redirect()->route('register-complete');
+                } else {
+                    return redirect(RouteServiceProvider::HOME);
+                }
             }
         }
 

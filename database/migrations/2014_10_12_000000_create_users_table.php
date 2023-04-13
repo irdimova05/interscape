@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_picture')->nullable();
+            $table->boolean('is_profile_completed')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

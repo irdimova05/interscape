@@ -11,20 +11,19 @@ class InterestService
     {
         /** @var User $user */
         $user = auth()->user();
+
         if ($user->isStudent()) {
             $student = $user->student;
 
-            $interest = new StudentInterest();
-            $interest->student_id = $student->id;
-            $interest->employer_id = $request->employer_id;
-            $interest->save();
+            StudentInterest::firstOrCreate(
+                ['student_id' => $student->id, 'employer_id' => $request->employer_id]
+            );
         } else if ($user->isEmployer()) {
             $employer = $user->employer;
 
-            $interest = new EmployerInterest();
-            $interest->employer_id = $employer->id;
-            $interest->student_id = $request->student_id;
-            $interest->save();
+            EmployerInterest::firstOrCreate(
+                ['employer_id' => $employer->id, 'student_id' => $request->student_id]
+            );
         }
     }
 

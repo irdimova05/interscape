@@ -22,7 +22,7 @@ class AdService
         if ($user->hasRole('employer')) {
             $query->where('employer_id', $user->employer->id);
 
-            array_push($statuses, AdStatus::INACTIVE);
+            array_push($statuses, AdStatus::INACTIVE, AdStatus::BLOCKED);
         } else if ($user->hasRole('admin')) {
             array_push($statuses, AdStatus::INACTIVE, AdStatus::BLOCKED);
         }

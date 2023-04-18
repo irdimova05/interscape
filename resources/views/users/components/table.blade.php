@@ -13,8 +13,7 @@
             <tr class="hover:bg-gray-50">
                 <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
                     <div class="relative h-10 w-10">
-                        <img class="h-full w-full rounded-full object-cover object-center" src="{{ $user->hasRole('employer') ? $user->employer->logo : $user->profile_picture }}" alt="{{ $user->name }}" class="rounded-full h-48 w-48 object-cover" />
-                        <!-- <span class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span> -->
+                        <img class="h-full w-full rounded-full object-cover object-center" src="{{ ($user->hasRole('employer') ? optional($user->employer)->logo : $user->profile_picture) ?: url('images/default-profile-picture.svg') }}" alt="{{ $user->name }}" class="rounded-full h-48 w-48 object-cover" />
                     </div>
                     <div class="text-sm">
                         <a href="{{ route('users.show', $user->id) }}">

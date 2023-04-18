@@ -38,7 +38,7 @@ class UserService
 
     public static function getUsers($callback = null)
     {
-        $query = User::with('status:id,slug', 'roles');
+        $query = User::with('status:id,slug', 'roles')->where('is_profile_completed', '1');
 
         if ($callback) {
             $query = call_user_func($callback, $query);

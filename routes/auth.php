@@ -40,6 +40,11 @@ Route::get('register-complete', [RegisteredUserController::class, 'complete'])
     ->name('register.complete')
     ->middleware('auth');
 
+
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout')
+    ->middleware('auth');
+
 Route::middleware(['auth', 'complete.profile'])->group(function () {
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
         ->name('verification.notice');
@@ -58,7 +63,4 @@ Route::middleware(['auth', 'complete.profile'])->group(function () {
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
 });

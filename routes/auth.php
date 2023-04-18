@@ -36,10 +36,11 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('register-complete', [RegisteredUserController::class, 'complete'])
-        ->name('register-complete');
+Route::get('register-complete', [RegisteredUserController::class, 'complete'])
+    ->name('register.complete')
+    ->middleware('auth');
 
+Route::middleware(['auth', 'complete.profile'])->group(function () {
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
         ->name('verification.notice');
 

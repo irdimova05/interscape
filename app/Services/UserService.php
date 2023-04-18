@@ -4,6 +4,11 @@ namespace App\Services;
 
 use App\Models\Status;
 use App\Models\User;
+use Hash;
+use Illuminate\Validation\Rule;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Spatie\Permission\Models\Role;
+use Validator;
 
 class UserService
 {
@@ -67,5 +72,47 @@ class UserService
 
         return User::create($data)
             ->assignRole($data['role']);
+    }
+
+    public static function importUsers($filePath)
+    {
+        $spreadsheet = IOFactory::load($filePath);
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        $highestRow = $worksheet->getHighestRow();
+        $highestColumn = $worksheet->getHighestColumn();
+
+        $roles = [
+            'администратор' => 'admin',
+            'студент' => 'student',
+            'фирма' => 'employer',
+        ];
+
+        $data = $worksheet->rangeToArray('A2:' . $highestColumn . $highestRow, null, true, false);
+
+        $validator = Validator::make($data, [
+            '*.0' => 'required|email|unique:users,email',
+            '*.1' => 'required|min:8',
+            '*.2' =>  [
+                'required',
+                Rule::in(array_keys($roles)),
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'errors' => $validator->errors()->all()
+            ];
+        }
+
+        foreach ($data as $rowData) {
+            $user = new User();
+            $user->email = $rowData[0];
+            $user->password = Hash::make($rowData[1]);
+            $user->status_id = Status::where('slug', Status::INACTIVE)->first()->id;
+            $role = Role::where('name', $roles[$rowData[2]])->first();
+            $user->save();
+            $user->assignRole($role);
+        }
     }
 }

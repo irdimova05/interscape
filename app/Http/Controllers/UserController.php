@@ -7,6 +7,7 @@ use App\Models\Status;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -114,6 +115,28 @@ class UserController extends Controller
     {
         $status = Status::where('slug', $request->get('status'))->firstOrFail()->id;
         UserService::updateStatus($user, $status);
+        return redirect()->back();
+    }
+
+    public function downloadTemplate()
+    {
+        $headers = [
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => 'attachment; filename="template.xlsx"',
+        ];
+
+        return response()->download(public_path('templates/template.xlsx'), 'template.xlsx', $headers);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        $path = $request->file('file')->getRealPath();
+        $result = UserService::importUsers($path);
+
         return redirect()->back();
     }
 }

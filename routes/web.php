@@ -43,6 +43,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('students', StudentController::class);
 
+    Route::get('/download-template', [UserController::class, 'downloadTemplate'])->name('download.template');
+    Route::post('users/import', [UserController::class, 'import'])->name('users.import');
+
     Route::get('users/search', [UserController::class, 'search'])->name('users.search');
     Route::resource('users', UserController::class);
     Route::put('users/{user}/status', [UserController::class, 'status'])->name('users.status');

@@ -30,4 +30,16 @@ class ApplyStoreRequest extends FormRequest
             'description' => 'required|string',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages()
+    {
+        return [
+            'file.required' => 'Моля, прикачете автобиография.',
+        ];
+    }
 }

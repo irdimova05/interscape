@@ -163,23 +163,35 @@
                 @endrole
             </div>
         </div>
-        <div class="inline-flex">
-            <div class="flex items-center gap-4">
-                <x-primary-button class="text-white bg-gradient-to-r mt-3 from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">{{ __('Запази') }}</x-primary-button>
+        <div x-data="{ cookiesAccepted: false, personalDataAccepted: false }">
+            <label class="flex mt-4 items-center">
+                <input type="checkbox" class="form-checkbox" x-model="cookiesAccepted">
+                <span class="ml-2 text-sm">Приемам <a href=route() class="text-blue-600 underline">бисквитките</a></span>
+            </label>
 
-                @if (session('status') === 'password-updated')
-                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Паролата е променена успешно.') }}</p>
-                @endif
-            </div>
-            {!! Form::close() !!}
-            <!-- Authentication -->
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
+            <label class="flex items-center mt-4">
+                <input type="checkbox" class="form-checkbox" x-model="personalDataAccepted">
+                <span class="ml-2 text-sm">Съгласен съм с <a href=route() class="text-blue-600 underline">общите условия</a> и <a href=route() class="text-blue-600 underline">обработката на лични данни</a></span>
+            </label>
 
-                <x-secondary-button onclick="event.preventDefault();
+
+            <div class="inline-flex">
+                <div class="flex items-center gap-4">
+                    <x-primary-button x-show="cookiesAccepted && personalDataAccepted" class="text-white bg-gradient-to-r mt-3 from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">{{ __('Запази') }}</x-primary-button>
+
+                    @if (session('status') === 'password-updated')
+                    <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Паролата е променена успешно.') }}</p>
+                    @endif
+                </div>
+                {!! Form::close() !!}
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-secondary-button onclick="event.preventDefault();
                                                 this.closest('form').submit();" class="text-white bg-gradient-to-r mt-3 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" formnovalidate>
-                    {{ __('Отказ') }}
-                </x-secondary-button>
-            </form>
-        </div>
+                        {{ __('Отказ') }}
+                    </x-secondary-button>
+                </form>
+            </div>
 </section>

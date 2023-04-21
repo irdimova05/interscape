@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdCreateRequest;
 use App\Http\Requests\AdStoreRequest;
 use App\Http\Requests\AdUpdateRequest;
 use App\Models\Ad;
@@ -27,9 +28,10 @@ class AdController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param AdCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(AdCreateRequest $request)
     {
         $categories = AdCategory::get()->pluck('name', 'id')->toArray();
         $jobTypes = JobType::get()->pluck('name', 'id')->toArray();

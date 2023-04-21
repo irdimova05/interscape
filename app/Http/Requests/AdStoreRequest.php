@@ -42,11 +42,11 @@ class AdStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'Заглавието е задължително поле',
-            'title.max' => 'Заглавието не може да бъде по-голямо от 50 символа',
-            'salary.integer' => 'Заплатата трябва да бъде цяло число',
-            'salary.min' => 'Заплатата не може да бъде по-малка от 0',
-            'description.required' => 'Описанието е задължително поле',
+            'title.required' => 'Заглавието е задължително поле.',
+            'title.max' => 'Заглавието не може да бъде по-голямо от 50 символа.',
+            'salary.integer' => 'Заплатата трябва да бъде цяло число.',
+            'salary.min' => 'Заплатата не може да бъде по-малка от 0.',
+            'description.required' => 'Описанието е задължително поле.',
         ];
     }
 }

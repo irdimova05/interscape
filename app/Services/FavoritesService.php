@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AdStatus;
 use App\Models\Favorite;
 
 class FavoritesService
@@ -26,7 +27,10 @@ class FavoritesService
         $user = auth()->user();
         if ($user->isStudent()) {
             return Favorite::where('student_id', $user->student->id)
-                ->with('ad')
+                ->with('ad', 'ad.adStatus')
+                ->whereHas('ad.adStatus', function ($q) {
+                    $q->where('slug', AdStatus::ACTIVE);
+                })
                 ->paginate(10);
         }
     }

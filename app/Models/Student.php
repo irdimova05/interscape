@@ -41,4 +41,19 @@ class Student extends Model
     {
         return $this->hasMany(StudentInterest::class);
     }
+
+    public function favorite()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function hasAdInFavorite($adId)
+    {
+        return $this->favorite()->where('ad_id', $adId)->exists();
+    }
+
+    public function getFavoriteByAd($adId)
+    {
+        return $this->favorite()->where('ad_id', $adId)->first();
+    }
 }

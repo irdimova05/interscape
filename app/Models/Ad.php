@@ -43,4 +43,9 @@ class Ad extends Model
     {
         return $this->hasMany(Apply::class);
     }
+
+    public function Favorite()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }

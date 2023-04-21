@@ -45,6 +45,11 @@
                         {{ __('Работодатели') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('favorites.index')" :active="request()->routeIs('favorites.index')">
+                        {{ __('Любими') }}
+                    </x-nav-link>
+                </div>
                 @endrole
                 @endunlessrole
 
@@ -127,6 +132,10 @@
 
             <x-responsive-nav-link :href="route('employers.index')" :active="request()->routeIs('employers.index')">
                 {{ __('Работодатели') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('favorites.index')" :active="request()->routeIs('favorites.index')">
+                {{ __('Любими') }}
             </x-responsive-nav-link>
             @endunlessrole
 

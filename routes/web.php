@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InterestsController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FavoritesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,13 +40,15 @@ Route::middleware(['auth', 'complete.profile'])->group(function () {
 
     Route::resource('interests', InterestsController::class);
 
+    Route::resource('favorites', FavoritesController::class);
+
     Route::resource('employers', EmployerController::class);
 
     Route::resource('students', StudentController::class);
 
     Route::get('/download-template', [UserController::class, 'downloadTemplate'])->name('download.template');
-    Route::post('users/import', [UserController::class, 'import'])->name('users.import');
 
+    Route::post('users/import', [UserController::class, 'import'])->name('users.import');
     Route::get('users/search', [UserController::class, 'search'])->name('users.search');
     Route::resource('users', UserController::class);
     Route::put('users/{user}/status', [UserController::class, 'status'])->name('users.status');

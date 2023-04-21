@@ -41,4 +41,9 @@ class Student extends Model
     {
         return $this->hasMany(StudentInterest::class);
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }

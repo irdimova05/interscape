@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Favorites;
+use App\Models\Favorite;
 
 class FavoritesService
 {
@@ -14,7 +14,7 @@ class FavoritesService
         if ($user->isStudent()) {
             $student = $user->student;
 
-            Favorites::firstOrCreate(
+            Favorite::firstOrCreate(
                 ['student_id' => $student->id, 'ad_id' => $request->ad_id]
             );
         }
@@ -25,7 +25,7 @@ class FavoritesService
         /** @var User $user */
         $user = auth()->user();
         if ($user->isStudent()) {
-            return Favorites::where('student_id', $user->student->id)
+            return Favorite::where('student_id', $user->student->id)
                 ->with('ad')
                 ->paginate(10);
         }

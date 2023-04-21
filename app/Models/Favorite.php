@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Favorites extends Model
+class Favorite extends Model
 {
     /**
      * Indicates if the model should be timestamped.

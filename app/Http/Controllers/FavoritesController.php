@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favorite;
 use App\Services\FavoritesService;
 use Illuminate\Http\Request;
 
@@ -81,11 +82,12 @@ class FavoritesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Favorite  $favorite
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Favorite $favorite)
     {
-        //
+        $favorite->delete();
+        return redirect()->back();
     }
 }

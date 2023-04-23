@@ -9,6 +9,7 @@ use App\Http\Controllers\InterestsController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\ReportedAdController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,10 @@ Route::middleware(['auth', 'complete.profile'])->group(function () {
     Route::resource('interests', InterestsController::class);
 
     Route::resource('favorites', FavoritesController::class);
+
+    Route::resource('reported-ads', ReportedAdController::class);
+    Route::post('reported-ads/{ad}', [ReportedAdController::class, 'store'])->name('reported-ads.store');
+    Route::put('reported-ads/{ad}/status', [ReportedAdController::class, 'update'])->name('reported-ads.update');
 
     Route::resource('employers', EmployerController::class);
 

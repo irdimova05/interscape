@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('favorites', function (Blueprint $table) {
+        Schema::create('reported_ads', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('students');
             $table->foreignId('ad_id')->constrained('ads');
+            $table->string('reason');
+            $table->timestamps();
         });
     }
 
@@ -27,9 +29,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('favorites', function (Blueprint $table) {
+        Schema::table('reported_ads', function (Blueprint $table) {
             $table->dropForeign(['student_id', 'ad_id']);
         });
-        Schema::dropIfExists('favorites');
+        Schema::dropIfExists('reported_ads');
     }
 };

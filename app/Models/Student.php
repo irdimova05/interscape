@@ -56,4 +56,9 @@ class Student extends Model
     {
         return $this->favorite()->where('ad_id', $adId)->first();
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
 }

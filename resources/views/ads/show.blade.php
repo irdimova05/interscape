@@ -102,6 +102,7 @@
                                     @endif
 
                                     @role('admin')
+
                                     {!! Form::open(['route' => ['ads.status', $ad->id], 'method' => 'put']) !!}
                                     {!! Form::hidden('status', \App\Models\AdStatus::BLOCKED) !!}
                                     <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
@@ -115,6 +116,20 @@
                                         <span>Блокирай</span>
                                     </button>
                                     {!! Form::close() !!}
+                                    @if($ad->is_reported == true)
+                                    {!! Form::open(['route' => ['reported-ads.update', $ad->id], 'method' => 'put']) !!}
+                                    {!! Form::hidden('is_reported', false) !!}
+                                    <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 mr-1" x-tooltip="tooltip">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </g>
+                                        </svg>
+                                        <span>Освободи</span>
+                                    </button>
+                                    @endif
                                     @endrole
 
                                     @role('student')
@@ -148,17 +163,41 @@
                                     {!! Form::close() !!}
                                     @endif
 
-                                    <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 mr-1" x-tooltip="tooltip">
-                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                            <g id="SVGRepo_iconCarrier">
-                                                <path d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </g>
-                                        </svg>
-                                        <span>Докладвай</span>
-                                    </button>
-
+                                    <div x-cloak x-data="{ showModal: false }" x-init="showModal = false">
+                                        <button x-cloak @click="showModal = true" type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex items-center">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 mr-1" x-tooltip="tooltip">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </g>
+                                            </svg>
+                                            <span>Докладвай</span>
+                                        </button>
+                                        <div x-cloak class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 z-40 flex justify-center items-center" x-show="showModal">
+                                            <div class="bg-white rounded-lg w-1/2">
+                                                <div class="border-b px-4 py-2 flex justify-between items-center">
+                                                    <h3 class="font-semibold text-lg">Докладване на обява</h3>
+                                                    <button x-cloak type="button" class="focus:outline-none" @click="showModal = false">
+                                                        <span>&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="p-4">
+                                                    {!! Form::open(['route' => ['reported-ads.store', $ad->id], 'method' => 'post']) !!}
+                                                    <div class="mb-4">
+                                                        {!! Form::label('reason', 'Причина за докладване:', ['class' => 'block text-gray-700 font-bold mb-2']) !!}
+                                                        {!! Form::textarea('reason', old('reason'), ['class' => 'form-textarea block w-full', 'rows' => 3, 'x-bind:class' => "{'border-red-500': $errors->has('reason') }"]) !!}
+                                                        <x-input-error :messages="$errors->get('reason')" class="mt-2" />
+                                                    </div>
+                                                    <div class="mt-4">
+                                                        {!! Form::button('Докладвай', ['type' => 'submit', 'class' => 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded']) !!}
+                                                        {!! Form::button('Отказ', ['type' => 'button', 'class' => 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none', 'x-on:click' => 'showModal = false']) !!}
+                                                    </div>
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endrole
 
                                 </div>
@@ -190,9 +229,17 @@
                         </a>
                     </div>
                     @endrole
+                </article>
             </div>
-            </article>
         </div>
     </div>
-    </div>
+
+    @if($ad->is_reported == true && $reports)
+    <p>Причини за докладване на обявата</p>
+    @foreach($reports as $report)
+    <p>{{$report->reason}}</p>
+    @endforeach
+    @endif
+
+
 </x-app-layout>

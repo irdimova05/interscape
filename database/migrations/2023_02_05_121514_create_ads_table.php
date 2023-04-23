@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('ad_status_id')->constrained();
             $table->foreignId('ad_category_id')->constrained();
             $table->foreignId('job_type_id')->constrained();
+            $table->boolean('is_reported')->default(false);
             $table->timestamps();
         });
     }

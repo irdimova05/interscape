@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdCreateRequest;
 use App\Http\Requests\AdStoreRequest;
 use App\Http\Requests\AdUpdateRequest;
+use App\Http\Requests\ReportAdStoreRequest;
 use App\Models\Ad;
 use App\Models\AdCategory;
 use App\Models\AdStatus;
 use App\Models\JobType;
+use App\Models\ReportedAd;
 use App\Services\AdService;
+use App\Services\ReportedAdService;
 use Illuminate\Http\Request;
 
 class AdController extends Controller
@@ -58,7 +61,8 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
-        return view('ads.show', compact('ad'));
+        $reports = ReportedAdService::getReportedAdsReasons($ad);
+        return view('ads.show', compact('ad', 'reports'));
     }
 
     /**

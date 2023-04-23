@@ -59,6 +59,11 @@
                         {{ __('Потребители') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('reported-ads.index')" :active="request()->routeIs('reported-ads.index')">
+                        {{ __('Докладвани обяви') }}
+                    </x-nav-link>
+                </div>
                 @endrole
 
             </div>
@@ -142,6 +147,9 @@
             @role('admin')
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                 {{ __('Потребители') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('reported-ads.index')" :active="request()->routeIs('reported-ads.index')">
+                {{ __('Докладвани обяви') }}
             </x-responsive-nav-link>
             @endrole
         </div>

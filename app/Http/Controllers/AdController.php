@@ -10,6 +10,7 @@ use App\Models\Ad;
 use App\Models\AdCategory;
 use App\Models\AdStatus;
 use App\Models\JobType;
+use App\Models\ReportedAd;
 use App\Services\AdService;
 use App\Services\ReportedAdService;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
-        $reports = $ad->reportedAds;
+        $reports = ReportedAdService::getReportedAdsReasons($ad);
         return view('ads.show', compact('ad', 'reports'));
     }
 

@@ -234,12 +234,21 @@
         </div>
     </div>
 
-    @if($ad->is_reported == true && $reports)
-    <p>Причини за докладване на обявата</p>
+    @role('admin')
+    @if($ad->is_reported == true)
     @foreach($reports as $report)
-    <p>{{$report->reason}}</p>
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 mb-4">
+        <div class="flex justify-between mb-3">
+            <div class="text-gray-950 font-bold ">
+                {{ $report->student->user->name }}
+            </div>
+            <div>
+                {{ $report->created_at->diffForHumans() }}
+            </div>
+        </div>
+        {{ $report->reason }}
+    </div>
     @endforeach
     @endif
-
-
+    @endrole
 </x-app-layout>

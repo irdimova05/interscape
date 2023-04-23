@@ -11,6 +11,7 @@ class ReportedAdService
     {
         $reportedAds = Ad::where('is_reported', true)->get();
 
+
         if ($callback) {
             $reportedAds = $callback($reportedAds);
         }
@@ -36,5 +37,10 @@ class ReportedAdService
     {
         $ad->is_reported = false;
         $ad->save();
+    }
+
+    public static function getReportedAdsReasons($ad)
+    {
+        return  ReportedAd::where('ad_id', $ad->id)->with('student', 'student.user')->get();
     }
 }

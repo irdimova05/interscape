@@ -20,7 +20,7 @@ class LoginTest extends DuskTestCase
     // }
 
     /**
-     * Succsessful login.
+     * Succsessful login as completed user.
      */
     public function testSuccessfulLogin(): void
     {
@@ -30,6 +30,22 @@ class LoginTest extends DuskTestCase
                 ->type('password', 'admin')
                 ->press('Вход')
                 ->assertPathIs('/ads');
+            $browser->driver->manage()->deleteAllCookies();
+        });
+    }
+
+    /**
+     * Login as incompleted user.
+     */
+    public function testLoginAsIncompletedUser(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/login')
+                ->type('email', 'abv@test.com')
+                ->type('password', '65124563')
+                ->press('Вход')
+                ->assertPathIs('/register-complete');
+            $browser->driver->manage()->deleteAllCookies();
         });
     }
 
@@ -43,7 +59,35 @@ class LoginTest extends DuskTestCase
                 ->type('email', 'admin@test.com')
                 ->type('password', 'test')
                 ->press('Вход')
-                ->assertPathIs('/ads');
+                ->assertSee('Потребителските данни не съвпадат.');
+            $browser->driver->manage()->deleteAllCookies();
+        });
+    }
+
+    /**
+     * Login without credentials.
+     */
+    public function testLoginWithoutCredentials(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/login')
+                ->press('Вход')
+                ->assertPathIs('/login');
+            $browser->driver->manage()->deleteAllCookies();
+        });
+    }
+
+    /**
+     * Login without email.
+     */
+    public function testLoginWithoutEmail(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/login')
+                ->type('password', 'test')
+                ->press('Вход')
+                ->assertPathIs('/login');
+            $browser->driver->manage()->deleteAllCookies();
         });
     }
 }

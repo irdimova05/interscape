@@ -23,13 +23,13 @@
             <div class="justify-center items-center">
                 <div>
                     <x-input-label for="name" :value="__('Име:')" />
-                    <x-text-input id="name" name="name" type="text" class="mt-1 block w-full mb-3 " :value=" old('name', null)" required autofocus autocomplete="name" />
+                    <x-text-input id="name" name="name" type="text" class="mt-1 block w-full mb-3 " :value=" old('name', null)" required autofocus autocomplete="off" />
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>
 
                 <div>
                     <x-input-label for="email" :value="__('Имейл:')" />
-                    <x-text-input id="email" name="email" type="email" class="mt-1 block w-full mb-3 " :value="old('email', null)" required autofocus autocomplete="name" />
+                    <x-text-input id="email" name="email" type="email" class="mt-1 block w-full mb-3 " :value="old('email', null)" required autofocus autocomplete="off" />
                     <x-input-error class="mt-2" :messages="$errors->get('email')" />
                 </div>
             </div>
@@ -38,13 +38,13 @@
             @role('employer')
             <div>
                 <x-input-label for="name" :value="__('Име:')" />
-                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full mb-3 " :value="old('name', null)" required autofocus autocomplete="name" />
+                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full mb-3 " :value="old('name', null)" required autofocus autocomplete="off" />
                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
             </div>
 
             <div>
                 <x-input-label for="email" :value="__('Имейл:')" />
-                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full mb-3 " :value="old('email', null)" required autofocus autocomplete="name" />
+                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full mb-3 " :value="old('email', null)" required autofocus autocomplete="off" />
                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
             </div>
             @endrole

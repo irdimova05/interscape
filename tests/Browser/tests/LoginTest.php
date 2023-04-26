@@ -8,17 +8,6 @@ use Tests\DuskTestCase;
 
 class LoginTest extends DuskTestCase
 {
-    // /**
-    //  * A Dusk test example.
-    //  */
-    // public function testExample(): void
-    // {
-    //     $this->browse(function (Browser  $browser) {
-    //         $browser->visit('/')
-    //                 ->assertSee('Laravel');
-    //     });
-    // }
-
     /**
      * Succsessful login as completed user.
      */

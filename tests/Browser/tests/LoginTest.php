@@ -79,4 +79,18 @@ class LoginTest extends DuskTestCase
             $browser->driver->manage()->deleteAllCookies();
         });
     }
+
+    /**
+     * Login without password.
+     */
+    public function testLoginWithoutPassword(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/login')
+                ->type('email', 'admin@test.com')
+                ->press('Вход')
+                ->assertPathIs('/login');
+            $browser->driver->manage()->deleteAllCookies();
+        });
+    }
 }

@@ -28,7 +28,7 @@ class AdUpdateRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'jobType' => 'required|integer|exists:job_types,id',
-            'salary' => 'required|integer|min:0',
+            'salary' => 'integer|min:0',
             'category' => 'required|integer|exists:ad_categories,id',
             'description' => 'required|string',
         ];

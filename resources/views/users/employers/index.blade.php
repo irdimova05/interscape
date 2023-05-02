@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Работодатели') }}
+        </h2>
+    </x-slot>
     <section class="bg-white rounded-xl">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:px-6 ">
             <div class="grid gap-8 md:grid-cols-2">

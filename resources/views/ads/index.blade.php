@@ -1,4 +1,20 @@
 <x-app-layout>
+    @unlessrole('employer')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Обяви') }}
+        </h2>
+    </x-slot>
+    @endunlessrole
+
+    @role('employer')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Мои обяви') }}
+        </h2>
+    </x-slot>
+    @endrole
+
     <div class="mt-2">
         @role('employer')
         <div class="flex justify-between mb-2 max-w-7xl mx-auto sm:px-6 lg:px-8">

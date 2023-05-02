@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Създаване на потребител') }}
+        </h2>
+    </x-slot>
 
     <div class="flex items-center justify-between px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div class="w-full p-6 bg-white rounded-lg shadow md:mt-0 sm:max-w-md sm:p-8">

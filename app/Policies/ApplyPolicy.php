@@ -53,6 +53,10 @@ class ApplyPolicy
      */
     public function update(User $user, Apply $apply)
     {
-        return $user->hasPermissionTo('status.apply');
+        if ($apply->status == 'pending') {
+            return $user->hasPermissionTo('accept.apply') || $user->hasPermissionTo('reject.apply');
+        } else {
+            return false;
+        }
     }
 }

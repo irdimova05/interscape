@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdCreateRequest;
-use App\Http\Requests\AdStoreRequest;
-use App\Http\Requests\AdUpdateRequest;
-use App\Http\Requests\ReportAdStoreRequest;
+use App\Http\Requests\Ad\AdApplyRequest;
+use App\Http\Requests\Ad\AdCreateRequest;
+use App\Http\Requests\Ad\AdEditRequest;
+use App\Http\Requests\Ad\AdIndexRequest;
+use App\Http\Requests\Ad\AdSearchRequest;
+use App\Http\Requests\Ad\AdShowRequest;
+use App\Http\Requests\Ad\AdStatusRequest;
+use App\Http\Requests\Ad\AdStoreRequest;
+use App\Http\Requests\Ad\AdUpdateRequest;
 use App\Models\Ad;
 use App\Models\AdCategory;
 use App\Models\AdStatus;
 use App\Models\JobType;
-use App\Models\ReportedAd;
 use App\Services\AdService;
 use App\Services\ReportedAdService;
 use Illuminate\Http\Request;
@@ -22,7 +26,7 @@ class AdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(AdIndexRequest $request)
     {
         $ads = AdService::getAds();
         return view('ads.index', compact('ads'));
@@ -59,7 +63,7 @@ class AdController extends Controller
      * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function show(Ad $ad)
+    public function show(AdShowRequest $request, Ad $ad)
     {
         $reports = ReportedAdService::getReportedAdsReasons($ad);
         return view('ads.show', compact('ad', 'reports'));
@@ -71,7 +75,7 @@ class AdController extends Controller
      * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ad $ad)
+    public function edit(AdEditRequest $request, Ad $ad)
     {
         $categories = AdCategory::get()->pluck('name', 'id')->toArray();
         $jobTypes = JobType::get()->pluck('name', 'id')->toArray();
@@ -91,18 +95,7 @@ class AdController extends Controller
         return redirect()->route('ads.show', $ad->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function search(Request $request)
+    public function search(AdSearchRequest $request)
     {
         $ads = AdService::getAds(function ($query) use ($request) {
             return AdService::applySearch($query, $request->get('q'));
@@ -110,12 +103,7 @@ class AdController extends Controller
         return view('ads.components.ads', compact('ads'));
     }
 
-    public function apply(Ad $ad)
-    {
-        return view('ads.apply', compact('ad'));
-    }
-
-    public function status(Request $request, Ad $ad)
+    public function status(AdStatusRequest $request, Ad $ad)
     {
         $adStatus = AdStatus::where('slug', $request->get('status'))->firstOrFail()->id;
         AdService::updateStatus($ad, $adStatus);

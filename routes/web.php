@@ -32,8 +32,7 @@ Route::middleware(['auth', 'complete.profile'])->group(function () {
 
     Route::get('applies/adsFilter', [ApplyController::class, 'adsFilter'])->name('applies.adsFilter');
     Route::get('/apply/{ad}', [ApplyController::class, 'create'])->name('ads.apply');
-    Route::post('/apply/{ad}', [ApplyController::class, 'store'])->name('applies.store');
-    Route::resource('applies', ApplyController::class)->only(['index', 'show']);
+    Route::resource('applies', ApplyController::class)->only(['index', 'show', 'store']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');

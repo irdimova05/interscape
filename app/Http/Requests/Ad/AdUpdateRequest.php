@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Ad;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Common\MainFormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class AdUpdateRequest extends FormRequest
+class AdUpdateRequest extends MainFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +14,7 @@ class AdUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->user();
-
-        return $user->can('edit.ad');
+        Gate::authorize('update.ad', $this->ad);
     }
 
     /**

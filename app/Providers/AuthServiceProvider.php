@@ -52,5 +52,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('list.employer', [EmployerPolicy::class, 'viewAny']);
         Gate::define('show.employer', [EmployerPolicy::class, 'view']);
+
+        Gate::define('list.favorites', [FavoritesPolicy::class, 'viewAny']);
+        Gate::define('add.favorites', [FavoritesPolicy::class, 'create']);
+        Gate::define('remove.favorites', [FavoritesPolicy::class, 'delete']);
     }
 }

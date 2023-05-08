@@ -34,8 +34,9 @@ class RolePermissionsSeeder extends Seeder
                 Permission::create(['name' => 'show.employer']),
                 Permission::create(['name' => 'employer.interest']),
                 Permission::create(['name' => 'apply.ad']),
-                Permission::create(['name' => 'ad.favorite']),
-                Permission::create(['name' => 'list.favorite']),
+                Permission::create(['name' => 'add.favorites']),
+                Permission::create(['name' => 'remove.favorites']),
+                Permission::create(['name' => 'list.favorites']),
                 Permission::create(['name' => 'report.ad'])
             ];
 

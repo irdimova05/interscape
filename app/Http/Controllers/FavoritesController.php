@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Favorites\FavoritesDestroyRequest;
+use App\Http\Requests\Favorites\FavoritesIndexRequest;
+use App\Http\Requests\Favorites\FavoritesStoreRequest;
 use App\Models\Favorite;
 use App\Services\FavoritesService;
 use Illuminate\Http\Request;
@@ -13,7 +16,7 @@ class FavoritesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FavoritesIndexRequest $request)
     {
         /** @var User $user */
         $user = auth()->user();
@@ -24,59 +27,15 @@ class FavoritesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FavoritesStoreRequest $request)
     {
         FavoritesService::createFavorite($request);
         return redirect()->back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -85,7 +44,7 @@ class FavoritesController extends Controller
      * @param  Favorite  $favorite
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Favorite $favorite)
+    public function destroy(FavoritesDestroyRequest $request, Favorite $favorite)
     {
         $favorite->delete();
         return redirect()->back();

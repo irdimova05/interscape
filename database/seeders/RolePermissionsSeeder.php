@@ -46,7 +46,9 @@ class RolePermissionsSeeder extends Seeder
                 Permission::create(['name' => 'deactivate.ad']),
                 Permission::create(['name' => 'list.student']),
                 Permission::create(['name' => 'show.student']),
-                Permission::create(['name' => 'list.applies'])
+                Permission::create(['name' => 'list.applies']),
+                Permission::create(['name' => 'show.apply']),
+                Permission::create(['name' => 'status.apply']),
             ];
 
         $sharedStudentEmployerPermissions =

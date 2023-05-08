@@ -44,5 +44,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('edit.ad', [AdPolicy::class, 'update']);
         Gate::define('status.ad', [AdPolicy::class, 'status']);
         Gate::define('report.ad', [AdPolicy::class, 'report']);
+
+        Gate::define('list.applies', [ApplyPolicy::class, 'viewAny']);
+        Gate::define('show.apply', [ApplyPolicy::class, 'view']);
+        Gate::define('apply.ad', [ApplyPolicy::class, 'create']);
+        Gate::define('status.apply', [ApplyPolicy::class, 'update']);
     }
 }

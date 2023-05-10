@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReportAdStoreRequest;
+use App\Http\Requests\ReportAdUpdateRequest;
+use App\Http\Requests\ReportedAd\ReportedAdIndexRequest;
 use App\Models\Ad;
-use App\Models\ReportedAd;
 use App\Services\ReportedAdService;
-use Illuminate\Http\Request;
 
 class ReportedAdController extends Controller
 {
@@ -15,7 +15,7 @@ class ReportedAdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ReportedAdIndexRequest $request)
     {
         $reportedAds = ReportedAdService::getReportedAds();
         return view('reported-ads.index', compact('reportedAds'));
@@ -44,48 +44,15 @@ class ReportedAdController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ad $ad)
+    public function update(ReportAdUpdateRequest $request, Ad $ad)
     {
         ReportedAdService::releaseAd($ad);
         return redirect()->route('reported-ads.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

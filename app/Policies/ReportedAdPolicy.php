@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Apply;
+use App\Models\ReportedAd;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ApplyPolicy
+class ReportedAdPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,7 @@ class ApplyPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('list.applies');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Apply  $apply
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function view(User $user, Apply $apply)
-    {
-        return $user->hasPermissionTo('show.apply');
+        return $user->hasPermissionTo('list.reported_ad');
     }
 
     /**
@@ -41,20 +29,20 @@ class ApplyPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('apply.ad');
+        return $user->hasPermissionTo('report.ad');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Apply  $apply
+     * @param  \App\Models\ReportedAd  $reportedAd
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Apply $apply)
+    public function update(User $user, ReportedAd $reportedAd)
     {
-        if ($apply->status == 'pending') {
-            return $user->hasPermissionTo('accept.apply') || $user->hasPermissionTo('reject.apply');
+        if ($reportedAd->status == 'pending') {
+            return $user->hasPermissionTo('accept.reported_ad') || $user->hasPermissionTo('reject.reported_ad');
         }
 
         return false;

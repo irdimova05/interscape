@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Common\MainGetRequest;
+use Illuminate\Support\Facades\Gate;
 
-class ReportAdStoreRequest extends FormRequest
+class ReportAdStoreRequest extends MainGetRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +14,7 @@ class ReportAdStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->user();
-
-        return $user->can('report.ad');
+        Gate::authorize('report.ad');
     }
 
     /**

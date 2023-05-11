@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\User\UserCreateRequest;
+use App\Http\Requests\User\UserEditRequest;
+use App\Http\Requests\User\UserIndexRequest;
+use App\Http\Requests\User\UserSearchRequest;
+use App\Http\Requests\User\UserShowRequest;
+use App\Http\Requests\User\UserStatusRequest;
+use App\Http\Requests\UserStoreRequest;
 use App\Models\Status;
 use App\Models\User;
 use App\Services\UserService;
@@ -17,7 +24,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UserIndexRequest $request)
     {
         $users = UserService::getUsers();
         return view('users.index', compact('users'));
@@ -28,7 +35,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(UserCreateRequest $request)
     {
         $roles = Role::all()->pluck('name', 'id')->transform(function ($name) {
             return trans("roles.$name");
@@ -39,10 +46,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CreateUserRequest  $request
+     * @param  UserStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(UserStoreRequest $request)
     {
         $user = UserService::createUser($request->all());
         return redirect()->route('users.index');
@@ -54,7 +61,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(UserShowRequest $request, $id)
     {
         $user = User::with('status:id,slug', 'roles')->findOrFail($id);
         UserService::enrichUser($user);
@@ -75,7 +82,7 @@ class UserController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(UserEditRequest $request, User $user)
     {
         return view('users.edit', compact('user'));
     }
@@ -92,18 +99,7 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function search(Request $request)
+    public function search(UserSearchRequest $request)
     {
         $users = UserService::getUsers(function ($query) use ($request) {
             return UserService::applySearch($query, $request->get('q'));
@@ -111,7 +107,7 @@ class UserController extends Controller
         return view('users.components.table', compact('users'));
     }
 
-    public function status(Request $request, User $user)
+    public function status(UserStatusRequest $request, User $user)
     {
         $status = Status::where('slug', $request->get('status'))->firstOrFail()->id;
         UserService::updateStatus($user, $status);
@@ -128,7 +124,7 @@ class UserController extends Controller
         return response()->download(public_path('templates/template.xlsx'), 'template.xlsx', $headers);
     }
 
-    public function import(Request $request)
+    public function import(UserCreateRequest $request)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls'

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Employer;
+namespace App\Http\Requests\User;
 
 use App\Http\Requests\Common\MainGetRequest;
 use Illuminate\Support\Facades\Gate;
 
-class EmployerIndexRequest extends MainGetRequest
+class UserIndexRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('list.employers');
+        Gate::authorize('list.users');
     }
 }

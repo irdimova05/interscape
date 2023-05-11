@@ -6,6 +6,10 @@ namespace App\Providers;
 
 use App\Models\Ad;
 use App\Policies\AdPolicy;
+use App\Policies\ApplyPolicy;
+use App\Policies\EmployerPolicy;
+use App\Policies\FavoritesPolicy;
+use App\Policies\StudentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -50,12 +54,18 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('apply.ad', [ApplyPolicy::class, 'create']);
         Gate::define('status.apply', [ApplyPolicy::class, 'update']);
 
-        Gate::define('list.employer', [EmployerPolicy::class, 'viewAny']);
+        Gate::define('list.employers', [EmployerPolicy::class, 'viewAny']);
         Gate::define('show.employer', [EmployerPolicy::class, 'view']);
 
         Gate::define('list.student', [StudentPolicy::class, 'viewAny']);
         Gate::define('show.student', [StudentPolicy::class, 'view']);
-        Gate::update('status.student', [StudentPolicy::class, 'update']);
+        Gate::define('status.student', [StudentPolicy::class, 'update']);
+
+        Gate::define('list.users', [UserPolicy::class, 'viewAny']);
+        Gate::define('show.user', [UserPolicy::class, 'view']);
+        Gate::define('create.user', [UserPolicy::class, 'create']);
+        Gate::define('edit.user', [UserPolicy::class, 'update']);
+        Gate::define('status.user', [UserPolicy::class, 'status']);
 
         Gate::define('list.favorites', [FavoritesPolicy::class, 'viewAny']);
         Gate::define('add.favorites', [FavoritesPolicy::class, 'create']);

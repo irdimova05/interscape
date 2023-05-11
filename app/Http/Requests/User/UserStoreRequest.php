@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Common\MainFormRequest;
+use Gate;
 
-class CreateUserRequest extends FormRequest
+class UserStoreRequest extends MainFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +14,7 @@ class CreateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->user();
-
-        return $user->can('create.student') && $user->can('create.employer');
+        Gate::authorize('create.user');
     }
 
     /**

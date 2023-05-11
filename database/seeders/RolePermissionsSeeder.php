@@ -26,6 +26,8 @@ class RolePermissionsSeeder extends Seeder
                 Permission::create(['name' => 'list.reported_ad']),
                 Permission::create(['name' => 'release.reported_ad']),
                 Permission::create(['name' => 'block.reported_ad']),
+                Permission::create(['name' => 'list.user']),
+                Permission::create(['name' => 'show.user']),
             ];
 
         $studentPermissions =
@@ -70,7 +72,7 @@ class RolePermissionsSeeder extends Seeder
         $studentRole = Role::create(['name' => 'student']);
         $employerRole = Role::create(['name' => 'employer']);
 
-        $adminRole->syncPermissions($adminPermissions);
+        $adminRole->syncPermissions($adminPermissions, $sharedStudentEmployerPermissions);
         $studentRole->syncPermissions($studentPermissions, $sharedStudentEmployerPermissions);
         $employerRole->syncPermissions($employerPermissions, $sharedStudentEmployerPermissions);
     }

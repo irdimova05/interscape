@@ -87,18 +87,6 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     public function search(UserSearchRequest $request)
     {
         $users = UserService::getUsers(function ($query) use ($request) {

@@ -9,6 +9,6 @@ class ReportedAdIndexRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('list.reported_ad');
+        Gate::authorize('list.reports');
     }
 }

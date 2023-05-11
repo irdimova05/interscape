@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\ReportedAd;
 
 use App\Http\Requests\Common\MainGetRequest;
 use Illuminate\Support\Facades\Gate;
 
-class ReportAdStoreRequest extends MainGetRequest
+class ReportedAdStoreRequest extends MainGetRequest
 {
     /**
      * Determine if the user is authorized to make this request.

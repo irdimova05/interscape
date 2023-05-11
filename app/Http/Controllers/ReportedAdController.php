@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ReportAdStoreRequest;
-use App\Http\Requests\ReportAdUpdateRequest;
 use App\Http\Requests\ReportedAd\ReportedAdIndexRequest;
+use App\Http\Requests\ReportedAd\ReportedAdStoreRequest;
+use App\Http\Requests\ReportedAd\ReportedAdUpdateRequest;
 use App\Models\Ad;
 use App\Services\ReportedAdService;
 
@@ -37,7 +37,7 @@ class ReportedAdController extends Controller
      * @param  \Illuminate\Http\ReportAdStoreRequest  $reportAdStoreRequest
      * @return \Illuminate\Http\Response
      */
-    public function store(ReportAdStoreRequest $reportAdStoreRequest, Ad $ad)
+    public function store(ReportedAdStoreRequest $reportAdStoreRequest, Ad $ad)
     {
         ReportedAdService::reportAd($ad->id, $reportAdStoreRequest->reason);
         return redirect()->route('ads.show', compact('ad'));
@@ -50,7 +50,7 @@ class ReportedAdController extends Controller
      * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function update(ReportAdUpdateRequest $request, Ad $ad)
+    public function update(ReportedAdUpdateRequest $request, Ad $ad)
     {
         ReportedAdService::releaseAd($ad);
         return redirect()->route('reported-ads.index');

@@ -5,11 +5,19 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Ad;
+use App\Models\Apply;
+use App\Models\Employer;
+use App\Models\Favorite;
+use App\Models\ReportedAd;
+use App\Models\Student;
+use App\Models\User;
 use App\Policies\AdPolicy;
 use App\Policies\ApplyPolicy;
 use App\Policies\EmployerPolicy;
 use App\Policies\FavoritesPolicy;
+use App\Policies\ReportedAdPolicy;
 use App\Policies\StudentPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -22,6 +30,12 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Ad::class => AdPolicy::class,
+        Apply::class => ApplyPolicy::class,
+        Employer::class => EmployerPolicy::class,
+        Favorite::class => FavoritesPolicy::class,
+        Student::class => StudentPolicy::class,
+        User::class => UserPolicy::class,
+        ReportedAd::class => ReportedAdPolicy::class,
     ];
 
     /**
@@ -70,5 +84,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('list.favorites', [FavoritesPolicy::class, 'viewAny']);
         Gate::define('add.favorites', [FavoritesPolicy::class, 'create']);
         Gate::define('remove.favorites', [FavoritesPolicy::class, 'delete']);
+
+        Gate::define('list.reports', [ReportedAdPolicy::class, 'viewAny']);
+        Gate::define('show.report', [ReportedAdPolicy::class, 'view']);
+        Gate::define('status.report', [ReportedAdPolicy::class, 'status']);
     }
 }

@@ -61,6 +61,12 @@ class RolePermissionsSeeder extends Seeder
 
         $sharedStudentEmployerPermissions =
             [
+                Permission::create(['name' => 'list.interests']),
+
+            ];
+
+        $sharedStudentEmployerAdminPermissions =
+            [
                 Permission::create(['name' => 'edit.profile']),
                 Permission::create(['name' => 'show.profile']),
                 Permission::create(['name' => 'show.ad']),
@@ -72,8 +78,8 @@ class RolePermissionsSeeder extends Seeder
         $studentRole = Role::create(['name' => 'student']);
         $employerRole = Role::create(['name' => 'employer']);
 
-        $adminRole->syncPermissions($adminPermissions, $sharedStudentEmployerPermissions);
-        $studentRole->syncPermissions($studentPermissions, $sharedStudentEmployerPermissions);
-        $employerRole->syncPermissions($employerPermissions, $sharedStudentEmployerPermissions);
+        $adminRole->syncPermissions($adminPermissions, $sharedStudentEmployerAdminPermissions);
+        $studentRole->syncPermissions($studentPermissions, $sharedStudentEmployerPermissions, $sharedStudentEmployerAdminPermissions);
+        $employerRole->syncPermissions($employerPermissions, $sharedStudentEmployerPermissions, $sharedStudentEmployerAdminPermissions);
     }
 }

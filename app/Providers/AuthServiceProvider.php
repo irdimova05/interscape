@@ -15,6 +15,7 @@ use App\Policies\AdPolicy;
 use App\Policies\ApplyPolicy;
 use App\Policies\EmployerPolicy;
 use App\Policies\FavoritesPolicy;
+use App\Policies\InterestsPolicy;
 use App\Policies\ReportedAdPolicy;
 use App\Policies\StudentPolicy;
 use App\Policies\UserPolicy;
@@ -36,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
         Student::class => StudentPolicy::class,
         User::class => UserPolicy::class,
         ReportedAd::class => ReportedAdPolicy::class,
+        InterestsPolicy::class => InterestsPolicy::class,
     ];
 
     /**
@@ -70,10 +72,13 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('list.employers', [EmployerPolicy::class, 'viewAny']);
         Gate::define('show.employer', [EmployerPolicy::class, 'view']);
+        Gate::define('status.employer', [EmployerPolicy::class, 'update']);
+        Gate::define('interest.employer', [EmployerPolicy::class, 'interestToStudent']);
 
         Gate::define('list.student', [StudentPolicy::class, 'viewAny']);
         Gate::define('show.student', [StudentPolicy::class, 'view']);
         Gate::define('status.student', [StudentPolicy::class, 'update']);
+        Gate::define('interest.student', [StudentPolicy::class, 'interestToEmployer']);
 
         Gate::define('list.users', [UserPolicy::class, 'viewAny']);
         Gate::define('show.user', [UserPolicy::class, 'view']);
@@ -88,5 +93,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('list.reports', [ReportedAdPolicy::class, 'viewAny']);
         Gate::define('show.report', [ReportedAdPolicy::class, 'view']);
         Gate::define('status.report', [ReportedAdPolicy::class, 'status']);
+
+        Gate::define('list.interests', [InterestsPolicy::class, 'viewAny']);
+        Gate::define('create.interests', [InterestsPolicy::class, 'create']);
     }
 }

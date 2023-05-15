@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('ads.index') }}">
-                        <x-application-logo class="block h-9 w-auto " />
+                        <x-application-logo class="block h-9 w-auto fill-current " />
                     </a>
                 </div>
 

@@ -9,6 +9,6 @@ class ReportedAdUpdateRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('status.report');
+        return Gate::authorize('status.report');
     }
 }

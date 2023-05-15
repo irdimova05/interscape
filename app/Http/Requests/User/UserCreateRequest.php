@@ -9,6 +9,6 @@ class UserCreateRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('create.user');
+        return Gate::authorize('create.user');
     }
 }

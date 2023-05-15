@@ -9,6 +9,6 @@ class AdShowRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('show.ad');
+        return Gate::authorize('show.ad');
     }
 }

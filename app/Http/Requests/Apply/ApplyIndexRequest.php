@@ -9,6 +9,6 @@ class ApplyIndexRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('list.applies');
+        return Gate::authorize('list.applies');
     }
 }

@@ -9,6 +9,6 @@ class AdEditRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('edit.ad');
+        return Gate::authorize('edit.ad');
     }
 }

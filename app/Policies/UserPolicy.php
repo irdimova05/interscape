@@ -30,7 +30,17 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->hasPermissionTo('show.user');
+        if ($user->id === $model->id) {
+            return true;
+        }
+
+        if ($model->isEmployer()) {
+            return $user->hasPermissionTo('show.employer');
+        } else if ($model->isStudent()) {
+            return $user->hasPermissionTo('show.student');
+        }
+
+        return false;
     }
 
     /**

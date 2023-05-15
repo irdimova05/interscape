@@ -58,10 +58,6 @@ Route::middleware(['auth', 'complete.profile'])->group(function () {
     Route::put('users/{user}/status', [UserController::class, 'status'])->name('users.status');
 });
 
-Route::get('/consent', [ConsentController::class, 'showConsentForm'])->name('consent.show');
-Route::post('/consent', [ConsentController::class, 'acceptConsent'])->name('consent.accept');
-Route::post('/cookies/accept', [ConsentController::class, 'acceptCookies'])->name('cookies.accept');
-
 
 
 require __DIR__ . '/auth.php';

@@ -9,6 +9,6 @@ class ApplyCreateRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('apply.ad');
+        return Gate::authorize('apply.ad');
     }
 }

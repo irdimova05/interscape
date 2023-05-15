@@ -9,6 +9,13 @@ class FavoritesStoreRequest extends MainFormRequest
 {
     public function authorize()
     {
-        Gate::authorize('create.favorites');
+        return Gate::authorize('add.favorites');
+    }
+
+    public function rules()
+    {
+        return [
+            'ad_id' => 'required|exists:ads,id',
+        ];
     }
 }

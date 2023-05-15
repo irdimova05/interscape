@@ -10,7 +10,6 @@ use App\Http\Requests\Apply\ApplyStoreRequest;
 use App\Models\Ad;
 use App\Models\Apply;
 use App\Services\ApplyService;
-use Illuminate\Http\Request;
 
 class ApplyController extends Controller
 {

@@ -9,6 +9,6 @@ class AdStatusRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('status.ad');
+        return Gate::authorize('status.ad');
     }
 }

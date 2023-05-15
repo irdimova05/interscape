@@ -14,7 +14,8 @@ class ApplyStoreRequest extends MainFormRequest
      */
     public function authorize()
     {
-        Gate::authorize('apply.ad');
+        //Gate::authorize('apply.ad');
+        return true;
     }
 
     /**

@@ -14,7 +14,7 @@ class UserStoreRequest extends MainFormRequest
      */
     public function authorize()
     {
-        Gate::authorize('create.user');
+        return Gate::authorize('create.user');
     }
 
     /**

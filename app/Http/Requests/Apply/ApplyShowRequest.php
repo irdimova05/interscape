@@ -9,6 +9,6 @@ class ApplyShowRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('show.apply');
+        return Gate::authorize('show.apply');
     }
 }

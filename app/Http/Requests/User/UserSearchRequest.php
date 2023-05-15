@@ -9,6 +9,6 @@ class UserSearchRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('list.users');
+        return Gate::authorize('list.users');
     }
 }

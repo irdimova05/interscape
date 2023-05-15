@@ -9,6 +9,6 @@ class StudentIndexRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('list.student');
+        return Gate::authorize('list.student');
     }
 }

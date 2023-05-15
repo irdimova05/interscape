@@ -9,6 +9,11 @@ class FavoritesDestroyRequest extends MainFormRequest
 {
     public function authorize()
     {
-        Gate::authorize('delete.favorites');
+        return Gate::authorize('remove.favorites');
+    }
+
+    public function rules()
+    {
+        return [];
     }
 }

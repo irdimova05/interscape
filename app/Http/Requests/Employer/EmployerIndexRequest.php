@@ -9,6 +9,6 @@ class EmployerIndexRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('list.employers');
+        return Gate::authorize('list.employers');
     }
 }

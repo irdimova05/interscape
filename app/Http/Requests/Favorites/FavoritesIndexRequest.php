@@ -9,6 +9,6 @@ class FavoritesIndexRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('list.favorites');
+        return Gate::authorize('list.favorites');
     }
 }

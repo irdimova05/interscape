@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\ReportedAd;
 
-use App\Http\Requests\Common\MainGetRequest;
+use App\Http\Requests\Common\MainFormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class ReportedAdStoreRequest extends MainGetRequest
+class ReportedAdStoreRequest extends MainFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class ReportedAdStoreRequest extends MainGetRequest
      */
     public function authorize()
     {
-        Gate::authorize('report.ad');
+        return Gate::authorize('report.ad');
     }
 
     /**

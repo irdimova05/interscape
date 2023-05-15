@@ -14,7 +14,7 @@ class AdUpdateRequest extends MainFormRequest
      */
     public function authorize()
     {
-        Gate::authorize('update.ad', $this->ad);
+        return Gate::authorize('update.ad', $this->ad);
     }
 
     /**

@@ -14,7 +14,7 @@ class AdStoreRequest extends MainFormRequest
      */
     public function authorize()
     {
-        Gate::authorize('create.ad');
+        return Gate::authorize('apply.ad');
     }
 
     /**

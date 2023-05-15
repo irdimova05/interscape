@@ -9,6 +9,6 @@ class AdSearchRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('list.ad');
+        return Gate::authorize('list.ad');
     }
 }

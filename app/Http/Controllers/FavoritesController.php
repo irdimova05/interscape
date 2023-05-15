@@ -7,7 +7,6 @@ use App\Http\Requests\Favorites\FavoritesIndexRequest;
 use App\Http\Requests\Favorites\FavoritesStoreRequest;
 use App\Models\Favorite;
 use App\Services\FavoritesService;
-use Illuminate\Http\Request;
 
 class FavoritesController extends Controller
 {

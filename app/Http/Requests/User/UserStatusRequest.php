@@ -9,6 +9,6 @@ class UserStatusRequest extends MainGetRequest
 {
     public function authorize()
     {
-        Gate::authorize('status.user');
+        return Gate::authorize('status.user');
     }
 }

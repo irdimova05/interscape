@@ -92,7 +92,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('list.reports', [ReportedAdPolicy::class, 'viewAny']);
         Gate::define('show.report', [ReportedAdPolicy::class, 'view']);
-        Gate::define('status.report', [ReportedAdPolicy::class, 'status']);
+        Gate::define('status.report', [ReportedAdPolicy::class, 'update']);
 
         Gate::define('list.interests', [InterestsPolicy::class, 'viewAny']);
         Gate::define('create.interests', [InterestsPolicy::class, 'create']);

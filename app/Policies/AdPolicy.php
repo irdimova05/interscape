@@ -66,10 +66,10 @@ class AdPolicy
      */
     public function status(User $user, Ad $ad)
     {
-        if ($ad->ad_status_id === AdStatus::where('slug', AdStatus::ACTIVE)->first()->id) {
-            return $user->hasPermissionTo('deactivate.ad') && $user->id === $ad->user_id;
-        } else if ($ad->ad_status_id === AdStatus::where('slug', AdStatus::INACTIVE)->first()->id) {
-            return $user->hasPermissionTo('activate.ad') && $user->id === $ad->user_id;
+        if ($ad->ad_status_id === AdStatus::where('slug', AdStatus::ACTIVE)->first()->id && $user->employer->id === $ad->employer_id) {
+            return $user->hasPermissionTo('deactivate.ad');
+        } else if ($ad->ad_status_id === AdStatus::where('slug', AdStatus::INACTIVE)->first()->id && $user->employer->id === $ad->employer_id) {
+            return $user->hasPermissionTo('activate.ad');
         } else if ($ad->ad_status_id === AdStatus::where('slug', AdStatus::BLOCKED)->first()->id) {
             return false;
         }

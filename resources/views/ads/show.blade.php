@@ -206,7 +206,7 @@
                             </div>
                         </div>
 
-                        @if($ad->salary !== null)
+                        @if($ad->salary != 0)
                         <p class=" text-gray-500">Заплата:
                             {{ $ad->salary }} лв.
                         </p>

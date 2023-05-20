@@ -45,4 +45,10 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function inactive(Request $request)
+    {
+        $user = auth()->user(); // Зарежда текущия потребител от базата данни
+        return view('auth.inactive-profile', ['user' => $user]);
+    }
 }

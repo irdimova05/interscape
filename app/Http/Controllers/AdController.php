@@ -103,8 +103,17 @@ class AdController extends Controller
      */
     public function update(AdUpdateRequest $request, Ad $ad)
     {
-        AdService::updateAd($ad, $request->all());
-        return redirect()->route('ads.show', $ad->id);
+        try {
+            DB::beginTransaction();
+            AdService::updateAd($ad, $request->all());
+            DB::commit();
+            MessageService::success('Обявата е редактирана успешно!');
+            return redirect()->route('ads.show', $ad->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при редактирането на обявата!');
+            return redirect()->back()->withInput();
+        }
     }
 
     public function search(AdSearchRequest $request)

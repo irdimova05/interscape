@@ -32,6 +32,8 @@ Route::middleware(['auth', 'complete.profile', 'inactive.profile'])->group(funct
 
     Route::get('applies/adsFilter', [ApplyController::class, 'adsFilter'])->name('applies.adsFilter');
     Route::get('/apply/{ad}', [ApplyController::class, 'create'])->name('ads.apply');
+    Route::put('/applies/{apply}/approve', [ApplyController::class, 'approve'])->name('applies.approve');
+    Route::put('/applies/{apply}/reject', [ApplyController::class, 'reject'])->name('applies.reject');
     Route::resource('applies', ApplyController::class)->only(['index', 'show', 'store']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

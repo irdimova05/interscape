@@ -7,6 +7,8 @@ use App\Http\Requests\Favorites\FavoritesIndexRequest;
 use App\Http\Requests\Favorites\FavoritesStoreRequest;
 use App\Models\Favorite;
 use App\Services\FavoritesService;
+use App\Services\MessageService;
+use DB;
 
 class FavoritesController extends Controller
 {
@@ -33,8 +35,17 @@ class FavoritesController extends Controller
      */
     public function store(FavoritesStoreRequest $request)
     {
-        FavoritesService::createFavorite($request);
-        return redirect()->back();
+        try {
+            DB::beginTransaction();
+            FavoritesService::createFavorite($request);
+            DB::commit();
+            MessageService::success('Успешно добавихте обявата в любими!');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при добавянето на обявата в любими!');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -45,7 +56,16 @@ class FavoritesController extends Controller
      */
     public function destroy(FavoritesDestroyRequest $request, Favorite $favorite)
     {
-        $favorite->delete();
-        return redirect()->back();
+        try {
+            DB::beginTransaction();
+            $favorite->delete();
+            DB::commit();
+            MessageService::success('Успешно премахнахте обявата от любими!');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при премахването на обявата от любими!');
+            return redirect()->back();
+        }
     }
 }

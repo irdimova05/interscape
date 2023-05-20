@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\UserCreateRequest;
 use App\Http\Requests\User\UserEditRequest;
+use App\Http\Requests\User\UserImportRequest;
 use App\Http\Requests\User\UserIndexRequest;
 use App\Http\Requests\User\UserSearchRequest;
 use App\Http\Requests\User\UserShowRequest;
@@ -119,15 +120,23 @@ class UserController extends Controller
         return response()->download(public_path('templates/template.xlsx'), 'template.xlsx', $headers);
     }
 
-    public function import(UserCreateRequest $request)
+    public function import(UserImportRequest $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
-        ]);
+        try {
+            DB::beginTransaction();
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls'
+            ]);
 
-        $path = $request->file('file')->getRealPath();
-        $result = UserService::importUsers($path);
-
-        return redirect()->back();
+            $path = $request->file('file')->getRealPath();
+            $result = UserService::importUsers($path);
+            DB::commit();
+            MessageService::success('Успешно импортирахте потребители!');
+            return redirect()->route('users.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при импортирането на потребители!');
+            return redirect()->back()->withInput();
+        }
     }
 }

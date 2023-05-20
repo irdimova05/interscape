@@ -56,6 +56,7 @@ $fileUploadName = $fileUploadName ?? 'file';
         </div>
     </template>
 </div>
+<x-input-error :messages="$errors->get('file')" class="mt-2" />
 
 @push('scripts')
 <script src="https://unpkg.com/create-file-list"></script>

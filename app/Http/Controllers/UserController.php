@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\User\UserCreateRequest;
 use App\Http\Requests\User\UserEditRequest;
+use App\Http\Requests\User\UserImportRequest;
 use App\Http\Requests\User\UserIndexRequest;
 use App\Http\Requests\User\UserSearchRequest;
 use App\Http\Requests\User\UserShowRequest;
 use App\Http\Requests\User\UserStatusRequest;
-use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\User\UserStoreRequest;
 use App\Models\Status;
 use App\Models\User;
+use App\Services\MessageService;
 use App\Services\UserService;
-use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+use DB;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -51,8 +51,16 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $user = UserService::createUser($request->all());
-        return redirect()->route('users.index');
+        try {
+            DB::beginTransaction();
+            UserService::createUser($request->all());
+            MessageService::success('Успешно създадохте потребител!');
+            return redirect()->route('users.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при създаването на потребител!');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -112,15 +120,23 @@ class UserController extends Controller
         return response()->download(public_path('templates/template.xlsx'), 'template.xlsx', $headers);
     }
 
-    public function import(UserCreateRequest $request)
+    public function import(UserImportRequest $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
-        ]);
+        try {
+            DB::beginTransaction();
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls'
+            ]);
 
-        $path = $request->file('file')->getRealPath();
-        $result = UserService::importUsers($path);
-
-        return redirect()->back();
+            $path = $request->file('file')->getRealPath();
+            $result = UserService::importUsers($path);
+            DB::commit();
+            MessageService::success('Успешно импортирахте потребители!');
+            return redirect()->route('users.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при импортирането на потребители!');
+            return redirect()->back()->withInput();
+        }
     }
 }

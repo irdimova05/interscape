@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Apply;
+namespace App\Http\Requests\User;
 
 use App\Http\Requests\Common\MainFormRequest;
-use Illuminate\Support\Facades\Gate;
+use Gate;
 
-class ApplyStoreRequest extends MainFormRequest
+class UserImportRequest extends MainFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,8 +14,7 @@ class ApplyStoreRequest extends MainFormRequest
      */
     public function authorize()
     {
-        //Gate::authorize('apply.ad');
-        return true;
+        return Gate::authorize('create.user');
     }
 
     /**
@@ -26,20 +25,21 @@ class ApplyStoreRequest extends MainFormRequest
     public function rules()
     {
         return [
-            'file' => 'required|file',
-            'description' => 'nullable|string',
+            'file' => 'required|file|mimes:xls,xlsx',
         ];
     }
 
     /**
      * Get the error messages for the defined validation rules.
      *
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     public function messages()
     {
         return [
-            'file.required' => 'Моля, прикачете автобиография.',
+            'file.required' => 'Файлът е задължителен.',
+            'file.file' => 'Невалиден файл.',
+            'file.mimes' => 'Невалиден формат на файла.',
         ];
     }
 }

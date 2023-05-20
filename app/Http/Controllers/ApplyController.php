@@ -10,6 +10,8 @@ use App\Http\Requests\Apply\ApplyStoreRequest;
 use App\Models\Ad;
 use App\Models\Apply;
 use App\Services\ApplyService;
+use App\Services\MessageService;
+use DB;
 
 class ApplyController extends Controller
 {
@@ -43,9 +45,18 @@ class ApplyController extends Controller
      */
     public function store(ApplyStoreRequest $request)
     {
-        $id = $request->ad_id;
-        ApplyService::createApply($request, $id);
-        return redirect()->route('ads.show', $id);
+        try {
+            DB::beginTransaction();
+            $id = $request->ad_id;
+            ApplyService::createApply($request, $id);
+            DB::commit();
+            MessageService::success('Успешно изпратихте кандидатура!');
+            return redirect()->route('ads.show', $id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при изпращането на кандидатура!');
+            return redirect()->back();
+        }
     }
 
     /**

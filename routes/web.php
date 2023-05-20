@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth', 'complete.profile'])->group(function () {
+Route::middleware(['auth', 'complete.profile', 'inactive.profile'])->group(function () {
     Route::get('ads/search', [AdController::class, 'search'])->name('ads.search');
     Route::put('ads/{ad}/status', [AdController::class, 'status'])->name('ads.status');
     Route::resource('ads', AdController::class);

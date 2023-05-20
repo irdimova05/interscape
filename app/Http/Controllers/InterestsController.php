@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Interests\InterestsIndexRequest;
 use App\Http\Requests\Interests\InterestsStoreRequest;
 use App\Services\InterestService;
+use App\Services\MessageService;
+use DB;
 use Illuminate\Http\Request;
 
 class InterestsController extends Controller
@@ -35,7 +37,16 @@ class InterestsController extends Controller
      */
     public function store(InterestsStoreRequest $request)
     {
-        InterestService::createInterest($request);
-        return redirect()->back();
+        try {
+            DB::beginTransaction();
+            InterestService::createInterest($request);
+            DB::commit();
+            MessageService::success('Успешно проявихте интерес към този потребител!');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при проявяването на интерес към този потребител!');
+            return redirect()->back();
+        }
     }
 }

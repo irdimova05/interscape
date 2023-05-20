@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Apply\ApplyAdsFilterRequest;
+use App\Http\Requests\Apply\ApplyApproveRequest;
 use App\Http\Requests\Apply\ApplyCreateRequest;
 use App\Http\Requests\Apply\ApplyIndexRequest;
+use App\Http\Requests\Apply\ApplyRejectRequest;
 use App\Http\Requests\Apply\ApplyShowRequest;
 use App\Http\Requests\Apply\ApplyStoreRequest;
 use App\Models\Ad;
@@ -85,7 +87,7 @@ class ApplyController extends Controller
         return view('applies.components.applies_results', compact('applies'));
     }
 
-    public function approve(Apply $apply)
+    public function approve(ApplyApproveRequest $request, Apply $apply)
     {
         try {
             DB::beginTransaction();
@@ -100,7 +102,7 @@ class ApplyController extends Controller
         }
     }
 
-    public function reject(Apply $apply)
+    public function reject(ApplyRejectRequest $request, Apply $apply)
     {
         try {
             DB::beginTransaction();

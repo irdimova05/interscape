@@ -45,18 +45,26 @@ class ApplyPolicy
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can approve the model.
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\Apply  $apply
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Apply $apply)
+    public function approve(User $user, Apply $apply)
     {
-        if ($apply->status == 'pending') {
-            return $user->hasPermissionTo('accept.apply') || $user->hasPermissionTo('reject.apply');
-        }
+        return $user->hasPermissionTo('approve.apply');
+    }
 
-        return false;
+    /**
+     * Determine whether the user can reject the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Apply  $apply
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function reject(User $user, Apply $apply)
+    {
+        return $user->hasPermissionTo('reject.apply');
     }
 }

@@ -68,7 +68,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('list.applies', [ApplyPolicy::class, 'viewAny']);
         Gate::define('show.apply', [ApplyPolicy::class, 'view']);
         Gate::define('apply.ad', [ApplyPolicy::class, 'create']);
-        Gate::define('status.apply', [ApplyPolicy::class, 'update']);
+        Gate::define('approve.apply', [ApplyPolicy::class, 'approve']);
+        Gate::define('reject.apply', [ApplyPolicy::class, 'reject']);
 
         Gate::define('list.employers', [EmployerPolicy::class, 'viewAny']);
         Gate::define('show.employer', [EmployerPolicy::class, 'view']);

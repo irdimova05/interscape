@@ -27,7 +27,7 @@ class ApplyStoreRequest extends MainFormRequest
     {
         return [
             'file' => 'required|file',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
         ];
     }
 

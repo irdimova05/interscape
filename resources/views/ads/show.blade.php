@@ -188,7 +188,7 @@
                                                     {!! Form::open(['route' => ['reported-ads.store', $ad->id], 'method' => 'post']) !!}
                                                     <div class="mb-4">
                                                         {!! Form::label('reason', 'Причина за докладване:', ['class' => 'block text-gray-700 font-bold mb-2']) !!}
-                                                        {!! Form::textarea('reason', old('reason'), ['class' => 'form-textarea block w-full', 'rows' => 3, 'x-bind:class' => "{'border-red-500': $errors->has('reason') }"]) !!}
+                                                        {!! Form::textarea('reason', old('reason'), ['class' => 'form-textarea block w-full rounded-lg border-slate-500', 'rows' => 3, 'x-bind:class' => "{'border-red-500': $errors->has('reason') }"]) !!}
                                                         <x-input-error :messages="$errors->get('reason')" class="mt-2" />
                                                     </div>
                                                     <div class="mt-4">
@@ -206,7 +206,7 @@
                             </div>
                         </div>
 
-                        @if($ad->salary !== null)
+                        @if($ad->salary != 0)
                         <p class=" text-gray-500">Заплата:
                             {{ $ad->salary }} лв.
                         </p>

@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 lg:py-12">
             <h2 class="mb-4 text-xl font-bold text-gray-900 ">Редактирай обява</h2>
 
-            {!! Form::open(['route' => 'ads.store', 'method' => 'POST']) !!}
+            {!! Form::open(['route' => ['ads.update', $ad->id], 'method' => 'PUT']) !!}
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <div class="sm:col-span-2">
                     <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Име на обявата:</label>

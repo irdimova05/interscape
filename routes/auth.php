@@ -40,6 +40,9 @@ Route::get('register-complete', [RegisteredUserController::class, 'complete'])
     ->name('register.complete')
     ->middleware('auth');
 
+Route::get('/inactive-profile', [AuthenticatedSessionController::class, 'inactive'])
+    ->name('inactive.profile')
+    ->middleware('auth');
 
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout')

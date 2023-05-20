@@ -14,7 +14,7 @@ class AdStoreRequest extends MainFormRequest
      */
     public function authorize()
     {
-        return Gate::authorize('apply.ad');
+        return Gate::authorize('create.ad');
     }
 
     /**
@@ -27,7 +27,7 @@ class AdStoreRequest extends MainFormRequest
         return [
             'title' => 'required|string|max:50',
             'jobType' => 'required|integer|exists:job_types,id',
-            'salary' => 'nullable|integer|min:0',
+            'salary' => 'integer|min:0',
             'category' => 'required|integer|exists:ad_categories,id',
             'description' => 'required|string',
         ];

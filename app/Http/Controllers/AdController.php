@@ -16,7 +16,9 @@ use App\Models\AdCategory;
 use App\Models\AdStatus;
 use App\Models\JobType;
 use App\Services\AdService;
+use App\Services\MessageService;
 use App\Services\ReportedAdService;
+use DB;
 use Illuminate\Http\Request;
 
 class AdController extends Controller
@@ -29,6 +31,7 @@ class AdController extends Controller
     public function index(AdIndexRequest $request)
     {
         $ads = AdService::getAds();
+
         return view('ads.index', compact('ads'));
     }
 
@@ -53,8 +56,17 @@ class AdController extends Controller
      */
     public function store(AdStoreRequest $request)
     {
-        $ad = AdService::createAd($request->all());
-        return redirect()->route('ads.show', $ad->id);
+        try {
+            DB::beginTransaction();
+            $ad = AdService::createAd($request->all());
+            DB::commit();
+            MessageService::success('Обявата е създадена успешно!');
+            return redirect()->route('ads.show', $ad->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при създаването на обявата!');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -91,8 +103,17 @@ class AdController extends Controller
      */
     public function update(AdUpdateRequest $request, Ad $ad)
     {
-        AdService::updateAd($ad, $request->all());
-        return redirect()->route('ads.show', $ad->id);
+        try {
+            DB::beginTransaction();
+            AdService::updateAd($ad, $request->all());
+            DB::commit();
+            MessageService::success('Обявата е редактирана успешно!');
+            return redirect()->route('ads.show', $ad->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при редактирането на обявата!');
+            return redirect()->back()->withInput();
+        }
     }
 
     public function search(AdSearchRequest $request)

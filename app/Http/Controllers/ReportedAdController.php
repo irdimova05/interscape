@@ -6,7 +6,9 @@ use App\Http\Requests\ReportedAd\ReportedAdIndexRequest;
 use App\Http\Requests\ReportedAd\ReportedAdStoreRequest;
 use App\Http\Requests\ReportedAd\ReportedAdUpdateRequest;
 use App\Models\Ad;
+use App\Services\MessageService;
 use App\Services\ReportedAdService;
+use DB;
 
 class ReportedAdController extends Controller
 {
@@ -39,8 +41,17 @@ class ReportedAdController extends Controller
      */
     public function store(ReportedAdStoreRequest $reportAdStoreRequest, Ad $ad)
     {
-        ReportedAdService::reportAd($ad->id, $reportAdStoreRequest->reason);
-        return redirect()->route('ads.show', compact('ad'));
+        try {
+            DB::beginTransaction();
+            ReportedAdService::reportAd($ad->id, $reportAdStoreRequest->reason);
+            DB::commit();
+            MessageService::success('Успешно докладвахте обявата!');
+            return redirect()->route('ads.show', compact('ad'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при докладването на обявата!');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -52,7 +63,16 @@ class ReportedAdController extends Controller
      */
     public function update(ReportedAdUpdateRequest $request, Ad $ad)
     {
-        ReportedAdService::releaseAd($ad);
-        return redirect()->route('reported-ads.index');
+        try {
+            DB::beginTransaction();
+            ReportedAdService::releaseAd($ad);
+            DB::commit();
+            MessageService::success('Успешно освободихте обявата!');
+            return redirect()->route('reported-ads.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при освобождаването на обявата!');
+            return redirect()->back();
+        }
     }
 }

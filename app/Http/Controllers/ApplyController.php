@@ -84,4 +84,34 @@ class ApplyController extends Controller
 
         return view('applies.components.applies_results', compact('applies'));
     }
+
+    public function approve(Apply $apply)
+    {
+        try {
+            DB::beginTransaction();
+            ApplyService::approveApply($apply);
+            DB::commit();
+            MessageService::success('Успешно одобрихте кандидатура!');
+            return redirect()->route('applies.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при одобряването на кандидатура!');
+            return redirect()->back();
+        }
+    }
+
+    public function reject(Apply $apply)
+    {
+        try {
+            DB::beginTransaction();
+            ApplyService::rejectApply($apply);
+            DB::commit();
+            MessageService::success('Успешно отхвърлихте кандидатура!');
+            return redirect()->route('applies.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при отхвърлянето на кандидатура!');
+            return redirect()->back();
+        }
+    }
 }

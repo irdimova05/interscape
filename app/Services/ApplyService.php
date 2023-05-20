@@ -28,6 +28,8 @@ class ApplyService
         if ($user->hasRole('employer')) {
             $query->whereHas('ad.employer', function ($query) use ($user) {
                 $query->where('id', $user->employer->id);
+            })->whereHas('applyStatus', function ($query) {
+                $query->where('slug', '!=', 'rejected');
             });
         }
 

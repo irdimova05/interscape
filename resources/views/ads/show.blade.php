@@ -176,7 +176,7 @@
                                             </svg>
                                             <span>Докладвай</span>
                                         </button>
-                                        <div x-cloak class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 z-40 flex justify-center items-center" x-show="showModal">
+                                        <div x-cloak class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 z-40 flex justify-center items-center" x-show="showModal" style="display: none">
                                             <div class="bg-white rounded-lg w-1/2">
                                                 <div class="border-b px-4 py-2 flex justify-between items-center">
                                                     <h3 class="font-semibold text-lg">Докладване на обява</h3>

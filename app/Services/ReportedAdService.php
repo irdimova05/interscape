@@ -11,7 +11,6 @@ class ReportedAdService
     {
         $reportedAds = Ad::where('is_reported', true)->get();
 
-
         if ($callback) {
             $reportedAds = $callback($reportedAds);
         }

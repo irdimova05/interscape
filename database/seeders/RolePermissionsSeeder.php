@@ -24,6 +24,7 @@ class RolePermissionsSeeder extends Seeder
                 Permission::create(['name' => 'create.employer']),
                 Permission::create(['name' => 'deactivate.employer']),
                 Permission::create(['name' => 'list.reported_ad']),
+                Permission::create(['name' => 'block.ad']),
                 Permission::create(['name' => 'release.reported_ad']),
                 Permission::create(['name' => 'block.reported_ad']),
                 Permission::create(['name' => 'list.user']),

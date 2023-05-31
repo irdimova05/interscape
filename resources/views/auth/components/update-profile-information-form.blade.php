@@ -50,8 +50,24 @@
             @endrole
 
             @role('student')
+            <x-input-label for="university" :value="__('Университет:')" />
+            {!! Form::select('university', $universities, null,["class" => "mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('university')" />
+
+            <x-input-label for="specialty" :value="__('Специалност:')" />
+            {!! Form::select('specialty', $specialties, null,["class" => "mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('specialty')" />
+
+            <x-input-label for="course" :value="__('Курс:')" />
+            {!! Form::select('course', $courses, null,["class" => "mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('course')" />
+
+            <x-input-label for="success" :value="__('Среден успех до момента:')" />
+            {!! Form::number('success', null, ["rows"=>"4", "class"=>"mb-3 block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('success')" />
+
             <x-input-label for="description" :value="__('За мен:')" />
-            {!! Form::textarea('description', null, ["rows"=>"4", "class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+            {!! Form::textarea('description', null, ["rows"=>"4", "class"=>"mb-3 block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
             @endrole
 
@@ -177,7 +193,7 @@
 
             <div class="inline-flex">
                 <div class="flex items-center gap-4">
-                    <x-primary-button x-show="cookiesAccepted && personalDataAccepted" class="text-white bg-gradient-to-r mt-3 from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">{{ __('Запази') }}</x-primary-button>
+                    <x-primary-button class="text-white bg-gradient-to-r mt-3 from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">{{ __('Запази') }}</x-primary-button>
 
                     @if (session('status') === 'password-updated')
                     <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Паролата е променена успешно.') }}</p>

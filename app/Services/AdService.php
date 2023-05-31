@@ -73,9 +73,15 @@ class AdService
         $ad->update($data);
     }
 
-    public static function updateStatus($ad, $adStatusId)
+    public static function updateStatus($ad, $adStatusSlug)
     {
-        $ad->ad_status_id = $adStatusId;
+        $adStatus = AdStatus::where('slug', $adStatusSlug)->firstOrFail()->id;
+        $ad->ad_status_id = $adStatus;
+
+        if ($adStatusSlug === AdStatus::BLOCKED) {
+            $ad->is_reported = false;
+        }
+
         $ad->save();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Ad\AdApplyRequest;
+use App\Http\Requests\Ad\AdBlockRequest;
 use App\Http\Requests\Ad\AdCreateRequest;
 use App\Http\Requests\Ad\AdEditRequest;
 use App\Http\Requests\Ad\AdIndexRequest;
@@ -126,8 +127,13 @@ class AdController extends Controller
 
     public function status(AdStatusRequest $request, Ad $ad)
     {
-        $adStatus = AdStatus::where('slug', $request->get('status'))->firstOrFail()->id;
-        AdService::updateStatus($ad, $adStatus);
+        AdService::updateStatus($ad, $request->get('status'));
+        return redirect()->back();
+    }
+
+    public function blockAd(AdBlockRequest $request, Ad $ad)
+    {
+        AdService::updateStatus($ad, AdStatus::BLOCKED);
         return redirect()->back();
     }
 }

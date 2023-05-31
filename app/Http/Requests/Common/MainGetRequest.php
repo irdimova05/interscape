@@ -8,7 +8,15 @@ abstract class MainGetRequest extends Request
 {
     public function __construct()
     {
-        parent::__construct();
+        $baseRequest = request();
+        parent::__construct(
+            $baseRequest->query->all(),
+            $baseRequest->request->all(),
+            $baseRequest->attributes->all(),
+            $baseRequest->cookies->all(),
+            $baseRequest->files->all(),
+            $baseRequest->server->all()
+        );
         $this->authorize();
     }
 

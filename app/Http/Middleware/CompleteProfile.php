@@ -17,7 +17,7 @@ class CompleteProfile
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && !(Auth::user()->is_profile_completed)) {
+        if (Auth::check() && !(Auth::user()->is_profile_completed) && $request->route()->getName() !== 'profile.update') {
             return redirect()->route('register.complete');
         }
 

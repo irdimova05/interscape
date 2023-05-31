@@ -23,7 +23,9 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
             'description' => 'required|string',
-            // 'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'required|image|max:2048',
+            'current_password' => 'sometimes|required_with:password|string|min:8|current_password',
+            'password' => 'sometimes|required_with:current_password|string|min:8|confirmed',
         ];
 
         if ($this->user()->hasRole('student')) {
@@ -50,7 +52,7 @@ class ProfileUpdateRequest extends FormRequest
             'phone' => 'required|string|max:10',
             'address' => 'required|string|max:255',
             'website' => 'required|string|max:255',
-            'employee_ranges' => 'required|integer|exists:employee_ranges,id',
+            'employee_range' => 'required|integer|exists:employee_ranges,id',
         ];
     }
 
@@ -71,8 +73,7 @@ class ProfileUpdateRequest extends FormRequest
             'description.required' => 'Описанието е задължително.',
             'description.string' => 'Невалидно описание.',
             'photo.required' => 'Снимката е задължителна.',
-            'photo.image' => 'Невалидна снимка.',
-            'photo.mimes' => 'Невалиден формат на снимката.',
+            'photo.image' => 'Невалиден формат на снимката.',
             'photo.max' => 'Снимката трябва да бъде по-малка от 2MB.',
             'success.required' => 'Успехът е задължителен.',
             'success.numeric' => 'Невалиден успех.',
@@ -93,9 +94,17 @@ class ProfileUpdateRequest extends FormRequest
             'website.required' => 'Уебсайтът е задължителен.',
             'website.string' => 'Невалиден уебсайт.',
             'website.max' => 'Уебсайтът трябва да бъде по-малко от 255 символа.',
-            'employee_ranges_id.required' => 'Размерът на фирмата е задължителен.',
-            'employee_ranges_id.integer' => 'Невалиден размер на фирмата.',
-            'employee_ranges_id.exists' => 'Невалиден размер на фирмата.',
+            'employee_range.required' => 'Размерът на фирмата е задължителен.',
+            'employee_range.integer' => 'Невалиден размер на фирмата.',
+            'employee_range.exists' => 'Невалиден размер на фирмата.',
+            'current_password.required_with' => 'Текущата парола е задължителна.',
+            'current_password.string' => 'Невалидна текуща парола.',
+            'current_password.min' => 'Текущата парола трябва да бъде поне 8 символа.',
+            'current_password.current_password' => 'Невалидна текуща парола.',
+            'password.required_with' => 'Паролата е задължителна.',
+            'password.string' => 'Невалидна парола.',
+            'password.min' => 'Паролата трябва да бъде поне 8 символа.',
+            'password.confirmed' => 'Паролите не съвпадат.',
         ];
     }
 }

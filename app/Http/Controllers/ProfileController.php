@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Course;
 use App\Models\EmployeeRanges;
 use App\Models\Specialty;
+use App\Models\Status;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
@@ -45,6 +46,7 @@ class ProfileController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $photoPath = Storage::url(Storage::disk('public')->putFile('profile_pictures', $request->file('photo')));
 
         if ($user->isStudent()) {
             $user->student->specialty_id = $request->specialty;
@@ -61,14 +63,15 @@ class ProfileController extends Controller
             $user->employer->phone = $request->phone;
             $user->employer->address = $request->address;
             $user->employer->website = $request->website;
-            $photoPath = $request->photo->storePublicly('public/profiles');
-            $user->employer->logo = Storage::url($photoPath);
-            $user->employer->employee_ranges_id = $request->employee_ranges;
+            $user->employer->logo = $photoPath;
+            $user->employer->employee_range_id = $request->employee_range;
             $user->employer->save();
         } else {
-            $photoPath = $request->photo->storePublicly('public/profiles');
-            $user->profile_picture = Storage::url($photoPath);
+            $user->profile_picture = $photoPath;
         }
+
+        $user->is_profile_completed = true;
+        $user->status_id = Status::where('slug', Status::ACTIVE)->first()->id;
 
         $user->save();
 

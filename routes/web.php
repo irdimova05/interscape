@@ -37,6 +37,7 @@ Route::middleware(['auth', 'complete.profile', 'inactive.profile'])->group(funct
     Route::put('/applies/{apply}/reject', [ApplyController::class, 'reject'])->name('applies.reject');
     Route::resource('applies', ApplyController::class)->only(['index', 'show', 'store']);
 
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

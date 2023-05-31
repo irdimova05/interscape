@@ -14,7 +14,7 @@
         @endrole
     </header>
 
-    {!! Form::open(['route'=>'profile.update', 'method'=>'patch'], ['class'=>"mt-6 space-y-6"]) !!}
+    {!! Form::open(['route'=>'profile.update', 'method'=>'post', 'files'=>true], ['class'=>"mt-6 space-y-6"]) !!}
 
     <div class="grid grid-cols-2">
 
@@ -22,14 +22,14 @@
             @unlessrole('employer')
             <div class="justify-center items-center">
                 <div>
-                    <x-input-label for="name" :value="__('Име:')" />
+                    <x-input-label for="name" :value="__('Име:')" required />
                     <x-text-input id="name" name="name" type="text" class="mt-1 block w-full mb-3 " :value=" old('name', null)" required autofocus autocomplete="off" />
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>
 
                 <div>
-                    <x-input-label for="email" :value="__('Имейл:')" />
-                    <x-text-input id="email" name="email" type="email" class="mt-1 block w-full mb-3 " :value="old('email', null)" required autofocus autocomplete="off" />
+                    <x-input-label for="email" :value="__('Имейл:')" required />
+                    <x-text-input id="email" name="email" type="email" class="mt-1 block w-full mb-3 " :value="old('email', $user->email)" required autofocus autocomplete="off" />
                     <x-input-error class="mt-2" :messages="$errors->get('email')" />
                 </div>
             </div>
@@ -37,62 +37,68 @@
 
             @role('employer')
             <div>
-                <x-input-label for="name" :value="__('Име:')" />
+                <x-input-label for="name" :value="__('Име:')" required />
                 <x-text-input id="name" name="name" type="text" class="mt-1 block w-full mb-3 " :value="old('name', null)" required autofocus autocomplete="off" />
                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
             </div>
 
             <div>
-                <x-input-label for="email" :value="__('Имейл:')" />
-                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full mb-3 " :value="old('email', null)" required autofocus autocomplete="off" />
+                <x-input-label for="email" :value="__('Имейл:')" required />
+                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full mb-3 " :value="old('email', $user->email)" required autofocus autocomplete="off" />
                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
             </div>
             @endrole
 
             @role('student')
-            <x-input-label for="university" :value="__('Университет:')" />
+            <x-input-label for="university" :value="__('Университет:')" required />
             {!! Form::select('university', $universities, null,["class" => "mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
             <x-input-error class="mt-2" :messages="$errors->get('university')" />
 
-            <x-input-label for="specialty" :value="__('Специалност:')" />
+            <x-input-label for="specialty" :value="__('Специалност:')" required />
             {!! Form::select('specialty', $specialties, null,["class" => "mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
             <x-input-error class="mt-2" :messages="$errors->get('specialty')" />
 
-            <x-input-label for="course" :value="__('Курс:')" />
+            <x-input-label for="course" :value="__('Курс:')" required />
             {!! Form::select('course', $courses, null,["class" => "mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
             <x-input-error class="mt-2" :messages="$errors->get('course')" />
 
-            <x-input-label for="success" :value="__('Среден успех до момента:')" />
+            <x-input-label for="success" :value="__('Среден успех до момента:')" required />
             {!! Form::number('success', null, ["rows"=>"4", "class"=>"mb-3 block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
             <x-input-error class="mt-2" :messages="$errors->get('success')" />
 
-            <x-input-label for="description" :value="__('За мен:')" />
+            <x-input-label for="description" :value="__('За мен:')" required />
             {!! Form::textarea('description', null, ["rows"=>"4", "class"=>"mb-3 block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
             @endrole
 
             @role('employer')
-            <x-input-label for="firmName" :value="__('Име на фирмата:')" />
+            <x-input-label for="firmName" :value="__('Име на фирмата:')" required />
             {!! Form::text('firmName', null, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('firmName')" />
 
-            <x-input-label for="firmEmail" :value="__('Имейл на фирмата:')" />
+            <x-input-label for="firmEmail" :value="__('Имейл на фирмата:')" required />
             {!! Form::text('firmEmail', null, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('firmEmail')" />
 
-            <x-input-label for="phone" :value="__('Тел. номер:')" />
+            <x-input-label for="phone" :value="__('Тел. номер:')" required />
             {!! Form::text('phone', null, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
 
-            <x-input-label for="address" :value="__('Адрес:')" />
+            <x-input-label for="address" :value="__('Адрес:')" required />
             {!! Form::text('address', null, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('address')" />
 
-            <x-input-label for="website" :value="__('Уеб сайт:')" />
+            <x-input-label for="website" :value="__('Уеб сайт:')" required />
             {!! Form::text('website', null, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('website')" />
 
-            <x-input-label for="employeeRange" :value="__('Брой служители:')" />
-            {!! Form::select('employeeRange', $employeeRanges, null, ['class' => "border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
+            <x-input-label for="employee_range" :value="__('Брой служители:')" required />
+            {!! Form::select('employee_range', $employeeRanges, null, ['class' => "border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"]) !!}
+            <x-input-error class="mt-2" :messages="$errors->get('employee_range')" />
 
-            <x-input-label for="description" class="mt-4" :value="__('За фирмата:')" />
+            <x-input-label for="description" class="mt-4" :value="__('За фирмата:')" required />
             {!! Form::textarea('description', null, ["rows"=>"4", "class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-input-error class="mt-2" :messages="$errors->get('email')" required />
             @endrole
 
             <h2 class="text-lg font-medium text-gray-900">
@@ -128,7 +134,7 @@
 
             <div x-data="{photoName: null, photoPreview: null}" class=" col-span-6 ml-2 sm:col-span-4 md:mr-3">
                 <!-- Photo File Input -->
-                <input type="file" class="hidden" x-ref="photo" x-on:change="
+                <input name="photo" type="file" class="hidden" x-ref="photo" x-on:change="
                         photoName = $refs.photo.files[0].name;
                         const reader = new FileReader();
                         reader.onload = (e) => {
@@ -138,34 +144,19 @@
 
                 @unlessrole('employer')
                 <label class="block text-gray-700 text-sm font-bold mb-2 text-center" for="photo">
-                    Профилна снимка <span class="text-red-600"> </span>
+                    Профилна снимка <span class="text-red-600"> * </span>
                 </label>
-
-                <div class="text-center">
-                    <!-- Current Profile Photo -->
-                    <div class="mt-2" x-show="! photoPreview">
-                        <img src="url('images/default-profile-picture.svg')" class="w-40 h-40 m-auto rounded-full shadow" alt="$user->name">
-                    </div>
-                    <!-- New Profile Photo Preview -->
-                    <div class="mt-2" x-show="photoPreview" style="display: none;">
-                        <span class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
-                        </span>
-                    </div>
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
-                        Изберете снимка
-                    </button>
-                </div>
                 @endunlessrole
 
                 @role('employer')
                 <label class="block text-gray-700 text-sm font-bold mb-2 text-center" for="photo">
-                    Лого на фирмата <span class="text-red-600"> </span>
+                    Лого на фирмата <span class="text-red-600"> * </span>
                 </label>
-
+                @endrole
                 <div class="text-center">
                     <!-- Current Profile Photo -->
                     <div class="mt-2" x-show="! photoPreview">
-                        <img src="url('images/default-profile-picture.svg')" class="w-40 h-40 m-auto rounded-full shadow" alt="">
+                        <img src="{{url('images/default-profile-picture.svg')}}" class="w-40 h-40 m-auto rounded-full shadow" alt="">
                     </div>
                     <!-- New Profile Photo Preview -->
                     <div class="mt-2" x-show="photoPreview" style="display: none;">
@@ -175,21 +166,21 @@
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
                         Изберете снимка
                     </button>
+                    <x-input-error class="mt-2" :messages="$errors->get('photo')" />
                 </div>
-                @endrole
+
             </div>
         </div>
-        <div x-data="{ cookiesAccepted: false, personalDataAccepted: false }">
+        <div>
             <label class="flex mt-4 items-center">
-                <input type="checkbox" class="form-checkbox" x-model="cookiesAccepted">
-                <span class="ml-2 text-sm">Приемам <a href=route() class="text-blue-600 underline">бисквитките</a></span>
+                <input type="checkbox" class="form-checkbox">
+                <span class="ml-2 text-sm">Приемам <a href="" class="text-blue-600 underline">бисквитките</a></span>
             </label>
 
             <label class="flex items-center mt-4">
-                <input type="checkbox" class="form-checkbox" x-model="personalDataAccepted">
-                <span class="ml-2 text-sm">Съгласен съм с <a href=route() class="text-blue-600 underline">общите условия</a> и <a href=route() class="text-blue-600 underline">обработката на лични данни</a></span>
+                <input type="checkbox" class="form-checkbox">
+                <span class="ml-2 text-sm">Съгласен съм с <a href="" class="text-blue-600 underline">общите условия</a> и <a href="" class="text-blue-600 underline">обработката на лични данни</a></span>
             </label>
-
 
             <div class="inline-flex">
                 <div class="flex items-center gap-4">
@@ -199,8 +190,7 @@
                     <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Паролата е променена успешно.') }}</p>
                     @endif
                 </div>
-                {!! Form::close() !!}
-                <!-- Authentication -->
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
@@ -210,4 +200,7 @@
                     </x-secondary-button>
                 </form>
             </div>
+        </div>
+    </div>
+    {!! Form::close() !!}
 </section>

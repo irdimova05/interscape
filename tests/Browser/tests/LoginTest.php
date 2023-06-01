@@ -9,7 +9,8 @@ use Tests\DuskTestCase;
 class LoginTest extends DuskTestCase
 {
     /**
-     * Succsessful login as completed active user.
+     * Successful login as completed active user.
+     * @group login
      */
     public function testSuccessfulLogin(): void
     {
@@ -24,14 +25,15 @@ class LoginTest extends DuskTestCase
     }
 
     /**
-     * Succsessful login as completed inactive user.
+     * Successful login as completed inactive user.
+     * @group login
      */
     public function testSuccessfulLoginAsInactiveUser(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')
-                ->type('email', 'abv@test.com')
-                ->type('password', '65124563')
+                ->type('email', 'inactive@test.com')
+                ->type('password', 'inactive')
                 ->press('Вход')
                 ->assertPathIs('/inactive-profile');
             $browser->driver->manage()->deleteAllCookies();
@@ -40,6 +42,7 @@ class LoginTest extends DuskTestCase
 
     /**
      * Succsessful login as incompleted user.
+     * @group login
      */
     public function testLoginAsIncompletedUser(): void
     {
@@ -55,6 +58,7 @@ class LoginTest extends DuskTestCase
 
     /**
      * Unsuccessful login.
+     * @group login
      */
     public function testUnsuccessfulLogin(): void
     {
@@ -70,6 +74,7 @@ class LoginTest extends DuskTestCase
 
     /**
      * Login without credentials.
+     * @group login
      */
     public function testLoginWithoutCredentials(): void
     {
@@ -83,6 +88,7 @@ class LoginTest extends DuskTestCase
 
     /**
      * Login without email.
+     * @group login
      */
     public function testLoginWithoutEmail(): void
     {
@@ -97,6 +103,7 @@ class LoginTest extends DuskTestCase
 
     /**
      * Login without password.
+     * @group login
      */
     public function testLoginWithoutPassword(): void
     {
@@ -110,22 +117,8 @@ class LoginTest extends DuskTestCase
     }
 
     /**
-     * Login as inactive user
-     */
-    public function testLoginAsInactiveUser(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/login')
-                ->type('email', 'inactive@test.com')
-                ->type('password', 'inactive')
-                ->press('Вход')
-                ->assertPathIs('/inactive-profile');
-            $browser->driver->manage()->deleteAllCookies();
-        });
-    }
-
-    /**
      * Test SQL injection.
+     * @group login
      */
     public function testSQLInjection(): void
     {
@@ -141,6 +134,7 @@ class LoginTest extends DuskTestCase
 
     /**
      * Test brute force attack.
+     * @group login
      */
     public function testBruteForceAttack(): void
     {
@@ -148,14 +142,23 @@ class LoginTest extends DuskTestCase
         $passwordList = ['password', 'password123', '123456', '12345678', 'qwerty', 'abc123', 'monkey', '1234567', 'letmein', 'trustno1'];
 
         $this->browse(function (Browser $browser) use ($usernameList, $passwordList) {
+
             foreach ($usernameList as $username) {
                 foreach ($passwordList as $password) {
                     $browser->visit('/login')
                         ->type('email', $username)
                         ->type('password', $password)
                         ->press('Вход')
-                        ->assertPathIs('/login');
-                    $browser->driver->manage()->deleteAllCookies();
+                        ->pause(1000);
+
+
+                    try {
+                        $browser->assertSee('Превишихте лимита на опитите.');
+                        break 2;
+                    } catch (\Exception $e) {
+                    }
+
+                    $browser->assertPathIs('/login');
                 }
             }
         });

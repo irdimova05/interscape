@@ -66,9 +66,11 @@ class UserPolicy
 
         if ($model->status_id === Status::where('slug', Status::ACTIVE)->first()->id) {
             return $user->hasPermissionTo('deactivate.student') || $user->hasPermissionTo('deactivate.employer');
-        } else if ($model->status_id === Status::where('slug', Status::ACTIVE)->first()->id) {
+        } else if ($model->status_id === Status::where('slug', Status::INACTIVE)->first()->id) {
             return $user->hasPermissionTo('activate.student') || $user->hasPermissionTo('activate.employer');
         }
+
+
 
         return false;
     }

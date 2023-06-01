@@ -55,6 +55,7 @@ class UserController extends Controller
             DB::beginTransaction();
             UserService::createUser($request->all());
             MessageService::success('Успешно създадохте потребител!');
+            DB::commit();
             return redirect()->route('users.index');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -105,9 +106,18 @@ class UserController extends Controller
 
     public function status(UserStatusRequest $request, User $user)
     {
-        $status = Status::where('slug', $request->get('status'))->firstOrFail()->id;
-        UserService::updateStatus($user, $status);
-        return redirect()->back();
+        try {
+            DB::beginTransaction();
+            $status = Status::where('slug', $request->get('status'))->firstOrFail()->id;
+            UserService::updateStatus($user, $status);
+            MessageService::success('Успешно променихте статуса на потребителя!');
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при промяната на статуса на потребителя!');
+            return redirect()->back();
+        }
     }
 
     public function downloadTemplate()

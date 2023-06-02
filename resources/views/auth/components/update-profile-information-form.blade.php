@@ -110,19 +110,19 @@
             </p>
 
             <div>
-                <x-input-label for="current_password" class="m-1" :value="__('Настояща парола:')" />
+                <x-input-label for="current_password" class="m-1" :value="__('Настояща парола:')" required />
                 <x-text-input id="current_password" name="current_password" type="password" class="p-2.5 block w-full" autocomplete="current-password" />
                 <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
             </div>
 
             <div>
-                <x-input-label for="password" class="m-1" :value="__('Нова парола:')" />
+                <x-input-label for="password" class="m-1" :value="__('Нова парола:')" required />
                 <x-text-input id="password" name="password" type="password" class="p-2.5 block w-full" autocomplete="new-password" />
                 <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
             </div>
 
             <div>
-                <x-input-label for="password_confirmation" class="m-1" :value="__('Повторете паролата:')" />
+                <x-input-label for="password_confirmation" class="m-1" :value="__('Повторете паролата:')" required />
                 <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="p-2.5 block w-full" autocomplete="new-password" />
                 <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
             </div>

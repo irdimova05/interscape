@@ -127,8 +127,17 @@ class AdController extends Controller
 
     public function status(AdStatusRequest $request, Ad $ad)
     {
-        AdService::updateStatus($ad, $request->get('status'));
-        return redirect()->back();
+        try {
+            DB::beginTransaction();
+            AdService::updateStatus($ad, $request->get('status'));
+            DB::commit();
+            MessageService::success('Статусът на обявата е променен успешно!');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при промяната на статуса на обявата!');
+            return redirect()->back();
+        }
     }
 
     public function blockAd(AdBlockRequest $request, Ad $ad)

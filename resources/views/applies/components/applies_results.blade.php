@@ -7,8 +7,21 @@
                     <img class="h-full w-full object-cover object-center" src="{{ $apply->user->profile_picture }}" alt="{{ $apply->user->name }}" />
                 </a>
                 <div class="p-5">
-                    <h3 class="text-xl font-bold tracking-tight text-gray-900 ">
-                        <a href="{{ route('applies.show', $apply->id) }}">{{ $apply->user->name }}</a>
+                    <h3 class="text-xl font-bold tracking-tight text-gray-900">
+                        <div class="inline-flex">
+                            <a href="{{ route('applies.show', $apply->id) }}">{{ $apply->user->name }}</a>
+                            @if ($apply->applyStatus->slug == 'approved')
+                            <div class="ml-2">
+                                <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M20 6L9 17L4 12" stroke="#08bf0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            @endif
+                        </div>
                     </h3>
                     <span class="text-gray-500 ">{{ $apply->user->student->course->name_formatted}}, {{$apply->user->student->specialty->education->name }}</span>
                     <p class="mt-3 font-light text-gray-500 ">{{ $apply->user->student->specialty->name }}</p>

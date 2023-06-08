@@ -25,7 +25,7 @@ class ApplyStoreRequest extends MainFormRequest
     public function rules()
     {
         return [
-            'file' => 'required|file',
+            'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
             'description' => 'nullable|string',
         ];
     }
@@ -39,6 +39,8 @@ class ApplyStoreRequest extends MainFormRequest
     {
         return [
             'file.required' => 'Моля, прикачете автобиография.',
+            'file.file' => 'Невалиден файл.',
+            'file.mimes' => 'Невалиден формат на файла.',
         ];
     }
 }

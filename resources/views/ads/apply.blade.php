@@ -8,7 +8,6 @@
                 <div class="sm:col-span-2">
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="file_input">Прикачете своята автобиография:</label>
                     @include('components.upload-file', ['name' => 'file_input', 'id'=>'file_input'])
-                    <x-input-error :messages="$errors->get('file')" class="mt-2" />
                     <label for="description" class="block mb-2 text-sm font-medium text-gray-900 mt-5">Мотивационно писмо:</label>
                     {!! Form::textarea('description', null, ["class" => "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 ", "placeholder"=>"Напишете защо според вас сте подходящи за тази позиция..."]) !!}
                 </div>

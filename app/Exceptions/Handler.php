@@ -47,14 +47,4 @@ class Handler extends ExceptionHandler
             //
         });
     }
-
-    public function render($request, Throwable $exception)
-    {
-        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
-            return parent::render($request, $exception);
-        }
-
-        // Показване на страницата за грешка 500 при възникване на грешка
-        return response()->view('errors.500', [], 500);
-    }
 }

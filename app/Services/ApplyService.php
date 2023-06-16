@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Apply;
+use App\Models\ApplyStatus;
 use App\Models\User;
 
 class ApplyService
@@ -27,6 +28,8 @@ class ApplyService
         if ($user->hasRole('employer')) {
             $query->whereHas('ad.employer', function ($query) use ($user) {
                 $query->where('id', $user->employer->id);
+            })->whereHas('applyStatus', function ($query) {
+                $query->where('slug', '!=', 'rejected');
             });
         }
 
@@ -69,5 +72,23 @@ class ApplyService
         $user = auth()->user();
         $ads = $user->employer->ads()->where('ad_status_id', '!=', 3)->pluck('title', 'id');
         return $ads;
+    }
+
+    public static function approveApply(Apply $apply)
+    {
+        $status = ApplyStatus::where('slug', ApplyStatus::APPROVED)->first();
+        if ($status) {
+            $apply->apply_status_id = $status->id;
+            $apply->save();
+        }
+    }
+
+    public static function rejectApply(Apply $apply)
+    {
+        $status = ApplyStatus::where('slug', ApplyStatus::REJECTED)->first();
+        if ($status) {
+            $apply->apply_status_id = $status->id;
+            $apply->save();
+        }
     }
 }

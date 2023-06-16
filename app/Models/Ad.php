@@ -17,6 +17,7 @@ class Ad extends Model
         'ad_status_id',
         'ad_category_id',
         'job_type_id',
+        'is_reported',
     ];
 
     public function employer()
@@ -42,5 +43,15 @@ class Ad extends Model
     public function applies()
     {
         return $this->hasMany(Apply::class);
+    }
+
+    public function favorite()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
     }
 }

@@ -45,4 +45,9 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function inactive(Request $request)
+    {
+        return view('auth.inactive-profile');
+    }
 }

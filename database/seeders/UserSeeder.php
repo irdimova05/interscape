@@ -53,6 +53,17 @@ class UserSeeder extends Seeder
             ->create()
             ->assignRole(Role::findByName('employer'));
 
+        User::factory()
+            ->state(fn (array $attributes) =>
+            [
+                'name' => 'inactive',
+                'email' => 'inactive@test.com',
+                'password' => Hash::make('inactive'),
+                'status_id' => Status::where('slug', Status::INACTIVE)->first()->id,
+            ])
+            ->create()
+            ->assignRole(Role::findByName('employer'));
+
         $users = User::factory()
             ->count(30)
             ->state(new Sequence(

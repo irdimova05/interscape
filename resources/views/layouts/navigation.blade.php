@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('ads.index') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-9 w-auto fill-current " />
                     </a>
                 </div>
 
@@ -45,6 +45,11 @@
                         {{ __('Работодатели') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('favorites.index')" :active="request()->routeIs('favorites.index')">
+                        {{ __('Любими') }}
+                    </x-nav-link>
+                </div>
                 @endrole
                 @endunlessrole
 
@@ -52,6 +57,11 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         {{ __('Потребители') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('reported-ads.index')" :active="request()->routeIs('reported-ads.index')">
+                        {{ __('Докладвани обяви') }}
                     </x-nav-link>
                 </div>
                 @endrole
@@ -63,7 +73,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <img class="mx-auto h-8 w-8 rounded-full mr-2" src="{{ Auth::user()->hasRole('employer') ? Auth::user()->employer->logo : Auth::user()->profile_picture }}" alt="{{Auth::user()->name}}">
+                            <img class="mx-auto h-8 w-8 rounded-full mr-2" src="{{ (Auth::user()->hasRole('employer') ? optional(Auth::user()->employer)->logo : Auth::user()->profile_picture) ?: url('images/default-profile-picture.svg') }}" alt="{{Auth::user()->name}}">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">
@@ -128,11 +138,18 @@
             <x-responsive-nav-link :href="route('employers.index')" :active="request()->routeIs('employers.index')">
                 {{ __('Работодатели') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('favorites.index')" :active="request()->routeIs('favorites.index')">
+                {{ __('Любими') }}
+            </x-responsive-nav-link>
             @endunlessrole
 
             @role('admin')
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                 {{ __('Потребители') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('reported-ads.index')" :active="request()->routeIs('reported-ads.index')">
+                {{ __('Докладвани обяви') }}
             </x-responsive-nav-link>
             @endrole
         </div>

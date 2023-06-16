@@ -15,7 +15,7 @@
         @csrf
     </form>
 
-    {!! Form::open(['route'=>'profile.update'], ['class'=>"mt-6 space-y-6"] ) !!}
+    {!! Form::open(['route'=>['users.update', $user->id], 'method'=>'put'], ['class'=>"mt-6 space-y-6", 'enctype'=>"multipart/form-data"] ) !!}
 
     <div class="grid grid-cols-2">
 
@@ -52,6 +52,18 @@
 
             <div>
                 @role('student')
+                <x-input-label for="specialty" :value="__('Специалност:')" />
+                {!! Form::select('specialty', $specialty, $user->student->specialty_id, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+                <x-input-error class="mt-2" :messages="$errors->get('specialty')" />
+
+                <x-input-label for="course" :value="__('Курс:')" />
+                {!! Form::select('course', $course, $user->student->course_id, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+                <x-input-error class="mt-2" :messages="$errors->get('course')" />
+
+                <x-input-label for="success" :value="__('Успех:')" />
+                {!! Form::text('success', $user->student->success, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+                <x-input-error class="mt-2" :messages="$errors->get('success')" />
+
                 <x-input-label for="description" :value="__('За мен:')" />
                 {!! Form::textarea('description', $user->student->description, ["rows"=>"4", "class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
@@ -105,7 +117,7 @@
 
             <div x-data="{photoName: null, photoPreview: null}" class=" col-span-6 ml-2 sm:col-span-4 md:mr-3">
                 <!-- Photo File Input -->
-                <input type="file" class="hidden" x-ref="photo" x-on:change="
+                <input name="photo" type="file" class="hidden" x-ref="photo" x-on:change="
                         photoName = $refs.photo.files[0].name;
                         const reader = new FileReader();
                         reader.onload = (e) => {
@@ -126,12 +138,13 @@
                     </div>
                     <!-- New Profile Photo Preview -->
                     <div class="mt-2" x-show="photoPreview" style="display: none;">
-                        <span class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+                        <span name="profilePicture" class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
                         </span>
                     </div>
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
                         Изберете снимка
                     </button>
+                    <x-input-error class="mt-2" :messages="$errors->get('photo')" />
                 </div>
                 @endunlessrole
 
@@ -147,12 +160,13 @@
                     </div>
                     <!-- New Profile Photo Preview -->
                     <div class="mt-2" x-show="photoPreview" style="display: none;">
-                        <span class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+                        <span name="firmLogo" class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
                         </span>
                     </div>
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
                         Изберете снимка
                     </button>
+                    <x-input-error class="mt-2" :messages="$errors->get('photo')" />
                 </div>
                 @endrole
             </div>

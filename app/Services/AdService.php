@@ -22,7 +22,7 @@ class AdService
         if ($user->hasRole('employer')) {
             $query->where('employer_id', $user->employer->id);
 
-            array_push($statuses, AdStatus::INACTIVE);
+            array_push($statuses, AdStatus::INACTIVE, AdStatus::BLOCKED);
         } else if ($user->hasRole('admin')) {
             array_push($statuses, AdStatus::INACTIVE, AdStatus::BLOCKED);
         }
@@ -40,11 +40,13 @@ class AdService
 
     public static function applySearch($query, $search)
     {
-        $query->where('title', 'like', '%' . $search . '%')
-            ->orWhere('id', $search)
-            ->orWhereHas('employer', function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%');
-            });
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', '%' . $search . '%')
+                ->orWhere('id', $search)
+                ->orWhereHas('employer', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+        });
 
         return $query;
     }
@@ -73,9 +75,15 @@ class AdService
         $ad->update($data);
     }
 
-    public static function updateStatus($ad, $adStatusId)
+    public static function updateStatus($ad, $adStatusSlug)
     {
-        $ad->ad_status_id = $adStatusId;
+        $adStatus = AdStatus::where('slug', $adStatusSlug)->firstOrFail()->id;
+        $ad->ad_status_id = $adStatus;
+
+        if ($adStatusSlug === AdStatus::BLOCKED) {
+            $ad->is_reported = false;
+        }
+
         $ad->save();
     }
 }

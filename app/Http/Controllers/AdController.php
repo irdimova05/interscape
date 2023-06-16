@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdStoreRequest;
-use App\Http\Requests\AdUpdateRequest;
+use App\Http\Requests\Ad\AdApplyRequest;
+use App\Http\Requests\Ad\AdBlockRequest;
+use App\Http\Requests\Ad\AdCreateRequest;
+use App\Http\Requests\Ad\AdEditRequest;
+use App\Http\Requests\Ad\AdIndexRequest;
+use App\Http\Requests\Ad\AdSearchRequest;
+use App\Http\Requests\Ad\AdShowRequest;
+use App\Http\Requests\Ad\AdStatusRequest;
+use App\Http\Requests\Ad\AdStoreRequest;
+use App\Http\Requests\Ad\AdUpdateRequest;
 use App\Models\Ad;
 use App\Models\AdCategory;
 use App\Models\AdStatus;
 use App\Models\JobType;
 use App\Services\AdService;
+use App\Services\MessageService;
+use App\Services\ReportedAdService;
+use DB;
 use Illuminate\Http\Request;
 
 class AdController extends Controller
@@ -18,18 +29,20 @@ class AdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(AdIndexRequest $request)
     {
         $ads = AdService::getAds();
+
         return view('ads.index', compact('ads'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param AdCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(AdCreateRequest $request)
     {
         $categories = AdCategory::get()->pluck('name', 'id')->toArray();
         $jobTypes = JobType::get()->pluck('name', 'id')->toArray();
@@ -44,8 +57,17 @@ class AdController extends Controller
      */
     public function store(AdStoreRequest $request)
     {
-        $ad = AdService::createAd($request->all());
-        return redirect()->route('ads.show', $ad->id);
+        try {
+            DB::beginTransaction();
+            $ad = AdService::createAd($request->all());
+            DB::commit();
+            MessageService::success('Обявата е създадена успешно!');
+            return redirect()->route('ads.show', $ad->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при създаването на обявата!');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -54,9 +76,10 @@ class AdController extends Controller
      * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function show(Ad $ad)
+    public function show(AdShowRequest $request, Ad $ad)
     {
-        return view('ads.show', compact('ad'));
+        $reports = ReportedAdService::getReportedAdsReasons($ad);
+        return view('ads.show', compact('ad', 'reports'));
     }
 
     /**
@@ -65,7 +88,7 @@ class AdController extends Controller
      * @param  Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ad $ad)
+    public function edit(AdEditRequest $request, Ad $ad)
     {
         $categories = AdCategory::get()->pluck('name', 'id')->toArray();
         $jobTypes = JobType::get()->pluck('name', 'id')->toArray();
@@ -81,22 +104,20 @@ class AdController extends Controller
      */
     public function update(AdUpdateRequest $request, Ad $ad)
     {
-        AdService::updateAd($ad, $request->all());
-        return redirect()->route('ads.show', $ad->id);
+        try {
+            DB::beginTransaction();
+            AdService::updateAd($ad, $request->all());
+            DB::commit();
+            MessageService::success('Обявата е редактирана успешно!');
+            return redirect()->route('ads.show', $ad->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при редактирането на обявата!');
+            return redirect()->back()->withInput();
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function search(Request $request)
+    public function search(AdSearchRequest $request)
     {
         $ads = AdService::getAds(function ($query) use ($request) {
             return AdService::applySearch($query, $request->get('q'));
@@ -104,15 +125,24 @@ class AdController extends Controller
         return view('ads.components.ads', compact('ads'));
     }
 
-    public function apply(Ad $ad)
+    public function status(AdStatusRequest $request, Ad $ad)
     {
-        return view('ads.apply', compact('ad'));
+        try {
+            DB::beginTransaction();
+            AdService::updateStatus($ad, $request->get('status'));
+            DB::commit();
+            MessageService::success('Статусът на обявата е променен успешно!');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при промяната на статуса на обявата!');
+            return redirect()->back();
+        }
     }
 
-    public function status(Request $request, Ad $ad)
+    public function blockAd(AdBlockRequest $request, Ad $ad)
     {
-        $adStatus = AdStatus::where('slug', $request->get('status'))->firstOrFail()->id;
-        AdService::updateStatus($ad, $adStatus);
+        AdService::updateStatus($ad, AdStatus::BLOCKED);
         return redirect()->back();
     }
 }

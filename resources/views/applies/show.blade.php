@@ -26,9 +26,11 @@
             <p class="mb-4 font-light text-gray-500 sm:mb-5"><a href="{{$apply->file->path}}" download="{{$apply->file->name}}">{{$apply->file->name}}</a></p>
             <p class="mb-2 font-semibold leading-none text-gray-900 ">Мотивационно писмо:</p>
             <p class="mb-4 font-light text-gray-500 sm:mb-5 text-justify">{{ $apply->description }}</p>
-            @if($apply->apply_status_id == 3)
+            @if($apply->applyStatus->slug == \App\Models\ApplyStatus::AWAITING)
+            {!! Form::open(['route'=> ['applies.approve', $apply->id], 'method' => 'put']) !!}
+            {!! Form::hidden('status', \App\Models\ApplyStatus::APPROVED) !!}
             <div class="flex items-center space-x-4">
-                <button type="button" class="inline-flex text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">
+                <button type="submit" class="inline-flex text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">
                     <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -38,7 +40,11 @@
                     </svg>
                     Одобри
                 </button>
-                <button type="button" class="inline-flex text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                {!! Form::close() !!}
+
+                {!! Form::open(['route'=> ['applies.reject', $apply->id], 'method' => 'put']) !!}
+                {!! Form::hidden('status', \App\Models\ApplyStatus::REJECTED) !!}
+                <button type="submit" class="inline-flex text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     <svg class=" w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -48,6 +54,7 @@
                     </svg>
                     Отхвърли
                 </button>
+                {!! Form::close() !!}
             </div>
             @endif
         </div>

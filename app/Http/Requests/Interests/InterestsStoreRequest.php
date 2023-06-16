@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Interests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Common\MainFormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class ApplyStoreRequest extends FormRequest
+class InterestsStoreRequest extends MainFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +14,7 @@ class ApplyStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->user();
-
-        return $user->can('apply.ad');
+        return Gate::authorize('create.interests');
     }
 
     /**
@@ -25,9 +24,6 @@ class ApplyStoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'file' => 'required|file',
-            'description' => 'required|string',
-        ];
+        return [];
     }
 }

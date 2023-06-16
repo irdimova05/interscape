@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ApplyStoreRequest;
+use App\Http\Requests\Apply\ApplyAdsFilterRequest;
+use App\Http\Requests\Apply\ApplyApproveRequest;
+use App\Http\Requests\Apply\ApplyCreateRequest;
+use App\Http\Requests\Apply\ApplyIndexRequest;
+use App\Http\Requests\Apply\ApplyRejectRequest;
+use App\Http\Requests\Apply\ApplyShowRequest;
+use App\Http\Requests\Apply\ApplyStoreRequest;
 use App\Models\Ad;
 use App\Models\Apply;
-use App\Services\AdService;
 use App\Services\ApplyService;
-use Illuminate\Http\Request;
+use App\Services\MessageService;
+use DB;
 
 class ApplyController extends Controller
 {
@@ -16,7 +22,7 @@ class ApplyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ApplyIndexRequest $request)
     {
         $applies = ApplyService::getApplies();
         $ads = ApplyService::getAdsNames();
@@ -28,7 +34,7 @@ class ApplyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Ad $ad)
+    public function create(ApplyCreateRequest $request, Ad $ad)
     {
         return view('ads.apply', compact('ad'));
     }
@@ -41,9 +47,18 @@ class ApplyController extends Controller
      */
     public function store(ApplyStoreRequest $request)
     {
-        $id = $request->ad_id;
-        ApplyService::createApply($request, $id);
-        return redirect()->route('ads.show', $id);
+        try {
+            DB::beginTransaction();
+            $id = $request->ad_id;
+            ApplyService::createApply($request, $id);
+            DB::commit();
+            MessageService::success('Успешно изпратихте кандидатура!');
+            return redirect()->route('ads.show', $id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при изпращането на кандидатура!');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -52,47 +67,13 @@ class ApplyController extends Controller
      * @param  Apply  $apply
      * @return \Illuminate\Http\Response
      */
-    public function show(Apply $apply)
+    public function show(ApplyShowRequest $request, Apply $apply)
     {
         ApplyService::loadApply($apply);
         return view('applies.show', compact('apply'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function adsFilter(Request $request)
+    public function adsFilter(ApplyAdsFilterRequest $request)
     {
         $applies = ApplyService::getApplies(function ($query) use ($request) {
             if (!$request->adId) {
@@ -104,5 +85,35 @@ class ApplyController extends Controller
         });
 
         return view('applies.components.applies_results', compact('applies'));
+    }
+
+    public function approve(ApplyApproveRequest $request, Apply $apply)
+    {
+        try {
+            DB::beginTransaction();
+            ApplyService::approveApply($apply);
+            DB::commit();
+            MessageService::success('Успешно одобрихте кандидатура!');
+            return redirect()->route('applies.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при одобряването на кандидатура!');
+            return redirect()->back();
+        }
+    }
+
+    public function reject(ApplyRejectRequest $request, Apply $apply)
+    {
+        try {
+            DB::beginTransaction();
+            ApplyService::rejectApply($apply);
+            DB::commit();
+            MessageService::success('Успешно отхвърлихте кандидатура!');
+            return redirect()->route('applies.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при отхвърлянето на кандидатура!');
+            return redirect()->back();
+        }
     }
 }

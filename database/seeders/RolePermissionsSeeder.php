@@ -24,32 +24,49 @@ class RolePermissionsSeeder extends Seeder
                 Permission::create(['name' => 'create.employer']),
                 Permission::create(['name' => 'deactivate.employer']),
                 Permission::create(['name' => 'list.reported_ad']),
+                Permission::create(['name' => 'block.ad']),
+                Permission::create(['name' => 'release.reported_ad']),
                 Permission::create(['name' => 'block.reported_ad']),
+                Permission::create(['name' => 'list.user']),
+                Permission::create(['name' => 'show.user']),
             ];
 
         $studentPermissions =
             [
 
-                Permission::create(['name' => 'follow.employer']),
+                Permission::create(['name' => 'list.employer']),
                 Permission::create(['name' => 'show.employer']),
+                Permission::create(['name' => 'employer.interest']),
                 Permission::create(['name' => 'apply.ad']),
+                Permission::create(['name' => 'add.favorites']),
+                Permission::create(['name' => 'remove.favorites']),
+                Permission::create(['name' => 'list.favorites']),
                 Permission::create(['name' => 'report.ad'])
             ];
 
         $employerPermissions =
             [
 
-                Permission::create(['name' => 'follow.student']),
+                Permission::create(['name' => 'student.interest']),
                 Permission::create(['name' => 'create.ad']),
                 Permission::create(['name' => 'edit.ad']),
                 Permission::create(['name' => 'activate.ad']),
                 Permission::create(['name' => 'deactivate.ad']),
                 Permission::create(['name' => 'list.student']),
                 Permission::create(['name' => 'show.student']),
-                Permission::create(['name' => 'list.applies'])
+                Permission::create(['name' => 'list.applies']),
+                Permission::create(['name' => 'show.apply']),
+                Permission::create(['name' => 'approve.apply']),
+                Permission::create(['name' => 'reject.apply']),
             ];
 
         $sharedStudentEmployerPermissions =
+            [
+                Permission::create(['name' => 'list.interests']),
+
+            ];
+
+        $sharedStudentEmployerAdminPermissions =
             [
                 Permission::create(['name' => 'edit.profile']),
                 Permission::create(['name' => 'show.profile']),
@@ -62,8 +79,8 @@ class RolePermissionsSeeder extends Seeder
         $studentRole = Role::create(['name' => 'student']);
         $employerRole = Role::create(['name' => 'employer']);
 
-        $adminRole->syncPermissions($adminPermissions);
-        $studentRole->syncPermissions($studentPermissions, $sharedStudentEmployerPermissions);
-        $employerRole->syncPermissions($employerPermissions, $sharedStudentEmployerPermissions);
+        $adminRole->syncPermissions($adminPermissions, $sharedStudentEmployerAdminPermissions);
+        $studentRole->syncPermissions($studentPermissions, $sharedStudentEmployerPermissions, $sharedStudentEmployerAdminPermissions);
+        $employerRole->syncPermissions($employerPermissions, $sharedStudentEmployerPermissions, $sharedStudentEmployerAdminPermissions);
     }
 }

@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\User\UserCreateRequest;
+use App\Http\Requests\User\UserEditRequest;
+use App\Http\Requests\User\UserImportRequest;
+use App\Http\Requests\User\UserIndexRequest;
+use App\Http\Requests\User\UserSearchRequest;
+use App\Http\Requests\User\UserShowRequest;
+use App\Http\Requests\User\UserStatusRequest;
+use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Status;
 use App\Models\User;
+use App\Services\MessageService;
 use App\Services\UserService;
-use Illuminate\Http\Request;
+use DB;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -16,7 +25,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UserIndexRequest $request)
     {
         $users = UserService::getUsers();
         return view('users.index', compact('users'));
@@ -27,7 +36,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(UserCreateRequest $request)
     {
         $roles = Role::all()->pluck('name', 'id')->transform(function ($name) {
             return trans("roles.$name");
@@ -38,13 +47,22 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CreateUserRequest  $request
+     * @param  UserStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(UserStoreRequest $request)
     {
-        $user = UserService::createUser($request->all());
-        return redirect()->route('users.index');
+        try {
+            DB::beginTransaction();
+            UserService::createUser($request->all());
+            MessageService::success('Успешно създадохте потребител!');
+            DB::commit();
+            return redirect()->route('users.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при създаването на потребител!');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -53,7 +71,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(UserShowRequest $request, $id)
     {
         $user = User::with('status:id,slug', 'roles')->findOrFail($id);
         UserService::enrichUser($user);
@@ -74,7 +92,7 @@ class UserController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(UserEditRequest $request, User $user)
     {
         return view('users.edit', compact('user'));
     }
@@ -82,27 +100,26 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  UserEditRequest  $request
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        try {
+            DB::beginTransaction();
+            UserService::updateUser($user, $request->all());
+            MessageService::success('Успешна редакция!');
+            DB::commit();
+            return redirect()->route('users.show', $user->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при редакцията!');
+            return redirect()->back()->withInput();
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function search(Request $request)
+    public function search(UserSearchRequest $request)
     {
         $users = UserService::getUsers(function ($query) use ($request) {
             return UserService::applySearch($query, $request->get('q'));
@@ -110,10 +127,49 @@ class UserController extends Controller
         return view('users.components.table', compact('users'));
     }
 
-    public function status(Request $request, User $user)
+    public function status(UserStatusRequest $request, User $user)
     {
-        $status = Status::where('slug', $request->get('status'))->firstOrFail()->id;
-        UserService::updateStatus($user, $status);
-        return redirect()->back();
+        try {
+            DB::beginTransaction();
+            $status = Status::where('slug', $request->get('status'))->firstOrFail()->id;
+            UserService::updateStatus($user, $status);
+            MessageService::success('Успешно променихте статуса на потребителя!');
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при промяната на статуса на потребителя!');
+            return redirect()->back();
+        }
+    }
+
+    public function downloadTemplate()
+    {
+        $headers = [
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => 'attachment; filename="template.xlsx"',
+        ];
+
+        return response()->download(public_path('templates/template.xlsx'), 'template.xlsx', $headers);
+    }
+
+    public function import(UserImportRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls'
+            ]);
+
+            $path = $request->file('file')->getRealPath();
+            $result = UserService::importUsers($path);
+            DB::commit();
+            MessageService::success('Успешно импортирахте потребители!');
+            return redirect()->route('users.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при импортирането на потребители!');
+            return redirect()->back()->withInput();
+        }
     }
 }

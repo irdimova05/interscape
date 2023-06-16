@@ -8,6 +8,7 @@ use Hash;
 use Illuminate\Validation\Rule;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Spatie\Permission\Models\Role;
+use Storage;
 use Validator;
 
 class UserService
@@ -72,6 +73,39 @@ class UserService
 
         return User::create($data)
             ->assignRole($data['role']);
+    }
+
+    public static function updateUser($user, $request)
+    {
+        $user = $request->user();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $photoPath = Storage::url(Storage::disk('public')->putFile('profile_pictures', $request->file('photo')));
+
+        if ($user->isStudent()) {
+            $user->student->specialty_id = $request->specialty;
+            $user->student->course_id = $request->course;
+            $user->student->success = $request->success;
+            $user->student->description = $request->description;
+            $user->student->save();
+        }
+
+        if ($user->isEmployer()) {
+            $user->employer->name = $request->name;
+            $user->employer->description = $request->description;
+            $user->employer->email = $request->email;
+            $user->employer->phone = $request->phone;
+            $user->employer->address = $request->address;
+            $user->employer->website = $request->website;
+            $user->employer->logo = $photoPath;
+            $user->employer->employee_range_id = $request->employee_range;
+            $user->employer->save();
+        } else {
+            $user->profile_picture = $photoPath;
+        }
+
+        $user->save();
     }
 
     public static function importUsers($filePath)

@@ -10,6 +10,7 @@ use App\Http\Requests\User\UserSearchRequest;
 use App\Http\Requests\User\UserShowRequest;
 use App\Http\Requests\User\UserStatusRequest;
 use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Status;
 use App\Models\User;
 use App\Services\MessageService;
@@ -94,6 +95,28 @@ class UserController extends Controller
     public function edit(UserEditRequest $request, User $user)
     {
         return view('users.edit', compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UserEditRequest  $request
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UserUpdateRequest $request, User $user)
+    {
+        try {
+            DB::beginTransaction();
+            UserService::updateUser($user, $request->all());
+            MessageService::success('Успешна редакция!');
+            DB::commit();
+            return redirect()->route('users.show', $user->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при редакцията!');
+            return redirect()->back()->withInput();
+        }
     }
 
     public function search(UserSearchRequest $request)

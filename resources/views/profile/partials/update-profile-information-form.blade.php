@@ -15,7 +15,7 @@
         @csrf
     </form>
 
-    {!! Form::open(['route'=>'profile.update'], ['class'=>"mt-6 space-y-6", 'enctype'=>"multipart/form-data"] ) !!}
+    {!! Form::open(['route'=>['users.update', $user->id], 'method'=>'put'], ['class'=>"mt-6 space-y-6", 'enctype'=>"multipart/form-data"] ) !!}
 
     <div class="grid grid-cols-2">
 

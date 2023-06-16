@@ -1,11 +1,11 @@
 <x-app-layout>
-    <div class="w-full h-screen flex flex-col lg:flex-row items-center justify-center space-y-16 lg:space-y-0 space-x-8 2xl:space-x-0">
-        <div class="w-full lg:w-1/2 flex flex-col items-center justify-center lg:px-2 xl:px-0 text-center">
+    <div class="w-full h-screen flex flex-col items-center justify-center space-y-16 lg:space-y-0 space-x-8 2xl:space-x-0">
+        <div class="w-full lg:w-1/2 flex-col items-center justify-center lg:px-2 xl:px-0 text-center">
             <p class="text-7xl md:text-8xl lg:text-9xl font-bold tracking-wider text-gray-300">@yield('code')</p>
             <p class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-300 mt-2">@yield('title')</p>
             <p class="text-lg md:text-xl lg:text-2xl text-gray-500 my-12">@yield('message')</p>
         </div>
-        <div class="w-1/2 lg:h-full flex lg:items-end justify-center p-4">
+        <div class="w-1/2 lg:h-full lg:items-end justify-center p-4">
             <svg class="w-full text-blue-600" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 1119.60911 699" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <circle cx="292.60911" cy="213" r="213" fill="#f2f2f2"></circle>
                 <path d="M31.39089,151.64237c0,77.49789,48.6181,140.20819,108.70073,140.20819" transform="translate(-31.39089 -100.5)" fill="#2f2e41"></path>

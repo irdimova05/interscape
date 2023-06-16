@@ -98,7 +98,7 @@
 
             <x-input-label for="description" class="mt-4" :value="__('За фирмата:')" required />
             {!! Form::textarea('description', null, ["rows"=>"4", "class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
-            <x-input-error class="mt-2" :messages="$errors->get('email')" required />
+            <x-input-error class="mt-2" :messages="$errors->get('description')" required />
             @endrole
 
             <h2 class="text-lg font-medium text-gray-900">
@@ -112,19 +112,19 @@
             <div>
                 <x-input-label for="current_password" class="m-1" :value="__('Настояща парола:')" required />
                 <x-text-input id="current_password" name="current_password" type="password" class="p-2.5 block w-full" autocomplete="current-password" />
-                <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+                <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
             </div>
 
             <div>
                 <x-input-label for="password" class="m-1" :value="__('Нова парола:')" required />
                 <x-text-input id="password" name="password" type="password" class="p-2.5 block w-full" autocomplete="new-password" />
-                <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
             <div>
                 <x-input-label for="password_confirmation" class="m-1" :value="__('Повторете паролата:')" required />
                 <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="p-2.5 block w-full" autocomplete="new-password" />
-                <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
 
@@ -172,11 +172,6 @@
             </div>
         </div>
         <div>
-            <label class="flex mt-4 items-center">
-                <input type="checkbox" class="form-checkbox">
-                <span class="ml-2 text-sm">Приемам <a href="" class="text-blue-600 underline">бисквитките</a></span>
-            </label>
-
             <label class="flex items-center mt-4">
                 <input type="checkbox" class="form-checkbox">
                 <span class="ml-2 text-sm">Съгласен съм с <a href="" class="text-blue-600 underline">общите условия</a> и <a href="" class="text-blue-600 underline">обработката на лични данни</a></span>

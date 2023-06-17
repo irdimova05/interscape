@@ -64,9 +64,9 @@ class UserPolicy
     public function update(User $user, User $model)
     {
         if ($user->isAdmin() || $user->id === $model->id) {
-            return true;
+            return $user->hasPermissionTo('edit.profile');
         }
-        return $user->hasPermissionTo('edit.profile');
+        return false;
     }
 
     /**

@@ -2,10 +2,13 @@
 
 namespace App\Services;
 
+use App\Http\Requests\User\UserCreateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
+use App\Mail\Email;
 use App\Models\Status;
 use App\Models\User;
 use Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Spatie\Permission\Models\Role;
@@ -70,10 +73,15 @@ class UserService
     public static function createUser($data)
     {
         $data['status_id'] = Status::where('slug', Status::INACTIVE)->first()->id;
-        $data['password'] = bcrypt($data['password']);
+        $password = $data['password'];
+        $data['password'] = bcrypt($password);
 
-        return User::create($data)
+        $user = User::create($data)
             ->assignRole($data['role']);
+
+        Mail::to($user)->send(new Email($user, $password));
+
+        return $user;
     }
 
     public static function updateUser($user, UserUpdateRequest $request)

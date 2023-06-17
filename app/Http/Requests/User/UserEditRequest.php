@@ -9,6 +9,6 @@ class UserEditRequest extends MainGetRequest
 {
     public function authorize()
     {
-        return Gate::authorize('edit.user');
+        return Gate::authorize('edit.user', $this->route('user'));
     }
 }

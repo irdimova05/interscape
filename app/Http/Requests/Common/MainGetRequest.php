@@ -17,6 +17,11 @@ abstract class MainGetRequest extends Request
             $baseRequest->files->all(),
             $baseRequest->server->all()
         );
+
+        $this->setUserResolver($baseRequest->getUserResolver());
+
+        $this->setRouteResolver($baseRequest->getRouteResolver());
+
         $this->authorize();
     }
 

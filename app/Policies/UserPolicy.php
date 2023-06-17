@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Database\Eloquent\Model;
 
 class UserPolicy
 {
@@ -52,6 +53,20 @@ class UserPolicy
     public function create(User $user)
     {
         return $user->hasPermissionTo('create.student') || $user->hasPermissionTo('create.employer');
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function update(User $user, User $model)
+    {
+        if ($user->isAdmin() || $user->id === $model->id) {
+            return true;
+        }
+        return $user->hasPermissionTo('edit.profile');
     }
 
     /**

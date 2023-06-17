@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Status;
 use App\Models\User;
 use Hash;
@@ -75,34 +76,71 @@ class UserService
             ->assignRole($data['role']);
     }
 
-    public static function updateUser($user, $request)
+    public static function updateUser($user, UserUpdateRequest $request)
     {
-        $user = $request->user();
-
         $user->name = $request->name;
         $user->email = $request->email;
-        $photoPath = Storage::url(Storage::disk('public')->putFile('profile_pictures', $request->file('photo')));
+        if ($request->hasFile('photo')) {
+            $photoPath = Storage::url(Storage::disk('public')->putFile('profile_pictures', $request->file('photo')));
+        }
 
         if ($user->isStudent()) {
-            $user->student->specialty_id = $request->specialty;
-            $user->student->course_id = $request->course;
-            $user->student->success = $request->success;
-            $user->student->description = $request->description;
+            if ($request->specialty) {
+                $user->student->specialty_id = $request->specialty;
+            }
+
+            if ($request->course) {
+                $user->student->course_id = $request->course;
+            }
+
+            if ($request->success) {
+                $user->student->success = $request->success;
+            }
+
+            if ($request->description) {
+                $user->student->description = $request->description;
+            }
+
             $user->student->save();
         }
 
         if ($user->isEmployer()) {
-            $user->employer->name = $request->name;
-            $user->employer->description = $request->description;
-            $user->employer->email = $request->email;
-            $user->employer->phone = $request->phone;
-            $user->employer->address = $request->address;
-            $user->employer->website = $request->website;
-            $user->employer->logo = $photoPath;
-            $user->employer->employee_range_id = $request->employee_range;
+            if ($request->employer->name) {
+                $user->employer->name = $request->employer->name;
+            }
+
+            if ($request->employer->description) {
+                $user->employer->description = $request->employer->description;
+            }
+
+            if ($request->employer->email) {
+                $user->employer->email = $request->employer->email;
+            }
+
+            if ($request->employer->phone) {
+                $user->employer->phone = $request->employer->phone;
+            }
+
+            if ($request->employer->address) {
+                $user->employer->address = $request->employer->address;
+            }
+
+            if ($request->employer->website) {
+                $user->employer->website = $request->employer->website;
+            }
+
+            if ($request->employer->logo) {
+                $user->employer->logo = $photoPath;
+            }
+
+            if ($request->employer->employee_range) {
+                $user->employer->employee_range_id = $request->employer->employee_range;
+            }
             $user->employer->save();
         } else {
-            $user->profile_picture = $photoPath;
+            if ($request->hasFile('photo')) {
+                $user->profile_picture = $photoPath;
+            }
         }
 
         $user->save();

@@ -28,13 +28,14 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => 'required|string|max:255',
+            'name' => 'sometimes|required|string|max:255',
             'email' => [
+                'sometimes',
                 'required',
                 'email',
-                Rule::unique(User::class)->ignore($this->user()->id),
+                Rule::unique(User::class)->ignore($this->route('user')->id),
             ],
-            'description' => 'required|string',
+            'description' => 'sometimes|required|string',
         ];
 
         if ($this->user()->hasRole('student')) {
@@ -49,18 +50,18 @@ class UserUpdateRequest extends FormRequest
     private function getStudentRules(): array
     {
         return [
-            'success' => 'required|numeric|min:2|max:6',
-            'specialty' => 'required|integer|exists:specialties,id',
-            'course' => 'required|integer|exists:courses,id',
+            'success' => 'sometimes|required|numeric|min:2|max:6',
+            'specialty' => 'sometimes|required|integer|exists:specialties,id',
+            'course' => 'sometimes|required|integer|exists:courses,id',
         ];
     }
 
     private function getEmployerRules(): array
     {
         return [
-            'address' => 'required|string|max:255',
-            'website' => 'required|string|max:255',
-            'employee_range' => 'required|integer|exists:employee_ranges,id',
+            'address' => 'sometimes|required|string|max:255',
+            'website' => 'sometimes|required|string|max:255',
+            'employee_range' => 'sometimes|required|integer|exists:employee_ranges,id',
         ];
     }
 
@@ -80,9 +81,9 @@ class UserUpdateRequest extends FormRequest
             'email.unique' => 'Вече съществува потребител с този имейл.',
             'description.required' => 'Описанието е задължително.',
             'description.string' => 'Невалидно описание.',
-            // 'photo.required' => 'Снимката е задължителна.',
-            // 'photo.image' => 'Невалиден формат на снимката.',
-            // 'photo.max' => 'Снимката трябва да бъде по-малка от 2MB.',
+            'photo.required' => 'Снимката е задължителна.',
+            'photo.image' => 'Невалиден формат на снимката.',
+            'photo.max' => 'Снимката трябва да бъде по-малка от 2MB.',
             'success.required' => 'Успехът е задължителен.',
             'success.numeric' => 'Невалиден успех.',
             'success.min' => 'Успехът трябва да бъде поне 2.',

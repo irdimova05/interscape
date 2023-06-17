@@ -100,7 +100,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserEditRequest  $request
+     * @param  UserUpdateRequest  $request
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
@@ -108,7 +108,7 @@ class UserController extends Controller
     {
         try {
             DB::beginTransaction();
-            UserService::updateUser($user, $request->all());
+            UserService::updateUser($user, $request);
             MessageService::success('Успешна редакция!');
             DB::commit();
             return redirect()->route('users.show', $user->id);

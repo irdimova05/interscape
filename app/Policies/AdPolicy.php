@@ -31,7 +31,11 @@ class AdPolicy
      */
     public function view(User $user, Ad $ad)
     {
-        return $user->hasPermissionTo('show.ad') || $user->id === $ad->user_id;
+        if ($user->isEmployer() && $user->employer->id !== $ad->employer_id) {
+            return false;
+        }
+
+        return $user->hasPermissionTo('show.ad');
     }
 
     /**

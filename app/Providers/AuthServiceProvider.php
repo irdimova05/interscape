@@ -59,7 +59,7 @@ class AuthServiceProvider extends ServiceProvider
     public function registerGates()
     {
         Gate::define('list.ad', [AdPolicy::class, 'viewAny']);
-        Gate::define('show.ad', [AdPolicy::class, 'view']);
+        Gate::define('ad.view', [AdPolicy::class, 'view']);
         Gate::define('create.ad', [AdPolicy::class, 'create']);
         Gate::define('edit.ad', [AdPolicy::class, 'update']);
         Gate::define('status.ad', [AdPolicy::class, 'status']);

@@ -113,36 +113,36 @@ class UserService
         }
 
         if ($user->isEmployer()) {
-            if ($request->employer->name) {
-                $user->employer->name = $request->employer->name;
+            if ($request->firmName) {
+                $user->employer->name = $request->firmName;
             }
 
-            if ($request->employer->description) {
-                $user->employer->description = $request->employer->description;
+            if ($request->description) {
+                $user->employer->description = $request->description;
             }
 
-            if ($request->employer->email) {
-                $user->employer->email = $request->employer->email;
+            if ($request->email) {
+                $user->employer->email = $request->email;
             }
 
-            if ($request->employer->phone) {
-                $user->employer->phone = $request->employer->phone;
+            if ($request->phone) {
+                $user->employer->phone = $request->phone;
             }
 
-            if ($request->employer->address) {
-                $user->employer->address = $request->employer->address;
+            if ($request->address) {
+                $user->employer->address = $request->address;
             }
 
-            if ($request->employer->website) {
-                $user->employer->website = $request->employer->website;
+            if ($request->website) {
+                $user->employer->website = $request->website;
             }
 
-            if ($request->employer->logo) {
+            if ($request->hasFile('photo')) {
                 $user->employer->logo = $photoPath;
             }
 
-            if ($request->employer->employee_range) {
-                $user->employer->employee_range_id = $request->employer->employee_range;
+            if ($request->employee_range) {
+                $user->employer->employee_range_id = $request->employee_range;
             }
             $user->employer->save();
         } else {

@@ -63,12 +63,12 @@
             <x-input-error class="mt-2" :messages="$errors->get('course')" />
 
             <x-input-label for="success" :value="__('Среден успех до момента:')" required />
-            {!! Form::number('success', null, ["rows"=>"4", "class"=>"mb-3 block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+            {!! Form::number('success', null, ["step"=>".01", "class"=>"mb-3 block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
             <x-input-error class="mt-2" :messages="$errors->get('success')" />
 
             <x-input-label for="description" :value="__('За мен:')" required />
             {!! Form::textarea('description', null, ["rows"=>"4", "class"=>"mb-3 block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-input-error class="mt-2" :messages="$errors->get('description')" />
             @endrole
 
             @role('employer')

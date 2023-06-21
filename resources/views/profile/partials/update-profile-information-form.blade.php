@@ -61,7 +61,7 @@
                 <x-input-error class="mt-2" :messages="$errors->get('course')" />
 
                 <x-input-label for="success" :value="__('Успех:')" />
-                {!! Form::text('success', $user->student->success, ["class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
+                {!! Form::text('success', $user->student->success, ["step"=>".01", "class"=>"block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4 "]) !!}
                 <x-input-error class="mt-2" :messages="$errors->get('success')" />
 
                 <x-input-label for="description" :value="__('За мен:')" />

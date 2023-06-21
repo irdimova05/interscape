@@ -40,7 +40,7 @@ class ProfileCompleteRequest extends FormRequest
     private function getStudentRules(): array
     {
         return [
-            'success' => 'required|numeric|min:2|max:6',
+            'success' => 'required|decimal:2|min:2|max:6',
             'specialty' => 'required|integer|exists:specialties,id',
             'course' => 'required|integer|exists:courses,id',
         ];

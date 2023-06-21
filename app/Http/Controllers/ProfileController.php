@@ -6,8 +6,10 @@ use App\Http\Requests\ProfileCompleteRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Course;
 use App\Models\EmployeeRanges;
+use App\Models\Employer;
 use App\Models\Specialty;
 use App\Models\Status;
+use App\Models\Student;
 use App\Models\User;
 use App\Services\MessageService;
 use App\Services\UserService;
@@ -55,23 +57,28 @@ class ProfileController extends Controller
             $photoPath = Storage::url(Storage::disk('public')->putFile('profile_pictures', $request->file('photo')));
 
             if ($user->isStudent()) {
-                $user->student->specialty_id = $request->specialty;
-                $user->student->course_id = $request->course;
-                $user->student->success = $request->success;
-                $user->student->description = $request->description;
-                $user->student->save();
+                $student = new Student();
+
+                $student->specialty()->associate($request->specialty);
+                $student->course()->associate($request->course);
+                $student->success = $request->success;
+                $student->description = $request->description;
+                $student->user()->associate($user);
+                $student->save();
             }
 
             if ($user->isEmployer()) {
-                $user->employer->name = $request->name;
-                $user->employer->description = $request->description;
-                $user->employer->email = $request->email;
-                $user->employer->phone = $request->phone;
-                $user->employer->address = $request->address;
-                $user->employer->website = $request->website;
-                $user->employer->logo = $photoPath;
-                $user->employer->employee_range_id = $request->employee_range;
-                $user->employer->save();
+                $employer = new Employer();
+                $employer->name = $request->name;
+                $employer->description = $request->description;
+                $employer->email = $request->email;
+                $employer->phone = $request->phone;
+                $employer->address = $request->address;
+                $employer->website = $request->website;
+                $employer->logo = $photoPath;
+                $employer->employee_range_id = $request->employee_range;
+                $employer->user()->associate($user);
+                $employer->save();
             } else {
                 $user->profile_picture = $photoPath;
             }

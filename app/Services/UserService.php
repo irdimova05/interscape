@@ -180,9 +180,12 @@ class UserService
         ]);
 
         if ($validator->fails()) {
-            return [
-                'errors' => $validator->errors()->all()
-            ];
+            // return [
+            //     'errors' => $validator->errors()->all()
+            // ];
+
+            $validator->errors()->all();
+            return null;
         }
 
         foreach ($data as $rowData) {
@@ -194,5 +197,7 @@ class UserService
             $user->save();
             $user->assignRole($role);
         }
+
+        return true;
     }
 }

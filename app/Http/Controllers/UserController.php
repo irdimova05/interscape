@@ -162,7 +162,13 @@ class UserController extends Controller
             ]);
 
             $path = $request->file('file')->getRealPath();
-            $result = UserService::importUsers($path);
+            $results = UserService::importUsers($path);
+
+            if ($results == null) {
+                MessageService::error('Файлът съдържа некоректни данни. Моля, поправете ги и опитайте отново!');
+                return redirect()->back()->withInput();
+            }
+
             DB::commit();
             MessageService::success('Успешно импортирахте потребители!');
             return redirect()->route('users.index');

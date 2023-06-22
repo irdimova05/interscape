@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PasswordUpdateRequest;
 use App\Http\Requests\ProfileCompleteRequest;
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Course;
 use App\Models\EmployeeRanges;
 use App\Models\Employer;
@@ -12,9 +12,7 @@ use App\Models\Status;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\MessageService;
-use App\Services\UserService;
 use DB;
-use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +81,8 @@ class ProfileController extends Controller
                 $user->profile_picture = $photoPath;
             }
 
+            $user->password = bcrypt($request->password);
+
             $user->is_profile_completed = true;
             $user->status_id = Status::where('slug', Status::ACTIVE)->first()->id;
 
@@ -117,5 +117,25 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function updatePassword(PasswordUpdateRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $user = $request->user();
+
+            $user->password = bcrypt($request->password);
+
+            $user->save();
+
+            MessageService::success('Успешно променихте паролата си.');
+            DB::commit();
+            return Redirect::route('profile.edit');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            MessageService::error('Възникна грешка при промяната на паролата ви.');
+            return Redirect::route('profile.edit');
+        }
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\User;
 
+use App\Http\Requests\Common\MainFormRequest;
 use App\Models\User;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserUpdateRequest extends FormRequest
+class UserUpdateRequest extends MainFormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *

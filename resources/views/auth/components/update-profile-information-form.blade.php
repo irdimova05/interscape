@@ -187,18 +187,26 @@
                 </div>
 
                 <div x-data="{ cancelClicked: false }">
-                    <form x-ref="logoutForm" method="POST" action="{{ route('logout') }}">
-                        @csrf
 
-                        <x-secondary-button x-on:click="cancelClicked = true; $refs.logoutForm.submit();" x-bind:disabled="cancelClicked" class="text-white bg-gradient-to-r mt-3 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" formnovalidate>
-                            {{ __('Отказ') }}
-                        </x-secondary-button>
-                    </form>
+                    <x-secondary-button @click.prevent="submitLogout" x-bind:disabled="cancelClicked" class="text-white bg-gradient-to-r mt-3 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" formnovalidate>
+                        {{ __('Отказ') }}
+                    </x-secondary-button>
                 </div>
-
-
             </div>
         </div>
     </div>
     {!! Form::close() !!}
+    <form method="POST" action="{{ route('logout') }}" id="logoutForm">
+        @csrf
+    </form>
+
+    @push('scripts')
+    <script>
+        function submitLogout() {
+            document.getElementById('logoutForm').submit();
+        }
+    </script>
+    @endpush
+
+
 </section>

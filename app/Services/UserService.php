@@ -121,8 +121,8 @@ class UserService
                 $user->employer->description = $request->description;
             }
 
-            if ($request->email) {
-                $user->employer->email = $request->email;
+            if ($request->firmEmail) {
+                $user->employer->email = $request->firmEmail;
             }
 
             if ($request->phone) {

@@ -48,8 +48,8 @@ class LoginTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')
-                ->type('email', 'abv@test.com')
-                ->type('password', '65124563')
+                ->type('email', 'complete@test.com')
+                ->type('password', 'complete')
                 ->press('Вход')
                 ->assertPathIs('/register-complete');
             $browser->driver->manage()->deleteAllCookies();

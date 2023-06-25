@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Common\MainFormRequest;
 use App\Models\User;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ProfileCompleteRequest extends FormRequest
+class ProfileCompleteRequest extends MainFormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -22,7 +22,6 @@ class ProfileCompleteRequest extends FormRequest
                 'email',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
-            'description' => 'required|string',
             'photo' => 'required|image|max:2048',
             'current_password' => 'sometimes|required_with:password|string|min:8|current_password',
             'password' => 'sometimes|required_with:current_password|string|min:8|confirmed',
@@ -40,6 +39,7 @@ class ProfileCompleteRequest extends FormRequest
     private function getStudentRules(): array
     {
         return [
+            'description' => 'required|string',
             'success' => 'required|decimal:2|min:2|max:6',
             'specialty' => 'required|integer|exists:specialties,id',
             'course' => 'required|integer|exists:courses,id',
@@ -49,6 +49,7 @@ class ProfileCompleteRequest extends FormRequest
     private function getEmployerRules(): array
     {
         return [
+            'description' => 'required|string',
             'phone' => 'required|string|max:10',
             'address' => 'required|string|max:255',
             'website' => 'required|string|max:255',
